@@ -27,12 +27,7 @@ export async function updateSession(request: NextRequest) {
       },
     }
   );
-  const { data: { user } } = await supabase.auth.getUser();
-  // Protect /app routes — redirect unauthenticated users to /login
-  if (!user && request.nextUrl.pathname.startsWith('/app')) {
-    const url = request.nextUrl.clone();
-    url.pathname = '/login';
-    return NextResponse.redirect(url);
-  }
+  await supabase.auth.getUser();
+  // Keep refreshing Supabase sessions when present, but allow guest access to the app.
   return supabaseResponse;
 }

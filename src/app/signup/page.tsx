@@ -46,7 +46,7 @@ export default function SignupPage() {
           </span>
         </div>
 
-        <AuthCard defaultMode="signup" />
+        <AuthCard />
 
         <p className="mt-8 text-[12px] text-[var(--ink-500)] text-center max-w-xs">
           By continuing, you agree to our{' '}

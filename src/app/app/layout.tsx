@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
@@ -9,7 +9,6 @@ import {
   Shirt,
   Image as ImageIcon,
   Settings,
-  LogOut,
   Sparkles,
 } from 'lucide-react';
 import clsx from 'clsx';
@@ -25,6 +24,27 @@ const NAV_ITEMS = [
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const [account, setAccount] = useState<{ name: string; signedIn: boolean | null } | null>(null);
+  const [usage, setUsage] = useState<{ used: number; limit: number; remaining: number } | null>(null);
+  const [sidebarError, setSidebarError] = useState(false);
+
+  useEffect(() => {
+    let active = true;
+    Promise.all([
+      fetch('/api/profile', { cache: 'no-store' }).then(async (response) => ({ status: response.status, data: response.ok ? await response.json() : null })),
+      fetch('/api/usage', { cache: 'no-store' }).then(async (response) => ({ status: response.status, data: response.ok ? await response.json() : null })),
+    ]).then(([profileData, usageData]) => {
+      if (!active) return;
+      setAccount(profileData.data?.ok
+        ? { name: profileData.data.profile.name || profileData.data.profile.email || 'Your account', signedIn: true }
+        : profileData.status === 401
+          ? { name: 'Guest session', signedIn: false }
+          : { name: 'Account unavailable', signedIn: null });
+      if (usageData.data?.ok) setUsage({ used: usageData.data.used, limit: usageData.data.limit, remaining: usageData.data.remaining });
+      if (!usageData.data?.ok || (profileData.status !== 401 && !profileData.data?.ok)) setSidebarError(true);
+    }).catch(() => { if (active) { setAccount({ name: 'Account unavailable', signedIn: null }); setSidebarError(true); } });
+    return () => { active = false; };
+  }, []);
 
   return (
     <div className="min-h-screen bg-[var(--pearl-50)] text-[var(--ink-900)] flex flex-col lg:flex-row">
@@ -78,36 +98,27 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
         {/* Bottom card & User Profile */}
         <div className="space-y-4 pt-6 border-t border-white/10">
-          <div className="p-3.5 rounded-2xl bg-white/[0.06] backdrop-blur border border-white/10 space-y-2">
+          <div className="p-3.5 rounded-2xl bg-white/[0.06] backdrop-blur border border-white/10 space-y-2" aria-live="polite">
             <div className="flex items-center justify-between text-xs font-semibold">
               <span className="text-white/70">Tries left today</span>
-              <span className="text-[var(--sky-400)] font-mono">10 / 10</span>
+              <span className="text-[var(--sky-400)] font-mono">{usage ? `${usage.remaining} / ${usage.limit}` : sidebarError ? 'Unavailable' : 'Loading…'}</span>
             </div>
             <div className="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
-              <div
-                className="bg-gradient-to-r from-[var(--blue-500)] to-[var(--sky-400)] h-full w-full rounded-full shadow-[0_0_8px_var(--sky-400)]"
-              />
+              <div className="bg-gradient-to-r from-[var(--blue-500)] to-[var(--sky-400)] h-full rounded-full shadow-[0_0_8px_var(--sky-400)] transition-[width]" style={{ width: usage ? `${usage.limit ? Math.max(0, Math.min(100, (usage.remaining / usage.limit) * 100)) : 0}%` : '0%' }} />
             </div>
-            <p className="text-[11px] text-white/50">Resets daily at 00:00 UTC</p>
+            <p className="text-[11px] text-white/50">{usage ? 'Daily try-on allowance' : sidebarError ? 'Usage could not be loaded' : 'Checking today’s allowance…'}</p>
           </div>
 
-          <div className="flex items-center justify-between pt-1">
+          <div className="flex items-center pt-1">
             <div className="flex items-center gap-2.5">
               <div className="w-9 h-9 rounded-full bg-dashboard-gradient border border-white/20 flex items-center justify-center font-display font-bold text-sm text-white">
                 M
               </div>
               <div className="text-left">
-                <p className="text-xs font-semibold text-white leading-tight">Guest User</p>
-                <p className="text-[10px] text-white/50">Free Tier</p>
+                <p className="text-xs font-semibold text-white leading-tight">{account?.name ?? 'Loading account…'}</p>
+                <p className="text-[10px] text-white/50">{account ? account.signedIn === null ? 'Status unavailable' : account.signedIn ? 'Signed in' : 'Guest' : 'Account status'}</p>
               </div>
             </div>
-            <Link
-              href="/login"
-              title="Log out"
-              className="p-2 rounded-xl text-white/50 hover:text-white hover:bg-white/10 transition-colors"
-            >
-              <LogOut size={16} />
-            </Link>
           </div>
         </div>
       </aside>
@@ -253,17 +264,18 @@ function PageInspiration({ pathname }: { pathname: string }) {
   const page = INSPIRATION[pathname];
   const cards = page?.cards ?? BEAUTY_PATHWAYS[pathname];
   if (!cards) return null;
+  const conciseCards = cards.slice(0, 2);
   const title = page?.title ?? 'Complete the look';
   const note = page?.note ?? 'Explore a complementary style and make the result your own.';
 
   return (
-    <section className="app-inspiration mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16" aria-labelledby="inspiration-heading">
-      <div className="mb-6 sm:mb-8 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
-        <div><p className="app-page-kicker mb-3">A little style inspiration</p><h2 id="inspiration-heading" className="font-display text-3xl sm:text-4xl text-[var(--ink-900)]">{title}</h2></div>
+    <section className="app-inspiration mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-8 sm:py-10" aria-labelledby="inspiration-heading">
+      <div className="mb-5 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
+        <div><p className="app-page-kicker mb-2">A little style inspiration</p><h2 id="inspiration-heading" className="font-display text-3xl sm:text-4xl text-[var(--ink-900)]">{title}</h2></div>
         <p className="max-w-sm text-sm leading-relaxed text-[var(--ink-500)]">{note}</p>
       </div>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {cards.map((card, index) => (
+        {conciseCards.map((card, index) => (
           <Link key={card.href + card.label} href={card.href} className="app-inspiration-card group" style={{ ['--card-index' as string]: index } as React.CSSProperties}>
             <div className="app-inspiration-image-wrap">
               {/* eslint-disable-next-line @next/next/no-img-element */}

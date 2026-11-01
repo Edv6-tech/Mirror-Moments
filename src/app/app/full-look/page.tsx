@@ -86,7 +86,18 @@ export default function FullLookPage() {
           <aside className="rounded-3xl border border-[var(--line)] bg-[var(--glass-light-bg)] p-5 shadow-[var(--shadow-soft)] lg:sticky lg:top-6" aria-labelledby="look-plan-title">
             <p className="app-page-kicker mb-3">Your styling session</p>
             <h2 id="look-plan-title" className="font-display text-2xl text-[var(--ink-900)]">Your look plan</h2>
-            <p className="mt-2 text-sm leading-relaxed text-[var(--ink-500)]">Open each selected studio to create its preview. You can keep multiple studios open while you compare ideas.</p>
+            <p className="mt-2 text-sm leading-relaxed text-[var(--ink-500)]">Arrange the pieces you want to try, then open each studio for its own preview. This board keeps your plan together while you explore.</p>
+            {chosen.length > 0 && (
+              <div className="mt-4 grid grid-cols-3 gap-2" aria-label="Selected style inspiration board">
+                {chosen.map((option) => (
+                  <div key={option.id} className="overflow-hidden rounded-xl border border-[var(--line)] bg-[var(--ice-100)]">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={option.image} alt={option.alt} loading="lazy" className="aspect-square w-full object-cover" />
+                    <p className="truncate px-2 py-1.5 text-[10px] font-semibold text-[var(--ink-900)]">{option.label}</p>
+                  </div>
+                ))}
+              </div>
+            )}
             {chosen.length ? (
               <ol className="mt-5 space-y-2">
                 {chosen.map((option, index) => (

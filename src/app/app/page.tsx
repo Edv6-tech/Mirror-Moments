@@ -48,7 +48,7 @@ const PREMIUM_SHADES = [
     bg: 'bg-[#FEE4A6]',
     text: 'text-[#7D5200]',
     btnBg: 'bg-[#D97706] text-white',
-    img: '/garments/garment_emerald_slip.jpg',
+    img: '/samples/hair-curly.jpg',
     alt: 'Portrait featuring sleek long black hair',
     href: '/app/studio?mode=hair',
   },
@@ -78,6 +78,7 @@ const PREMIUM_SHADES = [
 const CLOTHES_ITEMS = [
   {
     id: 'dress-try-on',
+    category: 'dresses',
     title: 'Dress Try-On',
     tag: 'CLOTHING',
     desc: 'Lift a dress from a photo, then preview it on you.',
@@ -90,6 +91,7 @@ const CLOTHES_ITEMS = [
   },
   {
     id: 'makeup-studio',
+    category: 'makeup',
     title: 'Makeup Studio',
     tag: 'BEAUTY',
     desc: 'Preview a curated makeup look on your photo.',
@@ -102,6 +104,7 @@ const CLOTHES_ITEMS = [
   },
   {
     id: 'hair-studio',
+    category: 'hair',
     title: 'Hair Try-On',
     tag: 'HAIR',
     desc: 'Use a hairstyle reference to explore a new look.',
@@ -114,6 +117,7 @@ const CLOTHES_ITEMS = [
   },
   {
     id: 'shoe-studio',
+    category: 'shoes',
     title: 'Shoes Try-On',
     tag: 'FOOTWEAR',
     desc: 'Preview shoes alongside your outfit photo.',
@@ -126,6 +130,7 @@ const CLOTHES_ITEMS = [
   },
   {
     id: 'bag-studio',
+    category: 'bags',
     title: 'Bag Try-On',
     tag: 'ACCESSORIES',
     desc: 'Preview a bag style with your look.',
@@ -138,18 +143,20 @@ const CLOTHES_ITEMS = [
   },
   {
     id: 'nail-studio',
+    category: 'nails',
     title: 'Nail Studio',
     tag: 'NAILS',
     desc: 'Try polish colours, textures and press-on shapes.',
     leftLabel: 'Pick a finish',
     studio: 'Choose a finish',
     href: '/app/nails',
-    img: '/samples/shoes-sneakers.jpg',
+    img: '/samples/sample-hand.jpg',
     alt: 'Glossy manicure detail for nail colour inspiration',
     icon: Sparkles,
   },
   {
     id: 'eye-colour',
+    category: 'eyes',
     title: 'Eye Colour Lens',
     tag: 'BEAUTY',
     desc: 'Preview lens colours on a photo of yourself.',
@@ -162,6 +169,7 @@ const CLOTHES_ITEMS = [
   },
   {
     id: 'earring-studio',
+    category: 'jewels',
     title: 'Earring Try-On',
     tag: 'JEWELRY',
     desc: 'Compare earring styles on your photo.',
@@ -193,7 +201,7 @@ export default function DashboardPage() {
   const [activeCategory, setActiveCategory] = useState('all');
 
   return (
-    <div className="min-h-screen bg-[#FFFFFF] text-slate-900 pb-20">
+    <div className="min-h-screen bg-[var(--pearl-50)] text-[var(--ink-900)] pb-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-12">
 
         {/* ════════════════════════════════════════════════════════════════════
@@ -282,13 +290,8 @@ export default function DashboardPage() {
                   <span>Choose a studio</span>
                   <ChevronDown size={14} className="text-white/80" />
                 </div>
-                <Link href="/app/studio">
-                  <button
-                    type="button"
-                    className="px-6 py-2.5 rounded-full bg-white text-[#EA384D] font-bold text-xs sm:text-sm hover:bg-white/95 transition-all shadow-md active:scale-95"
-                  >
-                    Start a try-on
-                  </button>
+                <Link href="/app/studio" className="px-6 py-2.5 rounded-full bg-white text-[#EA384D] font-bold text-xs sm:text-sm hover:bg-white/95 transition-all shadow-md active:scale-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
+                  Start a try-on
                 </Link>
               </div>
 
@@ -328,16 +331,6 @@ export default function DashboardPage() {
                 </div>
               </div>
 
-              {/* Bottom Member Link */}
-              <div className="pt-2 text-xs font-medium text-white/80">
-                <span>Want to save your looks? </span>
-                <Link
-                  href="/signup"
-                  className="font-bold text-white underline underline-offset-4 hover:text-white/90"
-                >
-                  Create an account
-                </Link>
-              </div>
             </div>
 
             {/* Right Column: Sample outfit photo on Halo Backdrop */}
@@ -356,7 +349,7 @@ export default function DashboardPage() {
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src="/garments/garment_floral_blouse.jpg"
-                      alt="Model wearing a soft grey outfit in a full-length sample photo"
+                      alt="Fashion sample portrait showing a model in a soft grey blouse"
                       className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-700"
                     />
                     {/* Subtle bottom vignette */}
@@ -380,11 +373,11 @@ export default function DashboardPage() {
         <section className="space-y-6">
           {/* Section Divider Header with Red Ornamental Wings */}
           <div className="flex items-center justify-center gap-4">
-            <span className="h-[1.5px] w-12 bg-gradient-to-r from-transparent to-[#EA384D]/60" />
-            <h2 className="font-display text-xl sm:text-2xl font-bold text-[#EA384D] tracking-wide">
+            <span className="h-[1.5px] w-12 bg-gradient-to-r from-transparent to-[var(--blue-600)]/60" />
+            <h2 className="font-display text-xl sm:text-2xl font-bold text-[var(--blue-700)] tracking-wide">
               Find your next look
             </h2>
-            <span className="h-[1.5px] w-12 bg-gradient-to-l from-transparent to-[#EA384D]/60" />
+            <span className="h-[1.5px] w-12 bg-gradient-to-l from-transparent to-[var(--blue-600)]/60" />
           </div>
 
           {/* 4 Capsule/Pill Cards */}
@@ -437,11 +430,11 @@ export default function DashboardPage() {
         <section className="space-y-6">
           {/* Section Divider Header with Red Ornamental Wings */}
           <div className="flex items-center justify-center gap-4">
-            <span className="h-[1.5px] w-12 bg-gradient-to-r from-transparent to-[#EA384D]/60" />
-            <h2 className="font-display text-xl sm:text-2xl font-bold text-[#EA384D] tracking-wide">
+            <span className="h-[1.5px] w-12 bg-gradient-to-r from-transparent to-[var(--blue-600)]/60" />
+            <h2 className="font-display text-xl sm:text-2xl font-bold text-[var(--blue-700)] tracking-wide">
               Explore by studio
             </h2>
-            <span className="h-[1.5px] w-12 bg-gradient-to-l from-transparent to-[#EA384D]/60" />
+            <span className="h-[1.5px] w-12 bg-gradient-to-l from-transparent to-[var(--blue-600)]/60" />
           </div>
 
           {/* Horizontal Category Circular Strip */}
@@ -453,15 +446,16 @@ export default function DashboardPage() {
                 <button
                   key={cat.id}
                   type="button"
+                  aria-pressed={isActive}
                   onClick={() => setActiveCategory(cat.id)}
-                  className="flex flex-col items-center gap-2 group flex-shrink-0 focus:outline-none"
+                  className="flex flex-col items-center gap-2 group flex-shrink-0 rounded-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--blue-700)]"
                 >
                   <div
                     className={clsx(
                       'w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center transition-all duration-200 border-2',
                       isActive
-                        ? 'border-[#EA384D] bg-[#FFF0F2] text-[#EA384D] shadow-md scale-105'
-                        : 'border-slate-200 bg-white text-slate-500 hover:border-[#EA384D]/40 hover:text-[#EA384D] hover:bg-[#FFF5F6]'
+                        ? 'border-[var(--blue-600)] bg-[var(--ice-100)] text-[var(--blue-700)] shadow-md scale-105'
+                        : 'border-[var(--line)] bg-white text-slate-500 hover:border-[var(--blue-500)] hover:text-[var(--blue-700)] hover:bg-[var(--ice-100)]'
                     )}
                   >
                     <Icon size={22} strokeWidth={isActive ? 2.2 : 1.8} />
@@ -469,13 +463,13 @@ export default function DashboardPage() {
                   <span
                     className={clsx(
                       'text-xs font-bold tracking-tight transition-colors',
-                      isActive ? 'text-[#EA384D]' : 'text-slate-600 group-hover:text-[#EA384D]'
+                      isActive ? 'text-[var(--blue-700)]' : 'text-slate-600 group-hover:text-[var(--blue-700)]'
                     )}
                   >
                     {cat.label}
                   </span>
                   {isActive && (
-                    <span className="w-5 h-[2px] rounded-full bg-[#EA384D] -mt-1" />
+                    <span className="w-5 h-[2px] rounded-full bg-[var(--blue-600)] -mt-1" />
                   )}
                 </button>
               );
@@ -499,7 +493,7 @@ export default function DashboardPage() {
             </div>
             <Link
               href="/app/studio"
-              className="text-xs font-bold text-[#EA384D] hover:underline flex items-center gap-1"
+              className="text-xs font-bold text-[var(--blue-700)] hover:underline flex items-center gap-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--blue-700)]"
             >
               <span>View all studios</span>
               <ArrowRight size={13} />
@@ -508,7 +502,7 @@ export default function DashboardPage() {
 
           {/* 4-column Coral-Red Card Grid (matches reference image) */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {CLOTHES_ITEMS.map((item) => (
+            {CLOTHES_ITEMS.filter((item) => activeCategory === 'all' || item.category === activeCategory).map((item) => (
               <FX7TiltCard key={item.id} maxDeg={7} className="h-full">
                 <div className="group h-full rounded-[28px] overflow-hidden bg-[#EA384D] text-white flex flex-col justify-between shadow-xl shadow-[#EA384D]/20 border border-white/20 transition-all duration-300">
 
@@ -559,13 +553,8 @@ export default function DashboardPage() {
                       <span className="font-display text-base font-bold text-white">
                         {item.leftLabel}
                       </span>
-                      <Link href={item.href}>
-                        <button
-                          type="button"
-                          className="px-4 py-1.5 rounded-full bg-white text-[#EA384D] text-xs font-bold hover:bg-white/95 transition-all shadow-md active:scale-95"
-                        >
-                          Open studio
-                        </button>
+                      <Link href={item.href} className="px-4 py-1.5 rounded-full bg-white text-[#EA384D] text-xs font-bold hover:bg-white/95 transition-all shadow-md active:scale-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
+                        Open studio
                       </Link>
                     </div>
                   </div>
@@ -596,13 +585,13 @@ export default function DashboardPage() {
                 <Link
                   key={st.name}
                   href={st.href}
-                  className="flex items-center gap-3 p-3.5 rounded-2xl bg-white border border-slate-200 hover:border-[#EA384D] hover:shadow-md transition-all group"
+                  className="flex items-center gap-3 p-3.5 rounded-2xl bg-white border border-[var(--line)] hover:border-[var(--blue-500)] hover:shadow-[var(--shadow-soft)] transition-all group focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--blue-700)]"
                 >
-                  <div className="w-10 h-10 rounded-xl bg-[#FFF0F2] text-[#EA384D] flex items-center justify-center group-hover:bg-[#EA384D] group-hover:text-white transition-colors">
+                  <div className="w-10 h-10 rounded-xl bg-[var(--ice-100)] text-[var(--blue-700)] flex items-center justify-center group-hover:bg-[var(--blue-700)] group-hover:text-white transition-colors">
                     <Icon size={18} />
                   </div>
                   <div className="min-w-0">
-                    <p className="text-xs font-bold text-slate-900 truncate group-hover:text-[#EA384D] transition-colors">
+                    <p className="text-xs font-bold text-slate-900 truncate group-hover:text-[var(--blue-700)] transition-colors">
                       {st.name}
                     </p>
                     <span className="text-[10px] font-semibold text-slate-600 block uppercase tracking-wide">

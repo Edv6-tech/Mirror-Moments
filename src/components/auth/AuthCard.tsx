@@ -7,15 +7,8 @@ import { Input } from '@/components/ui/Input';
 import { GlassCard } from '@/components/ui/GlassCard';
 import { createClient } from '@/lib/supabase/client';
 
-type Mode = 'login' | 'signup';
-
-interface AuthCardProps {
-  defaultMode?: Mode;
-}
-
-export function AuthCard({ defaultMode = 'login' }: AuthCardProps) {
+export function AuthCard() {
   const router = useRouter();
-  const [mode, setMode] = useState<Mode>(defaultMode);
 
   // Form state
   const [name, setName] = useState('');
@@ -29,7 +22,6 @@ export function AuthCard({ defaultMode = 'login' }: AuthCardProps) {
   const [formError, setFormError] = useState('');
 
   const [isLoading, setIsLoading] = useState(false);
-  const [resetSent, setResetSent] = useState(false);
 
   const supabase = createClient();
 
@@ -54,28 +46,6 @@ export function AuthCard({ defaultMode = 'login' }: AuthCardProps) {
   const handlePasswordBlur = () => setPasswordError(validatePassword(password));
   const handleNameBlur = () => setNameError(validateName(name));
 
-  // ── Tab switch ────────────────────────────────────────────────────────────
-  const switchMode = (m: Mode) => {
-    setMode(m);
-    setFormError('');
-    setNameError('');
-    setEmailError('');
-    setPasswordError('');
-    setResetSent(false);
-  };
-
-  // ── Password reset ────────────────────────────────────────────────────────
-  const handleForgotPassword = async () => {
-    const emailErr = validateEmail(email);
-    if (emailErr) { setEmailError(emailErr); return; }
-    setIsLoading(true);
-    const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${window.location.origin}/app/settings`,
-    });
-    setIsLoading(false);
-    if (error) { setFormError(error.message); } else { setResetSent(true); }
-  };
-
   // ── Google OAuth ──────────────────────────────────────────────────────────
   const handleGoogle = async () => {
     setIsLoading(true);
@@ -95,71 +65,44 @@ export function AuthCard({ defaultMode = 'login' }: AuthCardProps) {
 
       const eErr = validateEmail(email);
       const pErr = validatePassword(password);
-      const nErr = mode === 'signup' ? validateName(name) : '';
+      const nErr = validateName(name);
       setEmailError(eErr);
       setPasswordError(pErr);
-      if (mode === 'signup') setNameError(nErr);
+      setNameError(nErr);
       if (eErr || pErr || nErr) return;
 
       setIsLoading(true);
 
-      if (mode === 'login') {
-        const { error } = await supabase.auth.signInWithPassword({ email, password });
-        if (error) { setFormError(error.message); setIsLoading(false); return; }
-      } else {
-        const { error } = await supabase.auth.signUp({
-          email,
-          password,
-          options: { data: { full_name: name } },
-        });
-        if (error) { setFormError(error.message); setIsLoading(false); return; }
-      }
+      const { error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: { data: { full_name: name } },
+      });
+      if (error) { setFormError(error.message); setIsLoading(false); return; }
 
       router.push('/app');
     },
-    [mode, email, password, name, router, supabase]
+    [email, password, name, router, supabase]
   );
 
   return (
     <GlassCard variant="light" radius="24" className="w-full max-w-[420px] space-y-6">
-      {/* ── Tab toggle ── */}
-      <div className="relative flex rounded-full bg-[var(--ice-100)] p-1" role="tablist" aria-label="Authentication mode">
-        {(['login', 'signup'] as const).map((m) => (
-          <button
-            key={m}
-            role="tab"
-            aria-selected={mode === m}
-            onClick={() => switchMode(m)}
-            className={[
-              'relative flex-1 rounded-full py-2 text-[14px] font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--sky-400)]',
-              mode === m
-                ? 'bg-white text-[var(--ink-900)] shadow-sm'
-                : 'text-[var(--ink-500)] hover:text-[var(--ink-900)]',
-            ].join(' ')}
-          >
-            {m === 'login' ? 'Log in' : 'Sign up'}
-          </button>
-        ))}
-      </div>
-
       {/* ── Form ── */}
       <form onSubmit={handleSubmit} noValidate className="space-y-4">
-        {mode === 'signup' && (
-          <Input
-            label="Name"
-            placeholder="Your name"
-            autoComplete="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            onBlur={handleNameBlur}
-            error={nameError}
-          />
-        )}
+        <Input
+          label="Name"
+          placeholder="Your name"
+          autoComplete="name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          onBlur={handleNameBlur}
+          error={nameError}
+        />
         <Input
           label="Email"
           type="email"
           placeholder="you@example.com"
-          autoComplete={mode === 'login' ? 'username' : 'email'}
+          autoComplete="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           onBlur={handleEmailBlur}
@@ -168,8 +111,8 @@ export function AuthCard({ defaultMode = 'login' }: AuthCardProps) {
         <Input
           label="Password"
           type="password"
-          placeholder={mode === 'signup' ? 'At least 8 characters' : '••••••••'}
-          autoComplete={mode === 'login' ? 'current-password' : 'new-password'}
+          placeholder="At least 8 characters"
+          autoComplete="new-password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           onBlur={handlePasswordBlur}
@@ -181,27 +124,9 @@ export function AuthCard({ defaultMode = 'login' }: AuthCardProps) {
             {formError}
           </p>
         )}
-        {resetSent && (
-          <p className="text-[13px] text-[var(--success)] font-medium">
-            Check your inbox — we sent a reset link.
-          </p>
-        )}
-
         <Button type="submit" className="w-full" isLoading={isLoading} loadingText="One moment…">
-          {mode === 'login' ? 'Log in' : 'Create account'}
+          Create account
         </Button>
-
-        {mode === 'login' && (
-          <div className="text-center">
-            <button
-              type="button"
-              onClick={handleForgotPassword}
-              className="text-[13px] text-[var(--blue-700)] hover:text-[var(--blue-600)] underline underline-offset-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--sky-400)] rounded"
-            >
-              Forgot your password?
-            </button>
-          </div>
-        )}
       </form>
 
       {/* ── Divider ── */}

@@ -422,3 +422,32 @@ The official Clothes V4 guide still conflicts about target-photo framing; no liv
 | **Production build** | `npm run build -- --webpack` passed after running outside the restricted Windows process sandbox (the restricted run stopped at `spawn EPERM`). All 45 static pages and API routes compiled. |
 | **Supabase integration** | Not connected in this workspace. Apply `supabase/migrations/002_private_storage.sql` to the project and configure `SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, and server-only `SUPABASE_SECRET_KEY` locally before production use. The Supabase secret posted in chat must be rotated and retired; it was not copied into the project. |
 | **Live YouCam integration** | No provider task was submitted as part of this change. |
+
+## Session Update — 2026-11-01 (Dashboard usability and account details)
+
+### What changed
+
+| Area | Detail |
+|---|---|
+| **Studio category filters** | Category selection now filters the dashboard grid, announces the selected category with `aria-pressed`, and retains a visible keyboard focus ring. |
+| **App theme consistency** | Restored the original white, coral, and red styling across app pages using the existing app theme tokens; the dashboard banner remains intact. |
+| **Login prompts** | Removed the dashboard account creation link and the sidebar sign-in/account action. |
+| **Login route** | Removed the `/login` page and configured a Next.js redirect to `/app`; removed landing-page login buttons and login/password-reset mode from the signup form. |
+| **Guest app access** | Removed the remaining middleware gate that sent guests from `/app` to `/login`, preventing a redirect loop and allowing guest access. |
+| **Sidebar account and usage** | Removed the fixed guest/tier/quota values. The sidebar loads the authenticated profile and current usage endpoint, with loading, unavailable, and guest states. |
+| **Sample imagery** | Hair uses the hair sample; Nails uses the manicure sample; the dashboard hero alt text now accurately describes the existing portrait crop. |
+| **Keyboard and links** | Replaced nested link/button controls with styled links and added visible focus styling to dashboard actions. |
+| **Full Look planner** | Added a visual board of selected items and clarified that it organizes multiple studio previews rather than rendering one combined image. |
+| **Page inspiration sections** | Reduced the repeated section to two page-specific recommendations and tightened its spacing to limit unnecessary scrolling. |
+
+### Verification and remaining items
+
+| Check | Result |
+|---|---|
+| **TypeScript** | `npx tsc --noEmit` passed. |
+| **Diff whitespace** | `git diff --check` passed. |
+| **Login URL** | Confirmed `/login` returns a 307 redirect to `/app`. |
+| **Guest dashboard** | Confirmed `/app` now returns HTTP 200 without a login redirect. |
+| **Production build** | Next.js compilation could not start because Windows returned `spawn EPERM`; this workspace has previously required an unsandboxed build. |
+| **Responsive visual check** | Not completed in this session. |
+| **New dashboard banner image** | Still pending: image generation CLI requires `OPENAI_API_KEY`, which is not configured locally. Existing banner and image were preserved. |

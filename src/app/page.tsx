@@ -152,9 +152,6 @@ function Navbar() {
 
         {/* Desktop right */}
         <div className="hidden md:flex items-center gap-3">
-          <Link href="/login">
-            <Button variant="ghost" size="sm">Log in</Button>
-          </Link>
           <Link href="/try">
             <Button variant="primary" size="sm">Try it free</Button>
           </Link>
@@ -200,9 +197,6 @@ function Navbar() {
             ))}
           </nav>
           <div className="flex flex-col items-center gap-3 w-48">
-            <Link href="/login" className="w-full" onClick={() => setMenuOpen(false)}>
-              <Button variant="secondary" size="lg" className="w-full">Log in</Button>
-            </Link>
             <Link href="/try" className="w-full" onClick={() => setMenuOpen(false)}>
               <Button variant="primary" size="lg" className="w-full">Try it free</Button>
             </Link>

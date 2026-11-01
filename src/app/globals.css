@@ -85,7 +85,7 @@ body {
   background: var(--grad-silk-light);
 }
 
-/* The signed-in app follows the dashboard's white and coral-red identity. */
+/* The signed-in app follows the original pearl, white, and coral dashboard theme. */
 .app-dashboard-theme {
   --blue-700: #d92238;
   --blue-600: #ea384d;
