@@ -1,0 +1,10 @@
+{
+  "status": 200,
+  "data": {
+    "error": null,
+    "results": {
+      "url": "https://yce-us.s3-accelerate.amazonaws.com/ttl30/518460719096673044/123699304689/v2/aeMNNB0KmUIP8rnQ996tC5Q/bcf91478-ba53-4e65-984c-079658400283.zip?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20261029T165507Z&X-Amz-SignedHeaders=host&X-Amz-Expires=7200&X-Amz-Credential=AKIARB77EV5Y5D7DAE3S%2F20261029%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Signature=5f85dcfd9197ce715836c45f07589714ae1a3ab45b58ff8a076e1839d96893b4"
+    },
+    "task_status": "success"
+  }
+}

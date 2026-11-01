@@ -1,0 +1,4 @@
+{"timestamp":"2026-10-30T15:15:34.645Z","route":"/s2s/v2.0/file","status":401,"durationMs":1789,"error":{"status":401,"error":"This API key isn't recognized.","error_code":"InvalidApiKey"}}
+{"timestamp":"2026-10-30T15:24:10.623Z","route":"/s2s/v2.0/file","status":401,"durationMs":2249,"error":{"status":401,"error":"This API key isn't recognized.","error_code":"InvalidApiKey"}}
+{"timestamp":"2026-10-30T16:17:05.685Z","route":"/s2s/v2.0/file","status":401,"durationMs":2112,"error":{"status":401,"error":"This API key isn't recognized.","error_code":"InvalidApiKey"}}
+{"timestamp":"2026-10-30T16:22:10.498Z","route":"/s2s/v2.0/file","status":401,"durationMs":1743,"error":{"status":401,"error":"This API key isn't recognized.","error_code":"InvalidApiKey"}}

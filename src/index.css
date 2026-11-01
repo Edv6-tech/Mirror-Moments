@@ -1,0 +1,19 @@
+/* Accessibility Focus Rings */
+*:focus-visible {
+  outline: 2px solid #818CF8 !important;
+  outline-offset: 2px !important;
+}
+
+/* Ensure minimum touch target sizing */
+button, select, input, a {
+  touch-action: manipulation;
+}
+
+/* Smooth transitions */
+button {
+  transition: transform 0.1s ease, background-color 0.15s ease, opacity 0.15s ease;
+}
+
+button:active {
+  transform: scale(0.98);
+}

@@ -1,0 +1,27 @@
+# Environment and secrets
+.env
+.env.local
+.env.*.local
+
+# Dependencies
+node_modules/
+
+# Production build
+.next/
+out/
+dist/
+build/
+
+# Logs & temp
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.cache/
+.DS_Store
+Thumbs.db
+_trash_review/
+public/uploads/results/
+public/uploads/wardrobe/
+data/private-assets/
+data/wardrobe/items.json
+tsconfig.tsbuildinfo

@@ -1,0 +1,142 @@
+[
+  {
+    "id": "garment_navy_crew",
+    "name": "Classic Midnight Crewneck",
+    "colorFamily": "Cool Blue & Navy",
+    "colorHex": "#1E293B",
+    "category": "Top",
+    "image": "/garments/garment_navy_crew.jpg",
+    "season": "Cool Winter",
+    "stylistNote": "Cool deep tones create a striking, clean contrast that visibly calms facial redness and highlights clear skin."
+  },
+  {
+    "id": "garment_emerald_slip",
+    "name": "Luxe Silk Emerald Slip Dress",
+    "colorFamily": "Jewel Emerald",
+    "colorHex": "#065F46",
+    "category": "Dress",
+    "image": "/garments/garment_emerald_slip.jpg",
+    "season": "Deep Autumn",
+    "stylistNote": "Radiant emerald green enhances golden and olive undertones, providing a dramatic evening silhouette."
+  },
+  {
+    "id": "garment_camel_trench",
+    "name": "Tailored Double-Breasted Camel Trench",
+    "colorFamily": "Warm Camel & Sand",
+    "colorHex": "#C89D66",
+    "category": "Outerwear",
+    "image": "/garments/garment_camel_trench.jpg",
+    "season": "Warm Autumn",
+    "stylistNote": "Refined neutral camel creates a soft, luminous warmth around the jawline and flatters neutral-warm complexions."
+  },
+  {
+    "id": "garment_rose_knit",
+    "name": "Cashmere Rose Quartz Mockneck",
+    "colorFamily": "Soft Rose & Blush",
+    "colorHex": "#E0A899",
+    "category": "Top",
+    "image": "/garments/garment_rose_knit.jpg",
+    "season": "Light Spring",
+    "stylistNote": "Gentle blush and rose quartz tones bring out subtle cheek rosiness and soften high facial contrast."
+  },
+  {
+    "id": "garment_burgundy_blazer",
+    "name": "Velvet Evening Burgundy Blazer",
+    "colorFamily": "Deep Wine & Berry",
+    "colorHex": "#6B1D2F",
+    "category": "Outerwear",
+    "image": "/garments/garment_burgundy_blazer.jpg",
+    "season": "Deep Winter",
+    "stylistNote": "Rich wine undertones give an authoritative, sculpted look that flatters both cool and neutral deep complexions."
+  },
+  {
+    "id": "garment_denim_overshirt",
+    "name": "Vintage Indigo Denim Utility Jacket",
+    "colorFamily": "Classic Indigo",
+    "colorHex": "#3B5998",
+    "category": "Outerwear",
+    "image": "/garments/garment_denim_overshirt.jpg",
+    "season": "True Summer",
+    "stylistNote": "Crisp medium-wash denim gives effortless urban structure while balancing warm surface tones."
+  },
+  {
+    "id": "garment_floral_blouse",
+    "name": "Botanical Floral Silk Chiffon Blouse",
+    "colorFamily": "Pastel Botanical",
+    "colorHex": "#B8A3C7",
+    "category": "Top",
+    "image": "/garments/garment_floral_blouse.jpg",
+    "season": "Soft Summer",
+    "stylistNote": "Airy lavender and botanical motifs add romantic dimension, ideal for bright, delicate undertones."
+  },
+  {
+    "id": "garment_gold_gown",
+    "name": "Gilded Amber Satin Evening Gown",
+    "colorFamily": "Luminous Gold",
+    "colorHex": "#D4AF37",
+    "category": "Dress",
+    "image": "/garments/garment_gold_gown.jpg",
+    "season": "True Autumn",
+    "stylistNote": "Liquid gold shimmer illuminates the décolletage and pairs harmoniously with radiant, nourished skin."
+  },
+  {
+    "id": "garment_leather_biker",
+    "name": "Structured Moto Leather Jacket",
+    "colorFamily": "Obsidian Black",
+    "colorHex": "#18181B",
+    "category": "Outerwear",
+    "image": "/garments/garment_leather_biker.jpg",
+    "season": "Bright Winter",
+    "stylistNote": "High-contrast obsidian black delivers unmatched architectural framing and edge to any facial shape."
+  },
+  {
+    "id": "garment_olive_overshirt",
+    "name": "Earthy Olive Utility Overshirt",
+    "colorFamily": "Olive & Sage Green",
+    "colorHex": "#4D5B43",
+    "category": "Outerwear",
+    "image": "/garments/garment_olive_overshirt.jpg",
+    "season": "Warm Autumn",
+    "stylistNote": "Muted green undertones gently counterbalance surface erythema and enhance natural warmth."
+  },
+  {
+    "id": "garment_white_tee",
+    "name": "Crisp Minimalist Cotton Tee",
+    "colorFamily": "Crisp White & Minimal",
+    "colorHex": "#F8FAFC",
+    "category": "Top",
+    "image": "/garments/garment_white_tee.jpg",
+    "season": "Bright Spring",
+    "stylistNote": "High-reflectance neutral white amplifies facial radiance and pairs effortlessly with any skin profile."
+  },
+  {
+    "id": "garment_terracotta_linen",
+    "name": "Warm Terracotta Linen Shirt",
+    "colorFamily": "Warm Terracotta & Sunset",
+    "colorHex": "#C26247",
+    "category": "Top",
+    "image": "/garments/garment_terracotta_linen.jpg",
+    "season": "True Autumn",
+    "stylistNote": "Rich earthy warmth enhances glowing, well-hydrated skin and deepens golden undertones."
+  },
+  {
+    "id": "garment_sage_sweater",
+    "name": "Sage Ribbed Knit Sweater",
+    "colorFamily": "Olive & Sage Green",
+    "colorHex": "#7A9A80",
+    "category": "Top",
+    "image": "/garments/garment_sage_sweater.jpg",
+    "season": "Soft Autumn",
+    "stylistNote": "Soft pastel sage provides a tranquil, balanced aesthetic for reactive and sensitive profiles."
+  },
+  {
+    "id": "garment_charcoal_jacket",
+    "name": "Modern Charcoal Structured Blazer",
+    "colorFamily": "Crisp White & Minimal",
+    "colorHex": "#334155",
+    "category": "Outerwear",
+    "image": "/garments/garment_charcoal_jacket.jpg",
+    "season": "Cool Winter",
+    "stylistNote": "Deep architectural neutral framing that accentuates structured facial contours."
+  }
+]

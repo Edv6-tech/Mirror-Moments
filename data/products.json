@@ -1,0 +1,82 @@
+[
+  {
+    "id": "prod_barrier_cream",
+    "name": "Barrier Recovery Ceramide Complex",
+    "brand": "Dermacell Lab",
+    "category": "Moisturizer",
+    "isSample": true,
+    "description": "Lipid-replenishing cream formulated with skin-identical ceramides and multi-molecular hyaluronic acid.",
+    "ingredientsText": "Aqua, Glycerin, Ceramide NP, Ceramide AP, Ceramide EOP, Phytosphingosine, Cholesterol, Hyaluronic Acid, Squalane, Dimethicone, Carbomer, Phenoxyethanol",
+    "expectedForDemo": "BUY"
+  },
+  {
+    "id": "prod_astringent_toner",
+    "name": "Pore Tightening Citrus Astringent",
+    "brand": "Botanix Botanica",
+    "category": "Toner",
+    "isSample": true,
+    "description": "High-alcohol purifying toner with concentrated citrus essential oils and menthol.",
+    "ingredientsText": "Aqua, Alcohol Denat., Hamamelis Virginiana (Witch Hazel) Water, Parfum, Limonene, Linalool, Menthol, Citric Acid",
+    "expectedForDemo": "SKIP"
+  },
+  {
+    "id": "prod_botanical_serum",
+    "name": "Wild Orchid Glow Herbal Infusion",
+    "brand": "Verdant Flora",
+    "category": "Facial Oil",
+    "isSample": true,
+    "description": "Artisanal facial serum blended with unrefined rare botanical plant extracts.",
+    "ingredientsText": "Aqua, Glycerin, Tanacetum Annuum Flower Oil, Calophyllum Inophyllum Seed Oil, Silybum Marianum Seed Extract, Tocopherol, Phenoxyethanol",
+    "expectedForDemo": "PATCH-TEST FIRST"
+  },
+  {
+    "id": "prod_conflict_peel",
+    "name": "Resurfacing AHA + Retinol Youth Elixir",
+    "brand": "NovaDerm",
+    "category": "Treatment Serum",
+    "isSample": true,
+    "description": "Aggressive dual active combining exfoliating glycolic acid with high-strength retinol.",
+    "ingredientsText": "Aqua, Glycolic Acid, Retinol, Glycerin, Propanediol, Sodium Hyaluronate, Phenoxyethanol",
+    "expectedForDemo": "SKIP"
+  },
+  {
+    "id": "prod_niacinamide_zinc",
+    "name": "Niacinamide 10% + Zinc PCA 1% Pore Clarifier",
+    "brand": "Clinical Pure",
+    "category": "Serum",
+    "isSample": true,
+    "description": "High-purity vitamin B3 serum designed to minimize pore congestion and regulate sebum.",
+    "ingredientsText": "Aqua, Niacinamide, Zinc PCA, Dimethyl Isosorbide, Hydroxyethylcellulose, Phenoxyethanol",
+    "expectedForDemo": "BUY"
+  },
+  {
+    "id": "prod_vitamin_c_glow",
+    "name": "Pure Vitamin C 15% Brightening Complex",
+    "brand": "Lumina Radiance",
+    "category": "Serum",
+    "isSample": true,
+    "description": "Targeted antioxidant serum for fading hyperpigmentation and under-eye fatigue.",
+    "ingredientsText": "Aqua, Ascorbic Acid, Propanediol, Glycerin, Sodium Hyaluronate, Panthenol, Phenoxyethanol",
+    "expectedForDemo": "BUY"
+  },
+  {
+    "id": "prod_bpo_acne_treatment",
+    "name": "Benzoyl Peroxide 5% Spot Eraser",
+    "brand": "ClearSkin Pro",
+    "category": "Spot Treatment",
+    "isSample": true,
+    "description": "Targeted antibacterial emulsion for acute blemishes.",
+    "ingredientsText": "Aqua, Benzoyl Peroxide, Carbomer, Glycerin, Sodium Hydroxide",
+    "expectedForDemo": "PATCH-TEST FIRST"
+  },
+  {
+    "id": "prod_hydrating_cleanser",
+    "name": "Gentle Barrier Hydrating Cleanser",
+    "brand": "Essential Balance",
+    "category": "Cleanser",
+    "isSample": true,
+    "description": "Non-stripping amino acid cleanser with provitamin B5.",
+    "ingredientsText": "Aqua, Glycerin, Panthenol, Ceramide NP, Squalane, Phenoxyethanol",
+    "expectedForDemo": "BUY"
+  }
+]

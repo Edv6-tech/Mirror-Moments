@@ -1,0 +1,70 @@
+{
+  "version": "1.0.0",
+  "generated_at": "2026-10-28T17:45:00Z",
+  "profiles": {
+    "profile_sensitive": {
+      "skinAge": 26,
+      "skinType": "Sensitive",
+      "topConcerns": [
+        { "key": "redness", "label": "Redness & Sensitivity", "actionTag": "redness", "score": 50, "severity": 50, "severityLevel": "High", "description": "Prone to erythema" },
+        { "key": "moisture", "label": "Moisture Dehydration", "actionTag": "moisture", "score": 65, "severity": 35, "severityLevel": "Moderate", "description": "Compromised barrier" }
+      ]
+    },
+    "profile_dry": {
+      "skinAge": 29,
+      "skinType": "Dry",
+      "topConcerns": [
+        { "key": "moisture", "label": "Moisture Dehydration", "actionTag": "moisture", "score": 48, "severity": 52, "severityLevel": "High", "description": "Severe dryness" },
+        { "key": "texture", "label": "Uneven Texture", "actionTag": "texture", "score": 68, "severity": 32, "severityLevel": "Moderate", "description": "Flaking roughness" }
+      ]
+    },
+    "profile_acne": {
+      "skinAge": 22,
+      "skinType": "Oily",
+      "topConcerns": [
+        { "key": "acne", "label": "Acne & Blemishes", "actionTag": "acne", "score": 45, "severity": 55, "severityLevel": "High", "description": "Active breakouts" },
+        { "key": "oiliness", "label": "Excess Oiliness", "actionTag": "oiliness", "score": 55, "severity": 45, "severityLevel": "Moderate", "description": "High sebum excretion" }
+      ]
+    },
+    "profile_aging_spots": {
+      "skinAge": 38,
+      "skinType": "Normal",
+      "topConcerns": [
+        { "key": "age_spot", "label": "Dark Spots & Pigmentation", "actionTag": "spots", "score": 52, "severity": 48, "severityLevel": "High", "description": "Solar lentigines" },
+        { "key": "wrinkle", "label": "Fine Lines & Wrinkles", "actionTag": "wrinkles", "score": 58, "severity": 42, "severityLevel": "Moderate", "description": "Expression lines" }
+      ]
+    }
+  },
+  "cases": [
+    { "id": "tc_01", "name": "Ceramide Barrier Cream on Dry Skin", "profileId": "profile_dry", "formula": "Aqua, Glycerin, Ceramide NP, Squalane, Hyaluronic Acid, Phenoxyethanol", "expected": "BUY", "category": "good_fit" },
+    { "id": "tc_02", "name": "Ceramide Barrier Cream on Sensitive Skin", "profileId": "profile_sensitive", "formula": "Aqua, Glycerin, Ceramide NP, Squalane, Hyaluronic Acid, Phenoxyethanol", "expected": "BUY", "category": "good_fit" },
+    { "id": "tc_03", "name": "Alcohol Astringent on Sensitive Skin", "profileId": "profile_sensitive", "formula": "Aqua, Alcohol Denat., Parfum, Menthol", "expected": "SKIP", "category": "caution_block" },
+    { "id": "tc_04", "name": "Alcohol Astringent on Dry Skin", "profileId": "profile_dry", "formula": "Aqua, Alcohol Denat., Parfum, Menthol", "expected": "SKIP", "category": "caution_block" },
+    { "id": "tc_05", "name": "Retinoid + AHA Conflict Peel on Sensitive", "profileId": "profile_sensitive", "formula": "Aqua, Glycolic Acid, Retinol, Glycerin", "expected": "SKIP", "category": "conflict" },
+    { "id": "tc_06", "name": "Retinoid + AHA Conflict Peel on Aging", "profileId": "profile_aging_spots", "formula": "Aqua, Glycolic Acid, Retinol, Glycerin", "expected": "SKIP", "category": "conflict" },
+    { "id": "tc_07", "name": "Retinoid + Benzoyl Peroxide on Acne", "profileId": "profile_acne", "formula": "Aqua, Retinol, Benzoyl Peroxide, Glycerin", "expected": "SKIP", "category": "conflict" },
+    { "id": "tc_08", "name": "Salicylic Acid 2% on Acne Skin", "profileId": "profile_acne", "formula": "Aqua, Salicylic Acid, Glycerin, Zinc PCA, Phenoxyethanol", "expected": "BUY", "category": "good_fit" },
+    { "id": "tc_09", "name": "Salicylic Acid on Sensitive Skin", "profileId": "profile_sensitive", "formula": "Aqua, Salicylic Acid, Glycerin, Zinc PCA", "expected": "PATCH-TEST FIRST", "category": "caution_block" },
+    { "id": "tc_10", "name": "Pure Vitamin C 15% on Aging/Spots", "profileId": "profile_aging_spots", "formula": "Aqua, Ascorbic Acid, Propanediol, Tocopherol, Sodium Hyaluronate", "expected": "BUY", "category": "good_fit" },
+    { "id": "tc_11", "name": "Pure Vitamin C on Sensitive Skin", "profileId": "profile_sensitive", "formula": "Aqua, Ascorbic Acid, Propanediol, Tocopherol", "expected": "PATCH-TEST FIRST", "category": "caution_block" },
+    { "id": "tc_12", "name": "Uncataloged Herb Elixir on Dry Skin", "profileId": "profile_dry", "formula": "Aqua, Glycerin, Tanacetum Annuum Oil, RareOrchidExtract", "expected": "PATCH-TEST FIRST", "category": "unknown_cap" },
+    { "id": "tc_13", "name": "Uncataloged Herb Elixir on Acne Skin", "profileId": "profile_acne", "formula": "Aqua, Glycerin, Tanacetum Annuum Oil, RareOrchidExtract", "expected": "PATCH-TEST FIRST", "category": "unknown_cap" },
+    { "id": "tc_14", "name": "Uncataloged Herb Elixir on Sensitive Skin", "profileId": "profile_sensitive", "formula": "Aqua, Glycerin, Tanacetum Annuum Oil, RareOrchidExtract", "expected": "PATCH-TEST FIRST", "category": "unknown_cap" },
+    { "id": "tc_15", "name": "Uncataloged Herb Elixir on Aging Skin", "profileId": "profile_aging_spots", "formula": "Aqua, Glycerin, Tanacetum Annuum Oil, RareOrchidExtract", "expected": "PATCH-TEST FIRST", "category": "unknown_cap" },
+    { "id": "tc_16", "name": "Niacinamide 10% + Zinc on Acne Skin", "profileId": "profile_acne", "formula": "Aqua, Niacinamide, Zinc PCA, Glycerin, Phenoxyethanol", "expected": "BUY", "category": "good_fit" },
+    { "id": "tc_17", "name": "Niacinamide on Sensitive Skin", "profileId": "profile_sensitive", "formula": "Aqua, Niacinamide, Centella Asiatica Extract, Glycerin, Phenoxyethanol", "expected": "BUY", "category": "good_fit" },
+    { "id": "tc_18", "name": "Fragrance Heavy Cream on Sensitive Skin", "profileId": "profile_sensitive", "formula": "Aqua, Glycerin, Parfum, Linalool, Limonene, Geraniol", "expected": "SKIP", "category": "caution_block" },
+    { "id": "tc_19", "name": "Fragrance Heavy Cream on Acne Skin", "profileId": "profile_acne", "formula": "Aqua, Glycerin, Parfum, Linalool, Limonene, Geraniol", "expected": "PATCH-TEST FIRST", "category": "caution_block" },
+    { "id": "tc_20", "name": "Retinol Serum on Aging/Spots Skin", "profileId": "profile_aging_spots", "formula": "Aqua, Retinol, Squalane, Hyaluronic Acid, Tocopherol", "expected": "BUY", "category": "good_fit" },
+    { "id": "tc_21", "name": "Retinol Serum on Sensitive Skin", "profileId": "profile_sensitive", "formula": "Aqua, Retinol, Squalane, Hyaluronic Acid, Tocopherol", "expected": "PATCH-TEST FIRST", "category": "caution_block" },
+    { "id": "tc_22", "name": "Benzoyl Peroxide on Sensitive Skin", "profileId": "profile_sensitive", "formula": "Aqua, Benzoyl Peroxide, Glycerin, Carbomer", "expected": "PATCH-TEST FIRST", "category": "caution_block" },
+    { "id": "tc_23", "name": "Benzoyl Peroxide on Acne Skin", "profileId": "profile_acne", "formula": "Aqua, Benzoyl Peroxide, Glycerin, Carbomer", "expected": "BUY", "category": "good_fit" },
+    { "id": "tc_24", "name": "Centella Asiatica Soother on Sensitive", "profileId": "profile_sensitive", "formula": "Aqua, Centella Asiatica Extract, Madecassoside, Panthenol, Glycerin", "expected": "BUY", "category": "good_fit" },
+    { "id": "tc_25", "name": "Glycolic Acid 10% on Aging Skin", "profileId": "profile_aging_spots", "formula": "Aqua, Glycolic Acid, Glycerin, Panthenol", "expected": "BUY", "category": "good_fit" },
+    { "id": "tc_26", "name": "Glycolic Acid 10% on Sensitive Skin", "profileId": "profile_sensitive", "formula": "Aqua, Glycolic Acid, Glycerin, Panthenol", "expected": "PATCH-TEST FIRST", "category": "caution_block" },
+    { "id": "tc_27", "name": "Multi-Ceramide Cream on Aging Skin", "profileId": "profile_aging_spots", "formula": "Aqua, Ceramide NP, Ceramide AP, Phytosphingosine, Cholesterol, Glycerin", "expected": "PATCH-TEST FIRST", "category": "neutral_fit" },
+    { "id": "tc_28", "name": "Retinoid + BHA Conflict on Acne Skin", "profileId": "profile_acne", "formula": "Aqua, Retinol, Salicylic Acid, Glycerin", "expected": "SKIP", "category": "conflict" },
+    { "id": "tc_29", "name": "Mineral Zinc Oxide Sunscreen on Sensitive", "profileId": "profile_sensitive", "formula": "Aqua, Zinc Oxide, Squalane, Glycerin, Dimethicone", "expected": "BUY", "category": "good_fit" },
+    { "id": "tc_30", "name": "Alpha-Arbutin + Tranexamic on Spots", "profileId": "profile_aging_spots", "formula": "Aqua, Alpha-Arbutin, Tranexamic Acid, Glycerin, Hyaluronic Acid", "expected": "BUY", "category": "good_fit" }
+  ]
+}

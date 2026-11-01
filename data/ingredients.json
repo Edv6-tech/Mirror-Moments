@@ -1,0 +1,1474 @@
+[
+  {
+    "id": "retinol",
+    "inci_name": "Retinol",
+    "aliases": [
+      "vitamin a"
+    ],
+    "category": "retinoid",
+    "tags": {
+      "helps_for": [
+        "wrinkles",
+        "acne",
+        "texture"
+      ],
+      "caution_for": [
+        "redness"
+      ]
+    },
+    "strength_note": "Standard cosmetic retinoid",
+    "source": "CosIng / PubMed 17515510"
+  },
+  {
+    "id": "retinal",
+    "inci_name": "Retinal",
+    "aliases": [
+      "retinaldehyde"
+    ],
+    "category": "retinoid",
+    "tags": {
+      "helps_for": [
+        "wrinkles",
+        "acne"
+      ],
+      "caution_for": [
+        "redness"
+      ]
+    },
+    "strength_note": "Potent 1-step precursor to retinoic acid",
+    "source": "CosIng"
+  },
+  {
+    "id": "tretinoin",
+    "inci_name": "Retinoic Acid",
+    "aliases": [
+      "tretinoin",
+      "all-trans retinoic acid"
+    ],
+    "category": "retinoid",
+    "tags": {
+      "helps_for": [
+        "wrinkles",
+        "acne"
+      ],
+      "caution_for": [
+        "redness"
+      ]
+    },
+    "strength_note": "Prescription-strength active",
+    "source": "FDA / PubMed"
+  },
+  {
+    "id": "hydroxypinacolone_retinoate",
+    "inci_name": "Hydroxypinacolone Retinoate",
+    "aliases": [
+      "granactive retinoid",
+      "hpr"
+    ],
+    "category": "retinoid",
+    "tags": {
+      "helps_for": [
+        "wrinkles"
+      ],
+      "caution_for": [
+        "redness"
+      ]
+    },
+    "strength_note": "Direct-acting retinoid ester with lower irritation",
+    "source": "CosIng"
+  },
+  {
+    "id": "glycolic_acid",
+    "inci_name": "Glycolic Acid",
+    "aliases": [
+      "hydroxyacetic acid"
+    ],
+    "category": "aha",
+    "tags": {
+      "helps_for": [
+        "texture",
+        "spots",
+        "wrinkles"
+      ],
+      "caution_for": [
+        "redness"
+      ]
+    },
+    "strength_note": "Smallest molecular AHA, highest penetration",
+    "source": "CosIng / PubMed 29642579"
+  },
+  {
+    "id": "lactic_acid",
+    "inci_name": "Lactic Acid",
+    "aliases": [
+      "2-hydroxypropanoic acid"
+    ],
+    "category": "aha",
+    "tags": {
+      "helps_for": [
+        "texture",
+        "moisture"
+      ],
+      "caution_for": [
+        "redness"
+      ]
+    },
+    "strength_note": "Mild AHA with inherent humectant properties",
+    "source": "CosIng"
+  },
+  {
+    "id": "mandelic_acid",
+    "inci_name": "Mandelic Acid",
+    "aliases": [
+      "amygdalic acid"
+    ],
+    "category": "aha",
+    "tags": {
+      "helps_for": [
+        "acne",
+        "spots",
+        "texture"
+      ],
+      "caution_for": []
+    },
+    "strength_note": "Large molecular weight AHA, very gentle",
+    "source": "CosIng"
+  },
+  {
+    "id": "malic_acid",
+    "inci_name": "Malic Acid",
+    "aliases": [
+      "apple acid"
+    ],
+    "category": "aha",
+    "tags": {
+      "helps_for": [
+        "texture"
+      ],
+      "caution_for": [
+        "redness"
+      ]
+    },
+    "strength_note": "Intermediate fruit acid",
+    "source": "CosIng"
+  },
+  {
+    "id": "tartaric_acid",
+    "inci_name": "Tartaric Acid",
+    "aliases": [],
+    "category": "aha",
+    "tags": {
+      "helps_for": [
+        "texture"
+      ],
+      "caution_for": [
+        "redness"
+      ]
+    },
+    "strength_note": "Fruit acid pH regulator",
+    "source": "CosIng"
+  },
+  {
+    "id": "citric_acid",
+    "inci_name": "Citric Acid",
+    "aliases": [],
+    "category": "aha",
+    "tags": {
+      "helps_for": [
+        "texture"
+      ],
+      "caution_for": [
+        "redness"
+      ]
+    },
+    "strength_note": "Often used for pH buffering, high % can irritate",
+    "source": "CosIng"
+  },
+  {
+    "id": "salicylic_acid",
+    "inci_name": "Salicylic Acid",
+    "aliases": [
+      "2-hydroxybenzoic acid",
+      "bha"
+    ],
+    "category": "bha",
+    "tags": {
+      "helps_for": [
+        "acne",
+        "oiliness",
+        "texture"
+      ],
+      "caution_for": [
+        "redness"
+      ]
+    },
+    "strength_note": "Oil-soluble keratolytic pore clarifier",
+    "source": "CosIng / PubMed 26341737"
+  },
+  {
+    "id": "betaine_salicylate",
+    "inci_name": "Betaine Salicylate",
+    "aliases": [],
+    "category": "bha",
+    "tags": {
+      "helps_for": [
+        "acne",
+        "oiliness"
+      ],
+      "caution_for": []
+    },
+    "strength_note": "Gentler derivative of salicylic acid",
+    "source": "CosIng"
+  },
+  {
+    "id": "gluconolactone",
+    "inci_name": "Gluconolactone",
+    "aliases": [
+      "pha"
+    ],
+    "category": "pha",
+    "tags": {
+      "helps_for": [
+        "texture",
+        "moisture"
+      ],
+      "caution_for": []
+    },
+    "strength_note": "Gentle polyhydroxy acid barrier protector",
+    "source": "CosIng"
+  },
+  {
+    "id": "lactobionic_acid",
+    "inci_name": "Lactobionic Acid",
+    "aliases": [
+      "pha"
+    ],
+    "category": "pha",
+    "tags": {
+      "helps_for": [
+        "moisture",
+        "texture"
+      ],
+      "caution_for": []
+    },
+    "strength_note": "Antioxidant polyhydroxy acid",
+    "source": "CosIng"
+  },
+  {
+    "id": "ascorbic_acid",
+    "inci_name": "Ascorbic Acid",
+    "aliases": [
+      "l-ascorbic acid",
+      "vitamin c"
+    ],
+    "category": "vitamin_c",
+    "tags": {
+      "helps_for": [
+        "spots",
+        "wrinkles"
+      ],
+      "caution_for": [
+        "redness"
+      ]
+    },
+    "strength_note": "Pure active vitamin C, requires low pH (<3.5)",
+    "source": "CosIng / PubMed 29104718"
+  },
+  {
+    "id": "sodium_ascorbyl_phosphate",
+    "inci_name": "Sodium Ascorbyl Phosphate",
+    "aliases": [
+      "sap"
+    ],
+    "category": "vitamin_c",
+    "tags": {
+      "helps_for": [
+        "spots",
+        "acne"
+      ],
+      "caution_for": []
+    },
+    "strength_note": "Stable water-soluble vitamin C derivative",
+    "source": "CosIng"
+  },
+  {
+    "id": "magnesium_ascorbyl_phosphate",
+    "inci_name": "Magnesium Ascorbyl Phosphate",
+    "aliases": [
+      "map"
+    ],
+    "category": "vitamin_c",
+    "tags": {
+      "helps_for": [
+        "spots"
+      ],
+      "caution_for": []
+    },
+    "strength_note": "Gentle non-acidic vitamin C derivative",
+    "source": "CosIng"
+  },
+  {
+    "id": "tetrahexyldecyl_ascorbate",
+    "inci_name": "Tetrahexyldecyl Ascorbate",
+    "aliases": [
+      "thd ascorbate"
+    ],
+    "category": "vitamin_c",
+    "tags": {
+      "helps_for": [
+        "spots",
+        "wrinkles"
+      ],
+      "caution_for": []
+    },
+    "strength_note": "Lipid-soluble deep penetrating ester",
+    "source": "CosIng"
+  },
+  {
+    "id": "ascorbyl_glucoside",
+    "inci_name": "Ascorbyl Glucoside",
+    "aliases": [],
+    "category": "vitamin_c",
+    "tags": {
+      "helps_for": [
+        "spots"
+      ],
+      "caution_for": []
+    },
+    "strength_note": "Gentle brightening derivative",
+    "source": "CosIng"
+  },
+  {
+    "id": "ethyl_ascorbic_acid",
+    "inci_name": "3-O-Ethyl Ascorbic Acid",
+    "aliases": [
+      "ethyl ascorbic acid"
+    ],
+    "category": "vitamin_c",
+    "tags": {
+      "helps_for": [
+        "spots",
+        "wrinkles"
+      ],
+      "caution_for": []
+    },
+    "strength_note": "High-stability direct-acting ether derivative",
+    "source": "CosIng"
+  },
+  {
+    "id": "niacinamide",
+    "inci_name": "Niacinamide",
+    "aliases": [
+      "nicotinamide",
+      "vitamin b3"
+    ],
+    "category": "niacinamide",
+    "tags": {
+      "helps_for": [
+        "spots",
+        "redness",
+        "oiliness",
+        "texture"
+      ],
+      "caution_for": []
+    },
+    "strength_note": "Multi-pathway barrier fortifier & sebum regulator",
+    "source": "CosIng / PubMed 12100180"
+  },
+  {
+    "id": "panthenol",
+    "inci_name": "Panthenol",
+    "aliases": [
+      "provitamin b5",
+      "d-panthenol"
+    ],
+    "category": "soothing",
+    "tags": {
+      "helps_for": [
+        "redness",
+        "moisture"
+      ],
+      "caution_for": []
+    },
+    "strength_note": "Provitamin humectant and anti-inflammatory",
+    "source": "CosIng"
+  },
+  {
+    "id": "benzoyl_peroxide",
+    "inci_name": "Benzoyl Peroxide",
+    "aliases": [
+      "bpo"
+    ],
+    "category": "benzoyl_peroxide",
+    "tags": {
+      "helps_for": [
+        "acne"
+      ],
+      "caution_for": [
+        "redness",
+        "moisture"
+      ]
+    },
+    "strength_note": "Potent antibacterial, can cause dryness and staining",
+    "source": "FDA / PubMed 19852689"
+  },
+  {
+    "id": "azelaic_acid",
+    "inci_name": "Azelaic Acid",
+    "aliases": [
+      "nonanedioic acid"
+    ],
+    "category": "soothing",
+    "tags": {
+      "helps_for": [
+        "redness",
+        "acne",
+        "spots"
+      ],
+      "caution_for": []
+    },
+    "strength_note": "Dicarboxylic acid, reduces erythema & tyrosinase",
+    "source": "CosIng / PubMed 2528257"
+  },
+  {
+    "id": "zinc_pca",
+    "inci_name": "Zinc PCA",
+    "aliases": [],
+    "category": "oil_control",
+    "tags": {
+      "helps_for": [
+        "oiliness",
+        "acne"
+      ],
+      "caution_for": []
+    },
+    "strength_note": "Astringent zinc salt reducing sebum production",
+    "source": "CosIng"
+  },
+  {
+    "id": "sulfur",
+    "inci_name": "Sulfur",
+    "aliases": [
+      "colloidal sulfur"
+    ],
+    "category": "acne_active",
+    "tags": {
+      "helps_for": [
+        "acne",
+        "oiliness"
+      ],
+      "caution_for": [
+        "redness"
+      ]
+    },
+    "strength_note": "Traditional antimicrobial and keratolytic agent",
+    "source": "CosIng"
+  },
+  {
+    "id": "ceramide_np",
+    "inci_name": "Ceramide NP",
+    "aliases": [
+      "ceramide 3"
+    ],
+    "category": "ceramides",
+    "tags": {
+      "helps_for": [
+        "moisture",
+        "redness"
+      ],
+      "caution_for": []
+    },
+    "strength_note": "Major stratum corneum barrier constituent",
+    "source": "CosIng / PubMed 24656726"
+  },
+  {
+    "id": "ceramide_ap",
+    "inci_name": "Ceramide AP",
+    "aliases": [
+      "ceramide 6 ii"
+    ],
+    "category": "ceramides",
+    "tags": {
+      "helps_for": [
+        "moisture",
+        "redness"
+      ],
+      "caution_for": []
+    },
+    "strength_note": "Epidermal barrier lipid",
+    "source": "CosIng"
+  },
+  {
+    "id": "ceramide_eop",
+    "inci_name": "Ceramide EOP",
+    "aliases": [
+      "ceramide 1"
+    ],
+    "category": "ceramides",
+    "tags": {
+      "helps_for": [
+        "moisture",
+        "redness"
+      ],
+      "caution_for": []
+    },
+    "strength_note": "Long-chain barrier reinforcing ceramide",
+    "source": "CosIng"
+  },
+  {
+    "id": "phytosphingosine",
+    "inci_name": "Phytosphingosine",
+    "aliases": [],
+    "category": "ceramides",
+    "tags": {
+      "helps_for": [
+        "moisture",
+        "acne",
+        "redness"
+      ],
+      "caution_for": []
+    },
+    "strength_note": "Natural lipid precursor with antimicrobial qualities",
+    "source": "CosIng"
+  },
+  {
+    "id": "cholesterol",
+    "inci_name": "Cholesterol",
+    "aliases": [],
+    "category": "barrier",
+    "tags": {
+      "helps_for": [
+        "moisture",
+        "redness"
+      ],
+      "caution_for": []
+    },
+    "strength_note": "Key lipid ratio component (3:1:1:1)",
+    "source": "CosIng"
+  },
+  {
+    "id": "squalane",
+    "inci_name": "Squalane",
+    "aliases": [
+      "plant squalane"
+    ],
+    "category": "emollient",
+    "tags": {
+      "helps_for": [
+        "moisture"
+      ],
+      "caution_for": []
+    },
+    "strength_note": "Non-comedogenic biomimetic emollient",
+    "source": "CosIng"
+  },
+  {
+    "id": "jojoba_oil",
+    "inci_name": "Simmondsia Chinensis (Jojoba) Seed Oil",
+    "aliases": [
+      "jojoba oil"
+    ],
+    "category": "emollient",
+    "tags": {
+      "helps_for": [
+        "moisture"
+      ],
+      "caution_for": []
+    },
+    "strength_note": "Wax ester closely mimicking human sebum",
+    "source": "CosIng"
+  },
+  {
+    "id": "shea_butter",
+    "inci_name": "Butyrospermum Parkii (Shea) Butter",
+    "aliases": [
+      "shea butter"
+    ],
+    "category": "emollient",
+    "tags": {
+      "helps_for": [
+        "moisture"
+      ],
+      "caution_for": []
+    },
+    "strength_note": "Rich occlusive lipid",
+    "source": "CosIng"
+  },
+  {
+    "id": "hyaluronic_acid",
+    "inci_name": "Hyaluronic Acid",
+    "aliases": [
+      "ha"
+    ],
+    "category": "hyaluronic_acid",
+    "tags": {
+      "helps_for": [
+        "moisture",
+        "wrinkles"
+      ],
+      "caution_for": []
+    },
+    "strength_note": "High-weight water binding polymer",
+    "source": "CosIng / PubMed 2346728"
+  },
+  {
+    "id": "sodium_hyaluronate",
+    "inci_name": "Sodium Hyaluronate",
+    "aliases": [],
+    "category": "hyaluronic_acid",
+    "tags": {
+      "helps_for": [
+        "moisture",
+        "wrinkles"
+      ],
+      "caution_for": []
+    },
+    "strength_note": "Salt form of HA with deeper penetration",
+    "source": "CosIng"
+  },
+  {
+    "id": "hydrolyzed_hyaluronic_acid",
+    "inci_name": "Hydrolyzed Hyaluronic Acid",
+    "aliases": [],
+    "category": "hyaluronic_acid",
+    "tags": {
+      "helps_for": [
+        "moisture"
+      ],
+      "caution_for": []
+    },
+    "strength_note": "Low molecular weight HA",
+    "source": "CosIng"
+  },
+  {
+    "id": "glycerin",
+    "inci_name": "Glycerin",
+    "aliases": [
+      "glycerol"
+    ],
+    "category": "humectant",
+    "tags": {
+      "helps_for": [
+        "moisture"
+      ],
+      "caution_for": []
+    },
+    "strength_note": "Gold-standard skin-identical humectant",
+    "source": "CosIng"
+  },
+  {
+    "id": "polyglutamic_acid",
+    "inci_name": "Polyglutamic Acid",
+    "aliases": [
+      "pga"
+    ],
+    "category": "humectant",
+    "tags": {
+      "helps_for": [
+        "moisture"
+      ],
+      "caution_for": []
+    },
+    "strength_note": "High hydration capacity humectant",
+    "source": "CosIng"
+  },
+  {
+    "id": "sodium_pca",
+    "inci_name": "Sodium PCA",
+    "aliases": [],
+    "category": "humectant",
+    "tags": {
+      "helps_for": [
+        "moisture"
+      ],
+      "caution_for": []
+    },
+    "strength_note": "Natural moisturizing factor (NMF) component",
+    "source": "CosIng"
+  },
+  {
+    "id": "urea",
+    "inci_name": "Urea",
+    "aliases": [
+      "carbamide"
+    ],
+    "category": "humectant",
+    "tags": {
+      "helps_for": [
+        "moisture",
+        "texture"
+      ],
+      "caution_for": []
+    },
+    "strength_note": "Keratolytic humectant in NMF",
+    "source": "CosIng"
+  },
+  {
+    "id": "trehalose",
+    "inci_name": "Trehalose",
+    "aliases": [],
+    "category": "humectant",
+    "tags": {
+      "helps_for": [
+        "moisture"
+      ],
+      "caution_for": []
+    },
+    "strength_note": "Osmoprotectant sugar molecule",
+    "source": "CosIng"
+  },
+  {
+    "id": "allantoin",
+    "inci_name": "Allantoin",
+    "aliases": [],
+    "category": "soothing",
+    "tags": {
+      "helps_for": [
+        "redness",
+        "moisture"
+      ],
+      "caution_for": []
+    },
+    "strength_note": "Soothes and stimulates epidermal regeneration",
+    "source": "CosIng"
+  },
+  {
+    "id": "centella_asiatica",
+    "inci_name": "Centella Asiatica Extract",
+    "aliases": [
+      "cica",
+      "gotu kola"
+    ],
+    "category": "soothing",
+    "tags": {
+      "helps_for": [
+        "redness"
+      ],
+      "caution_for": []
+    },
+    "strength_note": "Calms vascular reactivity and micro-inflammation",
+    "source": "CosIng"
+  },
+  {
+    "id": "madecassoside",
+    "inci_name": "Madecassoside",
+    "aliases": [],
+    "category": "soothing",
+    "tags": {
+      "helps_for": [
+        "redness",
+        "wrinkles"
+      ],
+      "caution_for": []
+    },
+    "strength_note": "Purified active triterpene from centella",
+    "source": "CosIng"
+  },
+  {
+    "id": "colloidal_oatmeal",
+    "inci_name": "Avena Sativa (Oat) Kernel Flour",
+    "aliases": [
+      "colloidal oatmeal",
+      "oat extract"
+    ],
+    "category": "soothing",
+    "tags": {
+      "helps_for": [
+        "redness",
+        "moisture"
+      ],
+      "caution_for": []
+    },
+    "strength_note": "FDA approved skin protectant against erythema",
+    "source": "CosIng"
+  },
+  {
+    "id": "bisabolol",
+    "inci_name": "Bisabolol",
+    "aliases": [
+      "alpha-bisabolol"
+    ],
+    "category": "soothing",
+    "tags": {
+      "helps_for": [
+        "redness"
+      ],
+      "caution_for": []
+    },
+    "strength_note": "Chamomile active inhibiting inflammatory cytokines",
+    "source": "CosIng"
+  },
+  {
+    "id": "green_tea_extract",
+    "inci_name": "Camellia Sinensis Leaf Extract",
+    "aliases": [
+      "green tea extract",
+      "egcg"
+    ],
+    "category": "antioxidant",
+    "tags": {
+      "helps_for": [
+        "redness",
+        "oiliness"
+      ],
+      "caution_for": []
+    },
+    "strength_note": "Rich in polyphenols and EGCG",
+    "source": "CosIng"
+  },
+  {
+    "id": "matrixyl_3000",
+    "inci_name": "Palmitoyl Tripeptide-1",
+    "aliases": [
+      "palmitoyl oligopeptide"
+    ],
+    "category": "peptide",
+    "tags": {
+      "helps_for": [
+        "wrinkles"
+      ],
+      "caution_for": []
+    },
+    "strength_note": "Matrikine signal peptide for extracellular matrix",
+    "source": "CosIng"
+  },
+  {
+    "id": "palmitoyl_tetrapeptide_7",
+    "inci_name": "Palmitoyl Tetrapeptide-7",
+    "aliases": [],
+    "category": "peptide",
+    "tags": {
+      "helps_for": [
+        "wrinkles",
+        "redness"
+      ],
+      "caution_for": []
+    },
+    "strength_note": "Suppresses interleukin-6 inflammatory cascades",
+    "source": "CosIng"
+  },
+  {
+    "id": "copper_tripeptide_1",
+    "inci_name": "Copper Tripeptide-1",
+    "aliases": [
+      "ghk-cu"
+    ],
+    "category": "peptide",
+    "tags": {
+      "helps_for": [
+        "wrinkles",
+        "texture"
+      ],
+      "caution_for": []
+    },
+    "strength_note": "Tissue remodeling signaling peptide",
+    "source": "CosIng"
+  },
+  {
+    "id": "argireline",
+    "inci_name": "Acetyl Hexapeptide-8",
+    "aliases": [
+      "argireline"
+    ],
+    "category": "peptide",
+    "tags": {
+      "helps_for": [
+        "wrinkles"
+      ],
+      "caution_for": []
+    },
+    "strength_note": "Targets expression lines via neurotransmitter inhibition",
+    "source": "CosIng"
+  },
+  {
+    "id": "tranexamic_acid",
+    "inci_name": "Tranexamic Acid",
+    "aliases": [
+      "txa"
+    ],
+    "category": "brightener",
+    "tags": {
+      "helps_for": [
+        "spots",
+        "redness"
+      ],
+      "caution_for": []
+    },
+    "strength_note": "Plasmin inhibitor reducing UV-induced melanin synthesis",
+    "source": "CosIng"
+  },
+  {
+    "id": "alpha_arbutin",
+    "inci_name": "Alpha-Arbutin",
+    "aliases": [
+      "arbutin"
+    ],
+    "category": "brightener",
+    "tags": {
+      "helps_for": [
+        "spots"
+      ],
+      "caution_for": []
+    },
+    "strength_note": "Biosynthetic glycosylated hydroquinone derivative",
+    "source": "CosIng"
+  },
+  {
+    "id": "kojic_acid",
+    "inci_name": "Kojic Acid",
+    "aliases": [],
+    "category": "brightener",
+    "tags": {
+      "helps_for": [
+        "spots"
+      ],
+      "caution_for": [
+        "redness"
+      ]
+    },
+    "strength_note": "Chelating tyrosinase inhibitor derived from fungi",
+    "source": "CosIng"
+  },
+  {
+    "id": "licorice_root",
+    "inci_name": "Glycyrrhiza Glabra (Licorice) Root Extract",
+    "aliases": [
+      "licorice extract",
+      "glabridin"
+    ],
+    "category": "brightener",
+    "tags": {
+      "helps_for": [
+        "spots",
+        "redness"
+      ],
+      "caution_for": []
+    },
+    "strength_note": "Rich in glabridin and licochalcone",
+    "source": "CosIng"
+  },
+  {
+    "id": "fragrance",
+    "inci_name": "Parfum",
+    "aliases": [
+      "fragrance",
+      "aroma"
+    ],
+    "category": "fragrance",
+    "tags": {
+      "helps_for": [],
+      "caution_for": [
+        "redness"
+      ]
+    },
+    "strength_note": "Volatile complex allergen blend; frequent cause of contact allergy",
+    "source": "CosIng / SCCS"
+  },
+  {
+    "id": "linalool",
+    "inci_name": "Linalool",
+    "aliases": [],
+    "category": "fragrance",
+    "tags": {
+      "helps_for": [],
+      "caution_for": [
+        "redness"
+      ]
+    },
+    "strength_note": "EU-listed sensitizing fragrance terpene upon auto-oxidation",
+    "source": "CosIng / SCCS"
+  },
+  {
+    "id": "limonene",
+    "inci_name": "Limonene",
+    "aliases": [
+      "d-limonene"
+    ],
+    "category": "fragrance",
+    "tags": {
+      "helps_for": [],
+      "caution_for": [
+        "redness"
+      ]
+    },
+    "strength_note": "Citrus fragrance component with high sensitizing oxidization potential",
+    "source": "CosIng / SCCS"
+  },
+  {
+    "id": "geraniol",
+    "inci_name": "Geraniol",
+    "aliases": [],
+    "category": "fragrance",
+    "tags": {
+      "helps_for": [],
+      "caution_for": [
+        "redness"
+      ]
+    },
+    "strength_note": "Common floral sensitizer",
+    "source": "CosIng"
+  },
+  {
+    "id": "eugenol",
+    "inci_name": "Eugenol",
+    "aliases": [],
+    "category": "fragrance",
+    "tags": {
+      "helps_for": [],
+      "caution_for": [
+        "redness"
+      ]
+    },
+    "strength_note": "Clove aromatic compound and known allergen",
+    "source": "CosIng"
+  },
+  {
+    "id": "alcohol_denat",
+    "inci_name": "Alcohol Denat.",
+    "aliases": [
+      "denatured alcohol",
+      "ethanol",
+      "sd alcohol 40"
+    ],
+    "category": "drying_alcohol",
+    "tags": {
+      "helps_for": [],
+      "caution_for": [
+        "moisture",
+        "redness"
+      ]
+    },
+    "strength_note": "Short-chain solvent; high % strips barrier lipids",
+    "source": "CosIng"
+  },
+  {
+    "id": "isopropyl_alcohol",
+    "inci_name": "Isopropyl Alcohol",
+    "aliases": [
+      "isopropanol"
+    ],
+    "category": "drying_alcohol",
+    "tags": {
+      "helps_for": [],
+      "caution_for": [
+        "moisture",
+        "redness"
+      ]
+    },
+    "strength_note": "Drying volatile solvent",
+    "source": "CosIng"
+  },
+  {
+    "id": "menthol",
+    "inci_name": "Menthol",
+    "aliases": [],
+    "category": "irritant",
+    "tags": {
+      "helps_for": [],
+      "caution_for": [
+        "redness"
+      ]
+    },
+    "strength_note": "TRPM8 cooling sensitizer; can stimulate neurogenic inflammation",
+    "source": "CosIng"
+  },
+  {
+    "id": "witch_hazel",
+    "inci_name": "Hamamelis Virginiana (Witch Hazel) Water",
+    "aliases": [
+      "witch hazel extract"
+    ],
+    "category": "astringent",
+    "tags": {
+      "helps_for": [
+        "oiliness"
+      ],
+      "caution_for": [
+        "redness",
+        "moisture"
+      ]
+    },
+    "strength_note": "Tannin-rich astringent, often distilled with ethanol",
+    "source": "CosIng"
+  },
+  {
+    "id": "lavender_oil",
+    "inci_name": "Lavandula Angustifolia (Lavender) Oil",
+    "aliases": [
+      "lavender oil"
+    ],
+    "category": "essential_oil",
+    "tags": {
+      "helps_for": [],
+      "caution_for": [
+        "redness"
+      ]
+    },
+    "strength_note": "Essential oil containing linalool/linalyl acetate",
+    "source": "CosIng / SCCS"
+  },
+  {
+    "id": "tea_tree_oil",
+    "inci_name": "Melaleuca Alternifolia (Tea Tree) Leaf Oil",
+    "aliases": [
+      "tea tree oil"
+    ],
+    "category": "essential_oil",
+    "tags": {
+      "helps_for": [
+        "acne"
+      ],
+      "caution_for": [
+        "redness"
+      ]
+    },
+    "strength_note": "Antimicrobial terpene-rich oil, potential sensitizer if undiluted",
+    "source": "CosIng"
+  },
+  {
+    "id": "zinc_oxide",
+    "inci_name": "Zinc Oxide",
+    "aliases": [],
+    "category": "sunscreen",
+    "tags": {
+      "helps_for": [
+        "redness",
+        "spots"
+      ],
+      "caution_for": []
+    },
+    "strength_note": "Broad spectrum mineral filter with anti-inflammatory properties",
+    "source": "FDA / CosIng"
+  },
+  {
+    "id": "titanium_dioxide",
+    "inci_name": "Titanium Dioxide",
+    "aliases": [],
+    "category": "sunscreen",
+    "tags": {
+      "helps_for": [
+        "spots"
+      ],
+      "caution_for": []
+    },
+    "strength_note": "Mineral UVB/UVA2 filter",
+    "source": "FDA / CosIng"
+  },
+  {
+    "id": "tinosorb_s",
+    "inci_name": "Bis-Ethylhexyloxyphenol Methoxyphenyl Triazine",
+    "aliases": [
+      "tinosorb s",
+      "bemotrizinol"
+    ],
+    "category": "sunscreen",
+    "tags": {
+      "helps_for": [
+        "spots",
+        "wrinkles"
+      ],
+      "caution_for": []
+    },
+    "strength_note": "High-stability broad-spectrum filter",
+    "source": "CosIng"
+  },
+  {
+    "id": "uvinul_a_plus",
+    "inci_name": "Diethylamino Hydroxybenzoyl Hexyl Benzoate",
+    "aliases": [
+      "uvinul a plus"
+    ],
+    "category": "sunscreen",
+    "tags": {
+      "helps_for": [
+        "spots",
+        "wrinkles"
+      ],
+      "caution_for": []
+    },
+    "strength_note": "Photostable UVA filter",
+    "source": "CosIng"
+  },
+  {
+    "id": "water",
+    "inci_name": "Aqua",
+    "aliases": [
+      "water",
+      "purified water"
+    ],
+    "category": "solvent",
+    "tags": {
+      "helps_for": [],
+      "caution_for": []
+    },
+    "strength_note": "Universal formulation solvent",
+    "source": "CosIng"
+  },
+  {
+    "id": "butylene_glycol",
+    "inci_name": "Butylene Glycol",
+    "aliases": [
+      "1,3-butanediol"
+    ],
+    "category": "solvent",
+    "tags": {
+      "helps_for": [
+        "moisture"
+      ],
+      "caution_for": []
+    },
+    "strength_note": "Mild humectant solvent",
+    "source": "CosIng"
+  },
+  {
+    "id": "propanediol",
+    "inci_name": "Propanediol",
+    "aliases": [
+      "1,3-propanediol"
+    ],
+    "category": "solvent",
+    "tags": {
+      "helps_for": [
+        "moisture"
+      ],
+      "caution_for": []
+    },
+    "strength_note": "Corn-derived gentle humectant solvent",
+    "source": "CosIng"
+  },
+  {
+    "id": "dimethicone",
+    "inci_name": "Dimethicone",
+    "aliases": [
+      "polydimethylsiloxane"
+    ],
+    "category": "silicone",
+    "tags": {
+      "helps_for": [
+        "moisture",
+        "texture"
+      ],
+      "caution_for": []
+    },
+    "strength_note": "Breathable occlusive smoothing polymer",
+    "source": "CosIng"
+  },
+  {
+    "id": "tocopherol",
+    "inci_name": "Tocopherol",
+    "aliases": [
+      "vitamin e"
+    ],
+    "category": "antioxidant",
+    "tags": {
+      "helps_for": [
+        "moisture"
+      ],
+      "caution_for": []
+    },
+    "strength_note": "Lipophilic antioxidant protecting barrier lipids",
+    "source": "CosIng"
+  },
+  {
+    "id": "tocopheryl_acetate",
+    "inci_name": "Tocopheryl Acetate",
+    "aliases": [
+      "vitamin e acetate"
+    ],
+    "category": "antioxidant",
+    "tags": {
+      "helps_for": [
+        "moisture"
+      ],
+      "caution_for": []
+    },
+    "strength_note": "Stable ester form of vitamin E",
+    "source": "CosIng"
+  },
+  {
+    "id": "xanthan_gum",
+    "inci_name": "Xanthan Gum",
+    "aliases": [],
+    "category": "thickener",
+    "tags": {
+      "helps_for": [],
+      "caution_for": []
+    },
+    "strength_note": "Polysaccharide rheology modifier",
+    "source": "CosIng"
+  },
+  {
+    "id": "carbomer",
+    "inci_name": "Carbomer",
+    "aliases": [],
+    "category": "thickener",
+    "tags": {
+      "helps_for": [],
+      "caution_for": []
+    },
+    "strength_note": "Synthetic polymer gelling agent",
+    "source": "CosIng"
+  },
+  {
+    "id": "phenoxyethanol",
+    "inci_name": "Phenoxyethanol",
+    "aliases": [],
+    "category": "preservative",
+    "tags": {
+      "helps_for": [],
+      "caution_for": []
+    },
+    "strength_note": "Standard safe preservative (<1.0% in EU)",
+    "source": "CosIng / SCCS"
+  },
+  {
+    "id": "ethylhexylglycerin",
+    "inci_name": "Ethylhexylglycerin",
+    "aliases": [],
+    "category": "preservative_booster",
+    "tags": {
+      "helps_for": [
+        "moisture"
+      ],
+      "caution_for": []
+    },
+    "strength_note": "Mild conditioning agent and preservative booster",
+    "source": "CosIng"
+  },
+  {
+    "id": "citronellol",
+    "inci_name": "Citronellol",
+    "aliases": [],
+    "category": "fragrance_allergen",
+    "tags": {
+      "helps_for": [],
+      "caution_for": [
+        "redness"
+      ]
+    },
+    "strength_note": "EU Regulated Fragrance Allergen",
+    "source": "EU CosIng"
+  },
+  {
+    "id": "citral",
+    "inci_name": "Citral",
+    "aliases": [
+      "geranial",
+      "neral"
+    ],
+    "category": "fragrance_allergen",
+    "tags": {
+      "helps_for": [],
+      "caution_for": [
+        "redness"
+      ]
+    },
+    "strength_note": "Citrus terpene aldehyde allergen",
+    "source": "EU CosIng"
+  },
+  {
+    "id": "coumarin",
+    "inci_name": "Coumarin",
+    "aliases": [
+      "tonka bean extract"
+    ],
+    "category": "fragrance_allergen",
+    "tags": {
+      "helps_for": [],
+      "caution_for": [
+        "redness"
+      ]
+    },
+    "strength_note": "EU CosIng Regulated Contact Fragrance",
+    "source": "EU CosIng"
+  },
+  {
+    "id": "benzyl_alcohol",
+    "inci_name": "Benzyl Alcohol",
+    "aliases": [],
+    "category": "preservative",
+    "tags": {
+      "helps_for": [],
+      "caution_for": [
+        "redness"
+      ]
+    },
+    "strength_note": "Aromatic preservative & EU allergen",
+    "source": "EU CosIng"
+  },
+  {
+    "id": "cinnamal",
+    "inci_name": "Cinnamal",
+    "aliases": [
+      "cinnamaldehyde"
+    ],
+    "category": "fragrance_allergen",
+    "tags": {
+      "helps_for": [],
+      "caution_for": [
+        "redness"
+      ]
+    },
+    "strength_note": "Potent dermal sensitizer",
+    "source": "EU CosIng"
+  },
+  {
+    "id": "farnesol",
+    "inci_name": "Farnesol",
+    "aliases": [],
+    "category": "fragrance_allergen",
+    "tags": {
+      "helps_for": [],
+      "caution_for": [
+        "redness"
+      ]
+    },
+    "strength_note": "Acyclic sesquiterpene alcohol allergen",
+    "source": "EU CosIng"
+  },
+  {
+    "id": "hydroxycitronellal",
+    "inci_name": "Hydroxycitronellal",
+    "aliases": [],
+    "category": "fragrance_allergen",
+    "tags": {
+      "helps_for": [],
+      "caution_for": [
+        "redness"
+      ]
+    },
+    "strength_note": "Floral odorant with high allergic contact rate",
+    "source": "EU CosIng"
+  },
+  {
+    "id": "isoeugenol",
+    "inci_name": "Isoeugenol",
+    "aliases": [],
+    "category": "fragrance_allergen",
+    "tags": {
+      "helps_for": [],
+      "caution_for": [
+        "redness"
+      ]
+    },
+    "strength_note": "High-potency skin sensitizer",
+    "source": "EU CosIng"
+  },
+  {
+    "id": "oakmoss_extract",
+    "inci_name": "Evernia Prunastri Extract",
+    "aliases": [
+      "oakmoss",
+      "evernia prunastri"
+    ],
+    "category": "fragrance_allergen",
+    "tags": {
+      "helps_for": [],
+      "caution_for": [
+        "redness"
+      ]
+    },
+    "strength_note": "Top contact dermatitis trigger in perfumery",
+    "source": "EU CosIng Annex III"
+  }
+]

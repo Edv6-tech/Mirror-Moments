@@ -1,0 +1,182 @@
+{
+  "concern_rules": [
+    {
+      "id": "rule_retinoid_wrinkles",
+      "ingredient_tag": "retinoid",
+      "concern": "wrinkles",
+      "direction": "helps",
+      "weight": 3,
+      "reason": "Promotes cellular turnover and stimulates collagen synthesis to diminish fine lines.",
+      "citation": "Kafi R, et al. Improvement of naturally aged skin with vitamin A (retinol). Arch Dermatol. 2007."
+    },
+    {
+      "id": "rule_retinoid_acne",
+      "ingredient_tag": "retinoid",
+      "concern": "acne",
+      "direction": "helps",
+      "weight": 2,
+      "reason": "Prevents follicular plugging by accelerating epidermal desquamation.",
+      "citation": "Leyden J, et al. Why Topical Retinoids Are Mainstay of Therapy for Acne. Dermatol Ther. 2017."
+    },
+    {
+      "id": "rule_retinoid_redness_caution",
+      "ingredient_tag": "retinoid",
+      "concern": "redness",
+      "direction": "caution",
+      "weight": -2,
+      "reason": "May induce retinoid dermatitis, escalating erythema and transient barrier irritation.",
+      "citation": "Mukherjee S, et al. Retinoids in the treatment of skin aging. Clin Interv Aging. 2006."
+    },
+    {
+      "id": "rule_aha_texture",
+      "ingredient_tag": "aha",
+      "concern": "texture",
+      "direction": "helps",
+      "weight": 2,
+      "reason": "Cleaves stratum corneum desmosomes to smooth uneven roughness.",
+      "citation": "Tang SC, Yang JH. Dual Effects of Alpha-Hydroxy Acids on the Skin. Molecules. 2018."
+    },
+    {
+      "id": "rule_aha_redness_caution",
+      "ingredient_tag": "aha",
+      "concern": "redness",
+      "direction": "caution",
+      "weight": -2,
+      "reason": "Low pH acids can irritate sensitive capillaries and worsen erythema.",
+      "citation": "Babilas P, et al. Cosmetic and dermatologic use of alpha hydroxy acids. JDDG. 2012."
+    },
+    {
+      "id": "rule_bha_acne",
+      "ingredient_tag": "bha",
+      "concern": "acne",
+      "direction": "helps",
+      "weight": 3,
+      "reason": "Lipophilic salicylic acid penetrates sebum inside pores to dissolve keratin plugs.",
+      "citation": "Arif T. Salicylic acid as a peeling agent: a comprehensive review. Clin Cosmet Investig Dermatol. 2015."
+    },
+    {
+      "id": "rule_bha_oiliness",
+      "ingredient_tag": "bha",
+      "concern": "oiliness",
+      "direction": "helps",
+      "weight": 2,
+      "reason": "Regulates surface sebum accumulation through lipophilic exfoliation.",
+      "citation": "Kligman AM. Salicylic acid: an alternative to alpha-hydroxy acids. J Geriatr Dermatol. 1997."
+    },
+    {
+      "id": "rule_vitaminc_spots",
+      "ingredient_tag": "vitamin_c",
+      "concern": "spots",
+      "direction": "helps",
+      "weight": 3,
+      "reason": "Inhibits tyrosinase activity to impede melanogenesis and fade hyperpigmentation.",
+      "citation": "Al-Niaimi F, Chiang NYZ. Topical Vitamin C and the Skin: Mechanisms of Action and Clinical Applications. JCAD. 2017."
+    },
+    {
+      "id": "rule_niacinamide_spots",
+      "ingredient_tag": "niacinamide",
+      "concern": "spots",
+      "direction": "helps",
+      "weight": 2,
+      "reason": "Suppresses melanosome transfer from melanocytes to surrounding keratinocytes.",
+      "citation": "Hakozaki T, et al. The effect of niacinamide on reducing cutaneous pigmentation. Br J Dermatol. 2002."
+    },
+    {
+      "id": "rule_niacinamide_redness",
+      "ingredient_tag": "niacinamide",
+      "concern": "redness",
+      "direction": "helps",
+      "weight": 2,
+      "reason": "Fortifies ceramide synthesis and reduces cutaneous vascular inflammation.",
+      "citation": "Draelos ZD, et al. Niacinamide-containing facial moisturizer improves skin barrier. Cutis. 2005."
+    },
+    {
+      "id": "rule_hyaluronic_moisture",
+      "ingredient_tag": "hyaluronic_acid",
+      "concern": "moisture",
+      "direction": "helps",
+      "weight": 3,
+      "reason": "Humectant capable of binding up to 1,000 times its molecular weight in water.",
+      "citation": "Papakonstantinou E, et al. Hyaluronic acid: A key molecule in skin aging. Dermatoendocrinol. 2012."
+    },
+    {
+      "id": "rule_ceramides_moisture",
+      "ingredient_tag": "ceramides",
+      "concern": "moisture",
+      "direction": "helps",
+      "weight": 3,
+      "reason": "Replenishes physiological lipid bilayer to prevent transepidermal water loss (TEWL).",
+      "citation": "Meckfessel MH, Brandt S. The structure, function, and importance of ceramides in skin and their use as therapeutic agents in skin-care products. J Am Acad Dermatol. 2014."
+    },
+    {
+      "id": "rule_fragrance_redness_caution",
+      "ingredient_tag": "fragrance",
+      "concern": "redness",
+      "direction": "caution",
+      "weight": -3,
+      "reason": "Common contact allergen that frequently triggers flushing, reactive erythema, or dermatitis.",
+      "citation": "Johansen JD. Fragrance contact allergy: a worldwide issue. Contact Dermatitis. 2003."
+    },
+    {
+      "id": "rule_alcohol_denat_moisture_caution",
+      "ingredient_tag": "drying_alcohol",
+      "concern": "moisture",
+      "direction": "caution",
+      "weight": -2,
+      "reason": "Volatile alcohol strips essential epidermal lipids, worsening dehydration and barrier dryness.",
+      "citation": "Lachenmeier DW. Safety evaluation of topical applications of ethanol on the skin and inside the oral cavity. J Occup Med Toxicol. 2008."
+    },
+    {
+      "id": "rule_benzoyl_peroxide_acne",
+      "ingredient_tag": "benzoyl_peroxide",
+      "concern": "acne",
+      "direction": "helps",
+      "weight": 3,
+      "reason": "Releases free oxygen radicals bactericidal against Cutibacterium acnes.",
+      "citation": "Sagransky M, et al. Benzoyl peroxide: a review of its current use in the treatment of acne vulgaris. Expert Opin Pharmacother. 2009."
+    },
+    {
+      "id": "rule_benzoyl_peroxide_redness_caution",
+      "ingredient_tag": "benzoyl_peroxide",
+      "concern": "redness",
+      "direction": "caution",
+      "weight": -2,
+      "reason": "Potent oxidative mechanism often induces scaling, dryness, and contact erythema.",
+      "citation": "Tanghetti EA, et al. Optimizing the use of benzoyl peroxide in acne vulgaris. J Drugs Dermatol. 2009."
+    }
+  ],
+  "conflict_rules": [
+    {
+      "id": "conflict_retinoid_aha",
+      "tag_a": "retinoid",
+      "tag_b": "aha",
+      "severity": "high",
+      "warning": "Combining Retinoids with Alpha Hydroxy Acids (AHAs) drastically elevates irritation, flaking, and skin barrier compromise.",
+      "recommendation": "Alternate usage between morning and evening, or cycle on separate nights."
+    },
+    {
+      "id": "conflict_retinoid_bha",
+      "tag_a": "retinoid",
+      "tag_b": "bha",
+      "severity": "high",
+      "warning": "Using Retinoids simultaneously with Beta Hydroxy Acids (Salicylic Acid) can lead to excessive dryness and epidermal stinging.",
+      "recommendation": "Use BHA in the morning or on non-retinoid days."
+    },
+    {
+      "id": "conflict_retinoid_benzoyl_peroxide",
+      "tag_a": "retinoid",
+      "tag_b": "benzoyl_peroxide",
+      "severity": "high",
+      "warning": "Benzoyl Peroxide oxidizes and may deactivate classic retinol, while multiplying redness and peeling.",
+      "recommendation": "Apply Benzoyl Peroxide in the AM and Retinoid in the PM."
+    },
+    {
+      "id": "conflict_vitaminc_aha_bha",
+      "tag_a": "vitamin_c",
+      "tag_b": "aha",
+      "severity": "medium",
+      "warning": "Layering Pure L-Ascorbic Acid with exfoliating AHAs can over-acidify the skin mantle, inducing stinging or redness.",
+      "recommendation": "Reserve Vitamin C for morning antioxidant defense and AHA for evening exfoliation."
+    }
+  ]
+}

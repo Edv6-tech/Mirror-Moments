@@ -1,0 +1,1 @@
+{"timestamp":"2026-11-01T09:29:25.159Z","route":"/s2s/v2.0/file","status":401,"durationMs":1748,"error":{"status":401,"error":"This API key isn't recognized.","error_code":"InvalidApiKey"}}
