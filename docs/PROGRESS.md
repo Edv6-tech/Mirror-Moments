@@ -98,7 +98,7 @@
 | **YouCam API live test** | ✅ `POST /s2s/v2.0/file` returned `200` — key is valid and active. |
 | **End-to-end dress try-on** | ✅ Full pipeline tested: file upload → `cloth-v4` task → poll → result saved to `/uploads/results/`. Task ID confirmed. |
 | **Deleted stale routes** | `/api/retouch` and `/api/makeup-tryon` removed (per earlier decision to remove skin diagnostic, face retouch, body trim). |
-| **`.env` confirmed** | API key matches screenshot exactly: `sk-Fnd6W-LBG1oEtq44E-Bk88mKtUAGGmPhPgXztNVyAJxaYAOTHs69n6qq6Rd5h1Vi` |
+| **`.env` confirmed** | YouCam credentials are configured locally in ignored `.env`; credential values are not stored in this document. |
 
 ### Current live API status
 
