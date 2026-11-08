@@ -2,7 +2,8 @@
 
 import React, { useState, useRef } from 'react';
 import Link from 'next/link';
-import { motion, useInView } from 'framer-motion';
+import Image from 'next/image';
+import { motion, useInView, useReducedMotion } from 'framer-motion';
 import {
   Sparkles,
   Menu,
@@ -16,7 +17,6 @@ import {
 import clsx from 'clsx';
 
 import { AuroraBackground, Button, Chip, GlassCard } from '@/components/ui';
-import FX8BeforeAfterSlider from '@/components/effects/FX8BeforeAfterSlider';
 import { FaqAccordion } from '@/components/ui/FaqAccordion';
 
 // ─── Motion helpers ───────────────────────────────────────────────────────────
@@ -46,61 +46,22 @@ function FadeRise({
   );
 }
 
-// ─── SVG placeholders ─────────────────────────────────────────────────────────
-function DressSVG() {
+function HeroSilkArt() {
   return (
-    <svg viewBox="0 0 120 160" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-      <defs>
-        <linearGradient id="dressG" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#3B82F6" stopOpacity="0.5" />
-          <stop offset="100%" stopColor="#1E3FB8" stopOpacity="0.3" />
-        </linearGradient>
-      </defs>
-      <rect width="120" height="160" fill="var(--ice-100)" />
-      <path
-        d="M60 24 C48 24 38 34 36 44 L28 80 C25 92 24 104 28 116 L34 148 L86 148 L92 116 C96 104 95 92 92 80 L84 44 C82 34 72 24 60 24 Z"
-        fill="url(#dressG)"
-        stroke="rgba(37,99,235,0.5)"
-        strokeWidth="1.5"
-      />
-    </svg>
-  );
-}
-
-function PersonSVG() {
-  return (
-    <svg viewBox="0 0 120 160" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-      <rect width="120" height="160" fill="var(--ice-100)" />
-      <circle cx="60" cy="28" r="16" fill="rgba(91,107,140,0.4)" />
-      <path
-        d="M60 44 C44 44 34 56 32 68 L24 108 C22 120 24 132 28 144 L92 144 C96 132 98 120 96 108 L88 68 C86 56 76 44 60 44 Z"
-        fill="rgba(91,107,140,0.3)"
-        stroke="rgba(91,107,140,0.5)"
-        strokeWidth="1.5"
-      />
-    </svg>
-  );
-}
-
-function YouWearingItSVG() {
-  return (
-    <svg viewBox="0 0 120 160" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-      <defs>
-        <linearGradient id="resultG" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="#1E3FB8" stopOpacity="0.85" />
-          <stop offset="100%" stopColor="#38BDF8" stopOpacity="0.6" />
-        </linearGradient>
-      </defs>
-      <rect width="120" height="160" fill="url(#resultG)" />
-      <circle cx="60" cy="28" r="16" fill="rgba(255,255,255,0.5)" />
-      <path
-        d="M60 44 C44 44 34 56 32 68 L24 108 C22 120 24 132 28 144 L92 144 C96 132 98 120 96 108 L88 68 C86 56 76 44 60 44 Z"
-        fill="rgba(255,255,255,0.3)"
-        stroke="rgba(255,255,255,0.6)"
-        strokeWidth="1.5"
-      />
-      <text x="60" y="82" textAnchor="middle" fill="white" fontFamily="sans-serif" fontSize="8" opacity="0.9">✓</text>
-    </svg>
+    <div className="landing-hero-art" aria-hidden="true">
+      <svg className="landing-hero-ribbons" viewBox="0 0 1440 900" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <path className="landing-ribbon-glow" d="M-120 650C170 440 330 805 625 570S1010 155 1550 335" />
+        <path className="landing-ribbon landing-ribbon--one" d="M-120 650C170 440 330 805 625 570S1010 155 1550 335" />
+        <path className="landing-ribbon landing-ribbon--two" d="M-150 285C180 500 340 145 710 350S1110 780 1540 570" />
+        <path className="landing-ribbon-highlight" d="M-150 285C180 500 340 145 710 350S1110 780 1540 570" />
+      </svg>
+      <span className="landing-bubble landing-bubble--one" />
+      <span className="landing-bubble landing-bubble--two" />
+      <span className="landing-bubble landing-bubble--three" />
+      <span className="landing-bubble landing-bubble--four" />
+      <span className="landing-art-spark landing-art-spark--one">✦</span>
+      <span className="landing-art-spark landing-art-spark--two">✧</span>
+    </div>
   );
 }
 
@@ -152,7 +113,7 @@ function Navbar() {
 
         {/* Desktop right */}
         <div className="hidden md:flex items-center gap-3">
-          <Link href="/try">
+          <Link href="/login">
             <Button variant="primary" size="sm">Try it free</Button>
           </Link>
         </div>
@@ -197,7 +158,7 @@ function Navbar() {
             ))}
           </nav>
           <div className="flex flex-col items-center gap-3 w-48">
-            <Link href="/try" className="w-full" onClick={() => setMenuOpen(false)}>
+            <Link href="/login" className="w-full" onClick={() => setMenuOpen(false)}>
               <Button variant="primary" size="lg" className="w-full">Try it free</Button>
             </Link>
           </div>
@@ -209,16 +170,19 @@ function Navbar() {
 
 // ─── Hero floating card ───────────────────────────────────────────────────────
 function HeroCard({
-  step,
+  category,
   label,
-  children,
+  image,
+  alt,
   delay,
 }: {
-  step: string;
+  category: string;
   label: string;
-  children: React.ReactNode;
+  image: string;
+  alt: string;
   delay: number;
 }) {
+  const reduceMotion = useReducedMotion();
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -226,19 +190,19 @@ function HeroCard({
       transition={{ duration: 0.7, delay, ease }}
       style={{
         // Continuous oscillation
-        animation: `floatY${delay * 10 | 0} 4s ease-in-out infinite`,
+        animation: reduceMotion ? 'none' : `floatY${delay * 10 | 0} 4s ease-in-out infinite`,
       }}
     >
       <GlassCard
         variant="light"
         radius="24"
-        className="w-[140px] md:w-[160px] flex flex-col overflow-hidden p-0"
+        className="group w-[140px] md:w-[160px] flex flex-col overflow-hidden p-0"
       >
-        <div className="aspect-[3/4] w-full overflow-hidden bg-[var(--ice-100)]">
-          {children}
+        <div className="relative aspect-[3/4] w-full overflow-hidden bg-[var(--ice-100)]">
+          <Image src={image} alt={alt} fill sizes="(max-width: 768px) 140px, 160px" className="object-cover transition-transform duration-700 group-hover:scale-105 motion-reduce:transition-none" />
         </div>
         <div className="px-3 py-2">
-          <p className="text-[11px] font-semibold text-[var(--blue-700)] uppercase tracking-wider">{step}</p>
+          <p className="text-[11px] font-semibold text-[var(--blue-700)] uppercase tracking-wider">{category}</p>
           <p className="text-[13px] text-[var(--ink-900)] font-semibold leading-snug">{label}</p>
         </div>
       </GlassCard>
@@ -315,7 +279,7 @@ export default function LandingPage() {
   };
 
   return (
-    <>
+    <main className="landing-theme min-h-screen bg-[var(--white)] text-[var(--ink-900)]">
       {/* Keyframes for floating hero cards */}
       <style>{`
         @keyframes floatY0 { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
@@ -330,12 +294,13 @@ export default function LandingPage() {
 
       {/* ── Hero ─────────────────────────────────────────────────── */}
       <AuroraBackground variant="light" className="min-h-screen pt-[72px]">
-        <section className="min-h-[calc(100vh-72px)] flex flex-col items-center justify-center px-4 py-20 text-center relative">
+        <section className="min-h-[calc(100vh-72px)] flex flex-col items-center justify-center px-4 py-20 text-center relative isolate">
+          <HeroSilkArt />
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease }}
-            className="flex flex-col items-center gap-5 max-w-[680px]"
+            className="relative z-10 flex flex-col items-center gap-5 max-w-[680px]"
           >
             <Chip label="Try-on for your next big occasion" variant="ice" icon={<Sparkles size={12} />} />
 
@@ -354,7 +319,7 @@ export default function LandingPage() {
             </p>
 
             <div className="flex flex-col sm:flex-row items-center gap-3 pt-2">
-              <Link href="/try">
+              <Link href="/login">
                 <Button variant="primary" size="lg" leftIcon={<Sparkles size={18} />}>
                   Try a dress now
                 </Button>
@@ -375,27 +340,9 @@ export default function LandingPage() {
 
           {/* Floating step cards */}
           <div className="flex items-end justify-center gap-4 mt-14 flex-wrap">
-            <HeroCard step="Step 1" label="Dress photo" delay={0.3}>
-              <DressSVG />
-            </HeroCard>
-            <HeroCard step="Step 2" label="Dress only" delay={0.5}>
-              <div className="w-full h-full bg-[var(--ice-100)] flex items-center justify-center">
-                <svg viewBox="0 0 120 160" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-                  <rect width="120" height="160" fill="var(--pearl-50)" />
-                  <path
-                    d="M60 36 C44 36 34 48 32 60 L24 100 C22 112 24 124 28 136 L92 136 C96 124 98 112 96 100 L88 60 C86 48 76 36 60 36 Z"
-                    fill="rgba(37,99,235,0.18)"
-                    stroke="rgba(56,189,248,0.8)"
-                    strokeWidth="2"
-                    strokeDasharray="4 2"
-                  />
-                  <text x="60" y="90" textAnchor="middle" fill="#38BDF8" fontFamily="sans-serif" fontSize="8">lifted ✓</text>
-                </svg>
-              </div>
-            </HeroCard>
-            <HeroCard step="Step 3" label="You, wearing it" delay={0.7}>
-              <YouWearingItSVG />
-            </HeroCard>
+            <HeroCard category="Fashion" label="A dress for the moment" image="/garments/garment_emerald_slip.jpg" alt="Model in a flowing red occasion dress" delay={0.3} />
+            <HeroCard category="Accessories" label="The finishing touch" image="/samples/bag-crossbody.jpg" alt="Crossbody bag styling sample" delay={0.5} />
+            <HeroCard category="Beauty" label="A fresh point of view" image="/samples/portrait-eyecolor.jpg" alt="Portrait showing a blue eye colour preview" delay={0.7} />
           </div>
         </section>
       </AuroraBackground>
@@ -438,7 +385,7 @@ export default function LandingPage() {
               className="font-display font-semibold text-[var(--ink-900)]"
               style={{ fontSize: 'clamp(32px, 4vw, 52px)' }}
             >
-              See the difference
+              Style the whole look
             </h2>
             <div className="flex flex-wrap justify-center gap-2">
               {['Wedding guest', 'Evening', 'Everyday'].map((label) => (
@@ -448,17 +395,27 @@ export default function LandingPage() {
           </FadeRise>
 
           <FadeRise delay={0.1}>
-            <FX8BeforeAfterSlider
-              beforeSrc=""
-              afterSrc=""
-              beforeAlt="Dress alone on a mannequin"
-              afterAlt="You wearing the dress"
-              className="max-w-md mx-auto"
-            />
+            <div className="mx-auto grid max-w-4xl gap-4 sm:grid-cols-3">
+              {[
+                { image: '/garments/garment_gold_gown.jpg', alt: 'Model wearing a plum evening gown', title: 'Occasion outfits', detail: 'See how a new silhouette could feel.' },
+                { image: '/samples/earring-gold-drop.jpg', alt: 'Gold drop earrings on a display stand', title: 'Finishing details', detail: 'Bring accessories into the picture.' },
+                { image: '/samples/hair-curly.jpg', alt: 'Curly hairstyle sample', title: 'Beauty changes', detail: 'Explore hair and beauty together.' },
+              ].map((item) => (
+                <article key={item.title} className="group overflow-hidden rounded-[24px] border border-[var(--line)] bg-white shadow-[var(--shadow-soft)] transition-transform duration-300 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:transform-none">
+                  <div className="relative aspect-[4/3] overflow-hidden">
+                    <Image src={item.image} alt={item.alt} fill sizes="(max-width: 640px) 100vw, 33vw" className="object-cover transition-transform duration-700 group-hover:scale-105 motion-reduce:transition-none" />
+                  </div>
+                  <div className="p-5 text-left">
+                    <h3 className="font-display text-2xl text-[var(--ink-900)]">{item.title}</h3>
+                    <p className="mt-1 text-sm text-[var(--ink-500)]">{item.detail}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
           </FadeRise>
 
           <FadeRise delay={0.2} className="flex justify-center">
-            <Link href="/try">
+            <Link href="/login">
               <Button variant="secondary" size="lg" leftIcon={<ArrowRight size={18} />}>
                 Try your own
               </Button>
@@ -501,7 +458,7 @@ export default function LandingPage() {
 
       {/* ── Privacy band ─────────────────────────────────────────── */}
       <section
-        className="py-20 bg-[var(--navy-900)] text-white px-4"
+        className="py-20 bg-[var(--blue-700)] text-white px-4"
         aria-labelledby="privacy-heading"
       >
         <div className="max-w-3xl mx-auto text-center space-y-8">
@@ -581,7 +538,7 @@ export default function LandingPage() {
             </h2>
           </FadeRise>
           <FadeRise delay={0.1}>
-            <Link href="/try">
+            <Link href="/login">
               <Button
                 variant="secondary"
                 size="lg"
@@ -595,7 +552,7 @@ export default function LandingPage() {
       </section>
 
       {/* ── Footer ───────────────────────────────────────────────── */}
-      <footer className="bg-[var(--navy-950)] text-white py-10 px-4">
+      <footer className="bg-[var(--blue-700)] text-white py-10 px-4">
         <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-[13px] text-white/60">
           <div className="flex items-center gap-2">
             <Sparkles size={16} className="text-[var(--sky-400)]" aria-hidden="true" />
@@ -612,6 +569,6 @@ export default function LandingPage() {
           <p>Built with the YouCam API · 2026</p>
         </div>
       </footer>
-    </>
+    </main>
   );
 }

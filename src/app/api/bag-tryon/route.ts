@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { uploadFile, createTask, pollTask, saveResult, isMockMode } from '@/lib/youcam/youcamClient';
+import { uploadFile, createTask, pollTask, saveResult, isMockMode, getResultImageDataUrl } from '@/lib/youcam/youcamClient';
 import { validateImageBuffer } from '@/lib/imageValidation';
 import { rejectOversizedRequest } from '@/lib/requestLimits';
 import { BAG_STYLES } from '@/lib/youcam/bagStyles';
@@ -27,6 +27,7 @@ export async function POST(req: NextRequest) {
     let refMime = 'image/jpeg';
     let gender = 'female';
     let style = 'random';
+    let includeResultImageData = false;
 
     const contentType = req.headers.get('content-type') || '';
 
@@ -34,6 +35,7 @@ export async function POST(req: NextRequest) {
       const formData = await req.formData();
       const personFile = formData.get('personPhoto') as File | null;
       const refFile = formData.get('garmentPhoto') as File | null;
+      includeResultImageData = formData.get('includeResultImageData') === 'true';
       if (formData.get('gender')) gender = formData.get('gender') as string;
       if (formData.get('style')) style = formData.get('style') as string;
 
@@ -49,6 +51,7 @@ export async function POST(req: NextRequest) {
       }
     } else {
       const body = await req.json().catch(() => ({}));
+      includeResultImageData = body.includeResultImageData === true;
       if (body.gender) gender = body.gender;
       if (body.style) style = body.style;
 
@@ -101,9 +104,10 @@ export async function POST(req: NextRequest) {
     });
 
     const pollResult = await pollTask('/s2s/v2.0/task/bag', taskId);
+    const resultImageData = includeResultImageData ? await getResultImageDataUrl(pollResult.url) : undefined;
     const localResultUrl = await saveResult(pollResult.url, 'bag_tryon', { userId: quota.userId, category: 'bag' });
 
-    return NextResponse.json({ ok: true, resultUrl: localResultUrl, taskId });
+    return NextResponse.json({ ok: true, resultUrl: localResultUrl, ...(resultImageData ? { resultImageData } : {}), taskId });
   } catch (err: any) {
     console.error('Bag try-on error:', err);
     const msg = err.message || '';

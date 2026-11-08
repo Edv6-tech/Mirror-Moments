@@ -147,14 +147,22 @@ export async function POST(req: NextRequest) {
     let friendlyMessage = 'Hair try-on failed. Please try a different photo.';
     if (msg.includes('error_no_shoulder')) {
       friendlyMessage = 'Shoulders are not visible. Please use a photo that shows your shoulders.';
+    } else if (msg.includes('error_face_too_small') || msg.includes('face width')) {
+      friendlyMessage = 'Your face is too small or too far away. Use a clear, front-facing photo with your head and shoulders visible.';
+    } else if (msg.includes('error_below_min_image_size')) {
+      friendlyMessage = 'The photo is too small for hair try-on. Choose a higher-resolution image.';
+    } else if (msg.includes('error_exceed_max_image_size')) {
+      friendlyMessage = 'The photo is too large for hair try-on. Please choose a smaller image.';
     } else if (msg.includes('error_large_face_angle')) {
       friendlyMessage = 'Face angle is too large. Please use a front-facing photo.';
+    } else if (msg.includes('error_face_pose')) {
+      friendlyMessage = 'Please use a front-facing photo with your head level.';
     } else if (msg.includes('error_insufficient_landmarks')) {
       friendlyMessage = 'Could not detect face or body landmarks. Please use a clearer, front-facing photo.';
     } else if (msg.includes('error_hair_too_short')) {
       friendlyMessage = 'Hair in the reference photo is too short to transfer. Please try a different reference.';
-    } else if (msg.includes('InvalidAccessToken') || msg.includes('401')) {
-      friendlyMessage = 'Server configuration error. Please contact the admin.';
+    } else if (msg.includes('Server key problem') || msg.includes('InvalidAccessToken') || msg.includes('401')) {
+      friendlyMessage = 'YouCam rejected the server API key. Set an active YOUCAM_API_KEY in the server environment, then restart the app.';
     }
 
     return NextResponse.json(

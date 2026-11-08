@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import {
   ArrowLeft,
@@ -46,12 +46,26 @@ export default function EyeColorPage() {
   const [resultUrl,     setResultUrl]     = useState<string | null>(null);
   const [isMockResult, setIsMockResult] = useState(false);
   const [errorMsg,      setErrorMsg]      = useState<string | null>(null);
+  const [resultImageFailed, setResultImageFailed] = useState(false);
+  const resultPanelRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (state !== 'success') return;
+    const frame = window.requestAnimationFrame(() => {
+      resultPanelRef.current?.scrollIntoView({
+        behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+        block: 'center',
+      });
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, [state]);
 
   const handleSelfieFile = useCallback((file: File) => {
     setSelfieFile(file);
     setSelfieUrl(null);
     setSelfiePreview(URL.createObjectURL(file));
     setResultUrl(null);
+    setResultImageFailed(false);
     setState('idle');
   }, []);
 
@@ -60,6 +74,7 @@ export default function EyeColorPage() {
     setSelfieFile(null);
     setSelfiePreview(url);
     setResultUrl(null);
+    setResultImageFailed(false);
     setState('idle');
   }, []);
 
@@ -68,6 +83,7 @@ export default function EyeColorPage() {
     setSelfieUrl(null);
     setSelfiePreview(null);
     setResultUrl(null);
+    setResultImageFailed(false);
     setErrorMsg(null);
     setState('idle');
   };
@@ -75,6 +91,7 @@ export default function EyeColorPage() {
   const handleApply = async () => {
     setState('loading');
     setErrorMsg(null);
+    setResultImageFailed(false);
 
     try {
       const form = new FormData();
@@ -185,13 +202,19 @@ export default function EyeColorPage() {
               {state === 'loading' ? 'Applying lens…' : 'Apply Lens'}
             </Button>
 
+            {state === 'success' && (
+              <p role="status" className="text-center text-sm font-semibold text-[var(--success)]">
+                Lens applied. Your preview is ready.
+              </p>
+            )}
+
             {state === 'error' && errorMsg && (
               <div role="alert" className="p-4 rounded-2xl border border-[var(--danger)]/30 text-sm text-[var(--danger)]" style={{ background: 'rgba(229,72,77,0.1)' }}>{errorMsg}</div>
             )}
           </div>
 
           {/* ── Result ── */}
-          <div className="space-y-4">
+          <div ref={resultPanelRef} className="space-y-4 scroll-mt-8">
             {state === 'loading' && (
               <div className="rounded-3xl overflow-hidden aspect-[3/4] bg-[var(--navy-950)] flex items-center justify-center">
                 <FX5WeavingLoader personUrl={selfiePreview ?? undefined} />
@@ -203,9 +226,19 @@ export default function EyeColorPage() {
               <FX6CurtainReveal>
                 <div className="rounded-3xl overflow-hidden aspect-[3/4]">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={resultUrl} alt="Eye color lens try-on result" className="w-full h-full object-cover" />
+                  <img
+                    src={resultUrl}
+                    alt="Eye color lens try-on result"
+                    className="w-full h-full object-cover"
+                    onError={() => setResultImageFailed(true)}
+                  />
                 </div>
               </FX6CurtainReveal>
+              {resultImageFailed && (
+                <p role="alert" className="rounded-xl border border-[var(--danger)]/30 bg-[var(--danger)]/10 p-3 text-sm text-[var(--danger)]">
+                  The lens was applied, but its preview image could not be loaded. You can try again or download the result.
+                </p>
+              )}
               </div>
             )}
             {(state === 'idle' || state === 'error') && (

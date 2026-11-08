@@ -114,8 +114,8 @@ export async function POST(req: NextRequest) {
       friendlyMessage = 'No face detected. Please use a photo with your face visible.';
     } else if (msg.includes('invalid_parameter')) {
       friendlyMessage = 'Invalid gender or style. Please try again.';
-    } else if (msg.includes('InvalidAccessToken') || msg.includes('401')) {
-      friendlyMessage = 'Server configuration error. Please contact the admin.';
+    } else if (msg.includes('Server key problem') || msg.includes('InvalidAccessToken') || msg.includes('401')) {
+      friendlyMessage = 'YouCam rejected the server API key. Update YOUCAM_API_KEY in the server environment and restart the app.';
     }
     return NextResponse.json({ ok: false, message: friendlyMessage }, { status: 500 });
   }

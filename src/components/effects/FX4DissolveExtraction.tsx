@@ -6,12 +6,14 @@ import { motion } from 'framer-motion';
 export interface FX4DissolveExtractionProps {
   originalSrc: string;
   liftedSrc?: string;
+  originalFallback?: boolean;
   onComplete?: () => void;
 }
 
 export default function FX4DissolveExtraction({
   originalSrc,
   liftedSrc,
+  originalFallback = false,
   onComplete,
 }: FX4DissolveExtractionProps) {
   const [stage, setStage] = useState<'scanning' | 'lifted'>('scanning');
@@ -83,7 +85,7 @@ export default function FX4DissolveExtraction({
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={liftedSrc || originalSrc}
-              alt="Isolated dress"
+              alt={originalFallback ? 'Original shoe product photo' : 'Isolated garment'}
               className="max-w-full max-h-full object-contain drop-shadow-[0_10px_25px_rgba(56,189,248,0.4)]"
             />
           </motion.div>
@@ -93,7 +95,7 @@ export default function FX4DissolveExtraction({
       {/* Caption under pedestal */}
       <div className="mt-4 text-center">
         <span className="text-xs font-semibold tracking-wider uppercase text-[var(--sky-400)]">
-          {stage === 'scanning' ? 'Dissolving background…' : 'Isolated garment ready'}
+          {stage === 'scanning' ? 'Dissolving background…' : originalFallback ? 'Original photo ready' : 'Isolated garment ready'}
         </span>
       </div>
     </div>

@@ -15,7 +15,7 @@
 | Stage 0 | Accounts, keys and test photos | Completed | Verified keys, 6 test photos in `data/`, BUILD_GUIDE stored |
 | Stage 1 | Scaffold, design tokens and core components | Completed | Next.js 16 App Router, TypeScript strict, Cormorant Garamond & Manrope, 10 UI components in `/dev/kit` |
 | Stage 2 | Landing page (`/`) | Completed | Silk Aurora background, hero, How It Works, FX-8 before/after slider, features, FAQ accordion, footer |
-| Stage 3 | Supabase, authentication and guest mode | Completed | RLS migrations, SSR client/server/middleware, split `/login` and `/signup` auth pages |
+| Stage 3 | SQLite authentication and guest mode | In Progress | Local email/password accounts, hashed credentials, opaque secure sessions; cloud-data migration 003 still needs applying |
 | Stage 4 | App shell and Dashboard (`/app`) | Completed | Responsive 264px navy sidebar + mobile bottom nav, stats, AI beauty & fashion suite, recent looks, wardrobe preview, rotating tips |
 | Stage 5 | Dress lifter engine (Web Worker) | Completed | Transformers.js SegFormer clothes model, mask extraction, `/dev/lifter` testbench |
 | Stage 6 | YouCam server routes | Completed | `/api/tryon/start`, `/api/tryon/status`, `/api/usage` with server-side API key protection and sample mode |
@@ -451,3 +451,305 @@ The official Clothes V4 guide still conflicts about target-photo framing; no liv
 | **Production build** | Next.js compilation could not start because Windows returned `spawn EPERM`; this workspace has previously required an unsandboxed build. |
 | **Responsive visual check** | Not completed in this session. |
 | **New dashboard banner image** | Still pending: image generation CLI requires `OPENAI_API_KEY`, which is not configured locally. Existing banner and image were preserved. |
+
+## Session Update — 2026-11-01 (Studio preview clarity)
+
+### What changed
+
+| Area | Detail |
+|---|---|
+| **Item preview framing** | Added a tightly cropped display-only preview using the segmentation mask bounds. Original full-resolution source, transparent, and white-background images remain unchanged for private storage and YouCam requests. |
+| **Side-by-side preview** | Added clear labels for the selected item and user photo, stronger card framing, and a directional connector. |
+
+### Verification
+
+| Check | Result |
+|---|---|
+| **TypeScript** | Passed. |
+| **Diff whitespace** | Passed. |
+
+## Session Update — 2026-11-02 (Quota errors and studio framing)
+
+### What changed
+
+| Area | Detail |
+|---|---|
+| **Supabase endpoint** | Corrected the ignored local `.env` project URL from the Supabase Dashboard URL to the project's API URL; set the matching public URL for browser-side Supabase Auth. No credentials were added to source control. |
+| **Local development quota** | When the Supabase quota schema is missing in development, usage now falls back to a process-local daily counter. Production still fails with an instruction to apply the database migrations. |
+| **Preview framing** | The user's full photo now uses `object-contain` so the head and feet aren't cropped. The item lifter keeps the dominant horizontal garment cluster when a reference contains multiple separate subjects; shoe pairs remain intact. |
+
+### Verification and deployment requirement
+
+| Check | Result |
+|---|---|
+| **Usage endpoint** | `GET /api/usage` returned HTTP 200 and the local guest quota after correcting the project URL. |
+| **TypeScript** | `npx tsc --noEmit` passed. |
+| **Production quota persistence** | Apply `supabase/migrations/001_initial.sql` and `supabase/migrations/002_private_storage.sql` in the Supabase SQL editor. The development fallback is not shared across server instances and is not suitable for production. |
+
+## Session Update — 2026-11-02 (Single-item garment extraction)
+
+### What changed
+
+| Area | Detail |
+|---|---|
+| **Repeated garment views** | Replaced the horizontal-only component grouping with a two-dimensional proximity check around the largest garment region. This prevents separate repeated poses on a reference sheet from all being retained just because they share a horizontal row. Nearby fragments of the primary garment remain. |
+| **Mask alignment and source fidelity** | Fixed extraction to read the segmentation model's single-channel mask correctly and align it to source dimensions. The previous four-channel assumption sampled the wrong mask pixels, distorting the cutout. Original image RGB pixels are preserved; only the corrected mask is applied. |
+| **Try-on reference fidelity** | Dress, shoe, and bag requests now send the untouched selected reference photo to YouCam. The segmented white-background image remains for the local preview and wardrobe save, but is no longer used as the API reference where it can remove product details. |
+| **Cutout edge quality** | Added a subtle 5×5 Gaussian alpha feather to reduce pixel stair-steps around the isolated item while preserving opaque interior pixels and original image color. |
+
+### Verification
+
+| Check | Result |
+|---|---|
+| **TypeScript** | `npx tsc --noEmit` passed. |
+| **Diff whitespace** | `git diff --check` passed. |
+| **Try-on visual fidelity** | Needs a fresh YouCam try-on to confirm the provider output with the untouched garment reference. |
+
+## Session Update — 2026-11-02 (Low-resolution makeup photos)
+
+### What changed
+
+| Area | Detail |
+|---|---|
+| **Makeup input sizing** | Uploaded photos are cropped using the chosen zoom and smoothly resized to a 1024-pixel longest side before upload. Tall photos focus on the upper body to help small faces meet YouCam Makeup VTO's minimum face-width requirement; the original upload remains unchanged. |
+| **Makeup photo guidance and zoom** | Replaced technical-only upload wording with plain-language photo guidance and added an accessible zoom slider. The selected zoom/crop is what Makeup VTO receives, while full-body previews remain available in Dress and Bag studios. |
+| **Full Look expectations** | Clarified that Full Look currently organizes separate studio previews and does not merge them into one composite image. |
+
+### Verification
+
+| Check | Result |
+|---|---|
+| **TypeScript** | `npx tsc --noEmit` passed. |
+| **Diff whitespace** | `git diff --check` passed. |
+
+## Session Update — 2026-11-02 (Photo framing and multi-look guidance)
+
+### What changed
+
+| Area | Detail |
+|---|---|
+| **Makeup photo instructions** | Replaced technical dimension jargon with plain-language face framing guidance and file size/format requirements. |
+| **Face zoom control** | Added an accessible zoom slider. The selected face-focused crop is sent to Makeup VTO; the original photo remains untouched. |
+| **Full Look scope** | Clarified that selected items currently open separate studios and produce separate previews rather than a single merged image. |
+
+### Verification
+
+| Check | Result |
+|---|---|
+| **TypeScript** | `npx tsc --noEmit` passed. |
+| **Diff whitespace** | `git diff --check` passed. |
+
+## Session Update — 2026-11-02 (Combined Full Look workflow)
+
+### What changed
+
+| Area | Detail |
+|---|---|
+| **One-photo workflow** | Full Look now accepts one full-body photo, lets the user choose Dress, Bag, and/or Makeup, and supports sample or custom dress/bag references. |
+| **Sequential YouCam tasks** | The page runs the selected API stages in order. Bag and makeup operate on focused crops of the current result, then those images are softly blended back, preserving earlier selected changes. |
+| **Progress and cost clarity** | Added per-stage progress, empty/loading/success/error states, a combined-image download, a quota precheck before any paid stage begins, and a note that each selected category uses one app quota plus provider API units. |
+| **Safe image handoff** | Existing server routes only return compositing image data when the combined-look flow explicitly requests it; result downloads are server-side and restricted to YouCam's S3 result hosts. API credentials remain server-only. |
+| **Other studios** | Kept hair, eye colour, jewelry, and nail studios accessible from the Full Look page. |
+
+### Verification and limits
+
+| Check | Result |
+|---|---|
+| **TypeScript** | `npx tsc --noEmit` passed. |
+| **Diff whitespace** | `git diff --check` passed. |
+| **Live YouCam composite** | Not run; verifying it would submit chargeable YouCam tasks and consume the selected quota. The page runs that work only after the user chooses Create Combined Look. |
+| **Combined categories** | Dress, bag, and makeup are composited. Other studios remain individually available and are not yet part of the composite workflow. |
+
+## Session Update — 2026-11-02 (PNG support in Hair Studio)
+
+### What changed
+
+| Area | Detail |
+|---|---|
+| **Hair photo uploads** | Hair Studio now accepts PNG and JPEG for both the user's photo and hairstyle reference. The browser converts each to a high-quality JPEG capped at 1024 px before YouCam requests and before saving a hair reference, matching the provider's JPEG input requirement. |
+| **Upload guidance** | Hair photo labels now say JPG or PNG, matching what the page accepts. |
+
+### Verification
+
+| Check | Result |
+|---|---|
+| **TypeScript** | `npx tsc --noEmit` passed. |
+| **Diff whitespace** | `git diff --check` passed. |
+
+## Session Update — 2026-11-02 (Earring VTO InvalidParameters)
+
+### What changed
+
+| Area | Detail |
+|---|---|
+| **Earring task payload** | Added the required `source_info` and `object_infos` metadata, pairing each with the already selected source and reference file ID or URL. Enabled the documented automatic earring background removal parameter. |
+| **Root cause** | The route sent only `src_file_*` and `ref_file_*` selectors. The official Earring VTO schema also requires source and object metadata, which explains YouCam's `InvalidParameters` response. |
+
+### Verification and limits
+
+| Check | Result |
+|---|---|
+| **Official schema** | Confirmed required fields against Perfect Corp's Earring VTO OpenAPI schema. |
+| **Live YouCam task** | Not submitted; it consumes provider units. Confirm with a normal earring try-on when ready. |
+
+## Session Update — 2026-11-02 (Earring image clarity)
+
+### What changed
+
+| Area | Detail |
+|---|---|
+| **Try-on result preview** | Removed the fixed portrait crop so landscape and close-up results retain their full frame and natural proportions inside the available preview space. |
+| **Sample selection** | Enlarged product detail in the earring sample tiles while keeping the original full-resolution product images as the API references. |
+
+### Verification
+
+| Check | Result |
+|---|---|
+| **Diff whitespace** | `git diff --check` passed. |
+
+## Session Update — 2026-11-02 (Makeup VTO invalid_parameter)
+
+### What changed
+
+| Area | Detail |
+|---|---|
+| **Makeup effect payloads** | Removed `shimmerDensity` and `shimmerSize` from eyeliner and eyeshadow palettes; those fields are not part of the official Makeup VTO effect schema for those categories. Highlighter shimmer controls remain, where they are supported. |
+| **Engine error detail** | The Makeup error now includes YouCam's `error_message` when the task response provides one, to make future failures actionable. |
+
+### Verification and limits
+
+| Check | Result |
+|---|---|
+| **Official API schema** | Compared the affected effect properties with Perfect Corp's Makeup VTO v1.0 schema. |
+| **Live Makeup task** | Not submitted; the user can retry the corrected look in the app. |
+
+## Session Update — 2026-11-02 (Makeup gloss palette validation)
+
+| Area | Detail |
+|---|---|
+| **Gloss palettes** | Added the engine-required `transparencyIntensity` value to every gloss lipstick palette in Makeup Studio and the Full Look builder. |
+| **Error source** | The live provider response identified the exact missing value: `effects.lip_color.palettes[0].transparencyIntensity`. |
+| **Verification** | Checked every gloss lipstick effect in `src` and ran `git diff --check`; did not submit another provider task. |
+
+## Session Update — 2026-11-02 (Makeup preview sharpness)
+
+| Area | Detail |
+|---|---|
+| **Source detail** | The Makeup crop no longer upscales every selected image to 1024 px; it keeps the captured pixels and only downsizes to fit YouCam's documented limits (width under 1920 px and height under 1080 px). |
+| **Skin smoothing** | Lowered skin-smooth strength in all makeup looks, including Full Look's makeup stage, to reduce the airbrushed/soft appearance while keeping the effect available. |
+| **Result display** | The result stays inside the preview frame without forced filling/cropping or enlargement, so its native sharpness is preserved as much as the display size allows. |
+| **Verification** | Compared the input dimension caps with Perfect Corp's Makeup VTO docs and ran `git diff --check`; no paid live task submitted. |
+
+## Session Update — 2026-11-02 (Makeup minimum crop dimensions)
+
+| Area | Detail |
+|---|---|
+| **Minimum image size** | Makeup photo preparation now keeps a squarer crop and scales it up only as much as necessary when its shorter side would be below YouCam's runtime-reported 320 px minimum. It still stays within the documented 1919 px width / 1079 px height caps. |
+| **Upload guidance** | The page now asks for an image at least 320 × 320 px for a crisp result. |
+| **Verification** | Ran `git diff --check`; no live YouCam task submitted. |
+
+## Session Update — 2026-11-02 (Makeup look gallery expansion)
+
+| Area | Detail |
+|---|---|
+| **New looks** | Added Soft Glam, Rosewater, and After Hours with distinct blush, eyeshadow, lip, and lash combinations. Effect values reuse supported Makeup VTO v1.0 categories, palettes, and catalog pattern labels. |
+| **Gallery visuals** | Enlarged the inspiration image area, added finish tags and selection indicators, and clarified the range of looks and total count. |
+| **Verification** | Ran `git diff --check` and loaded the Makeup page; no provider task submitted. |
+
+## Session Update — 2026-11-02 (Email and password sign-in)
+
+### What changed
+
+| Area | Detail |
+|---|---|
+| **Sign-in page** | Added `/login` with the existing Mirror Moment blue-and-white visual system and responsive layout. |
+| **Authentication method** | At the time of this update, sign-in used email and password through Supabase `signInWithPassword`; superseded by the SQLite account update below. |
+| **Feedback and accessibility** | Added required labeled fields, password visibility control via the shared input, loading feedback, inline authentication/network errors, and an accessible success announcement. |
+
+### Verification and limits
+
+| Check | Result |
+|---|---|
+| **Page response** | `GET /login` returned HTTP 200 from the local development server. |
+| **Auth credentials** | No sign-in was attempted; it requires user credentials. |
+
+## Session Update — 2026-11-02 (SQLite email and password accounts)
+
+### What changed
+
+| Area | Detail |
+|---|---|
+| **Local accounts** | Sign-up and sign-in now use SQLite at `data/mirror-moment.sqlite` by default, configurable with `SQLITE_DB_PATH`. Passwords are stored as scrypt hashes with per-account salts; sessions use random opaque tokens stored hashed in SQLite and an HTTP-only SameSite cookie. |
+| **Account pages** | Replaced the OAuth signup card with email/password signup, connected `/login` to the SQLite session API, and added sign-out in Settings. |
+| **Account-aware routes** | Profile preferences are stored in SQLite. Quota identity and private asset ownership come from the SQLite session. Supabase remains a server-only store for try-on records and private cloud assets; service-role queries explicitly filter by the SQLite account ID. |
+| **Database compatibility** | Added `supabase/migrations/003_sqlite_auth_user_ids.sql` to remove Auth-only foreign keys so SQLite account UUIDs can own existing Supabase rows. Existing Supabase Auth accounts do not automatically migrate into SQLite. |
+| **Runtime and privacy** | Requires Node.js 24.14 or newer for built-in `node:sqlite`; local credential files and private local photos are git-ignored. |
+
+### Verification and limits
+
+| Check | Result |
+|---|---|
+| **Production database migration** | Not applied remotely. Apply migration 003 in the Supabase SQL editor before signed-in users save cloud wardrobe, hair, or look records. |
+| **Persistent deployment storage** | SQLite file must live on a persistent disk. Serverless/ephemeral filesystems can lose accounts when instances are replaced; configure `SQLITE_DB_PATH` to a durable mounted volume before deployment. |
+| **TypeScript and routes** | `npx tsc --noEmit` passed; `/login` and `/signup` returned HTTP 200, and auth API routes compiled and correctly rejected GET with HTTP 405. |
+| **Credential flow** | No account was created and no sign-in was attempted. |
+
+## Session Update — 2026-11-02 (Full Look bag crop clarity)
+
+### What changed
+
+| Area | Detail |
+|---|---|
+| **Bag person framing** | Tightened the Full Look bag input to a centered head-to-waist 3:4 crop, while retaining the normalized crop coordinates for compositing the result back into the matching region. |
+| **Visible crop preview** | Full Look now displays the actual person crop sent to Bag VTO before the task runs; after a selected dress stage, this preview refreshes to the post-dress image crop used for the bag request. |
+| **Reference guidance** | Added instructions for custom bag references: one unobstructed bag should occupy at least a quarter of the image height; YouCam performs product/background recognition on the reference. |
+| **Similar crop paths reviewed** | Makeup uses its own face crop and matching normalized blend region after bag; dress remains full-body. Bag and makeup are applied in the same stage order used by the final composite. |
+
+### Verification
+
+| Check | Result |
+|---|---|
+| **Bag API observation** | The latest development server log showed `/api/bag-tryon` returning HTTP 200; the request reached a successful response, so the reported issue was in crop visibility/framing rather than task creation. |
+| **TypeScript and page** | `npx tsc --noEmit` passed; `/app/full-look` returned HTTP 200. |
+| **Provider task** | No additional YouCam task submitted. |
+
+## Session Update — 2026-11-02 (Landing → sign-in → dashboard flow)
+
+| Area | Detail |
+|---|---|
+| **Landing calls to action** | The landing page's “Try it free” buttons now open `/login`. |
+| **Dashboard access** | `/app` and its nested pages now require a valid SQLite account session and redirect signed-out visitors to `/login`. |
+| **Existing sessions** | Signed-in users who open `/login` or `/signup` are sent directly to `/app`; new users can create an account from the sign-in page and continue to the dashboard. |
+| **Verification** | Reviewed landing links, session lookup, and server-side route guard. No credentials were used and no test suite was run. |
+
+## Session Update — 2026-11-02 (Landing page photography)
+
+| Area | Detail |
+|---|---|
+| **Hero cards** | Replaced the colored SVG placeholders with local fashion, bag, and beauty photos already in the public asset library. |
+| **Style gallery** | Replaced the illustrated before/after boxes with three real image cards for occasion outfits, accessories, and beauty. The captions now describe style categories rather than implying a generated before/after result. |
+| **Theme and assets** | Preserved the existing blue-and-white palette and used local images through Next Image. |
+| **Reduced motion** | Disabled floating and hover movement when the device requests reduced motion. |
+| **Verification** | Confirmed image paths exist and reviewed the landing page component. No test suite was run. |
+
+## Session Update — 2026-11-02 (Landing try buttons enter sign-in flow)
+
+| Area | Detail |
+|---|---|
+| **Landing CTAs** | Changed “Try a dress now” and “Try your own” to route through `/login`, matching the requested landing → sign-in → dashboard flow. |
+| **Verification** | Confirmed all landing-page try CTAs now point to `/login`. No test suite was run. |
+
+## Session Update — 2026-11-02 (Keep sign-in route reachable)
+
+| Area | Detail |
+|---|---|
+| **Auth-page routing** | Removed automatic redirects from `/login` and `/signup`. The dashboard still redirects signed-out visitors to `/login`, while users can now always reach the email/password form. |
+| **Cause** | `/login` redirected to `/app` while the dashboard guard redirected back to `/login`; a `next.config.mjs` redirect was keeping that loop active. |
+| **Verification** | Removed the configured redirect and confirmed the loop in local HTTP responses before the change. |
+
+## Session Update — 2026-11-02 (Login red-and-white theme)
+
+| Area | Detail |
+|---|---|
+| **Login palette** | Applied the dashboard theme scope to the login page so its blue accents and aurora become the existing coral-red and white palette without changing shared tokens globally. |
+| **Verification** | Confirmed the login route responds after the auth redirect fix. No test suite was run. |

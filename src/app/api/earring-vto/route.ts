@@ -155,9 +155,24 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ ok: false, message: 'An earring image (file or URL) is required.' }, { status: 400 });
     }
 
+    // The Earring VTO schema requires both the file selectors and the
+    // corresponding source/object metadata. Other 2D VTO routes accept only
+    // the selectors, but the earring endpoint rejects that shorter payload
+    // with InvalidParameters.
+    const sourceName = src_file_id ?? src_file_url;
+    const objectName = ref_file_id ?? ref_file_url;
+    if (!sourceName || !objectName) {
+      return NextResponse.json({ ok: false, message: 'A selfie and an earring image are required.' }, { status: 400 });
+    }
+
     const taskPayload: Record<string, unknown> = {
-      ...(src_file_id  ? { src_file_id }  : { src_file_url }),
-      ...(ref_file_id  ? { ref_file_ids: [ref_file_id] }  : { ref_file_urls: [ref_file_url] }),
+      ...(src_file_id ? { src_file_id } : { src_file_url }),
+      ...(ref_file_id ? { ref_file_ids: [ref_file_id] } : { ref_file_urls: [ref_file_url] }),
+      source_info: { name: sourceName },
+      object_infos: [{
+        name: objectName,
+        parameter: { earring_need_remove_background: true },
+      }],
     };
 
     const taskId      = await createEarringTask(taskPayload);

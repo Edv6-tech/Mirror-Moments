@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import fs from 'node:fs';
 import path from 'node:path';
-import { uploadFile, isMockMode } from '@/lib/youcam/youcamClient';
+import { uploadFile, isMockMode, getResultImageDataUrl } from '@/lib/youcam/youcamClient';
 import { validateImageBuffer } from '@/lib/imageValidation';
 import { rejectOversizedRequest } from '@/lib/requestLimits';
 import { consumeTryOnQuota } from '@/lib/tryonQuota';
@@ -54,7 +54,8 @@ async function pollMakeupTask(taskId: string): Promise<string> {
     }
     if (status === 'error') {
       const reason = data?.data?.error ?? data?.data?.failure_reason ?? 'unknown_error';
-      throw new Error(`Makeup VTO engine error: ${reason}`);
+      const detail = data?.data?.error_message;
+      throw new Error(`Makeup VTO engine error: ${reason}${detail ? ` — ${detail}` : ''}`);
     }
     // still running / queued — continue polling
   }
@@ -82,11 +83,13 @@ export async function POST(req: NextRequest) {
     let personBuffer: Buffer | null = null;
     let personMime = 'image/jpeg';
     let effects: unknown[] = [];
+    let includeResultImageData = false;
 
     if (contentType.includes('multipart/form-data')) {
       const form = await req.formData();
       const personFile = form.get('personPhoto') as File | null;
       const effectsRaw = form.get('effects') as string | null;
+      includeResultImageData = form.get('includeResultImageData') === 'true';
 
       if (personFile) {
         if (!['image/jpeg', 'image/png'].includes(personFile.type)) return NextResponse.json({ ok: false, message: 'Use a JPG or PNG selfie.' }, { status: 400 });
@@ -99,6 +102,7 @@ export async function POST(req: NextRequest) {
     } else {
       const body = await req.json().catch(() => ({}));
       effects = Array.isArray(body.effects) ? body.effects : [];
+      includeResultImageData = body.includeResultImageData === true;
 
       if (body.personPhoto) {
         if (body.personPhoto.startsWith('data:image')) {
@@ -143,12 +147,13 @@ export async function POST(req: NextRequest) {
 
     const taskId = await createMakeupTask(taskPayload);
     const resultRemoteUrl = await pollMakeupTask(taskId);
+    const resultImageData = includeResultImageData ? await getResultImageDataUrl(resultRemoteUrl) : undefined;
 
     // Cache result locally
     const { saveResult } = await import('@/lib/youcam/youcamClient');
     const localResultUrl = await saveResult(resultRemoteUrl, 'makeup_tryon', { userId: quota.userId, category: 'makeup' });
 
-    return NextResponse.json({ ok: true, resultUrl: localResultUrl, taskId });
+    return NextResponse.json({ ok: true, resultUrl: localResultUrl, ...(resultImageData ? { resultImageData } : {}), taskId });
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : 'Makeup try-on failed.';
     console.error('Makeup VTO error:', message);

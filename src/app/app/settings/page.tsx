@@ -8,6 +8,7 @@ import {
   AlertTriangle,
   Upload,
   Check,
+  LogOut,
 } from 'lucide-react';
 import { Button, GlassCard, Input, Modal } from '@/components/ui';
 
@@ -21,6 +22,7 @@ export default function SettingsPage() {
   const [isSaving, setIsSaving] = useState(false);
   const [isSavingPhoto, setIsSavingPhoto] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isSigningOut, setIsSigningOut] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [savedSuccess, setSavedSuccess] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -125,6 +127,20 @@ export default function SettingsPage() {
     } finally { setIsDeleting(false); }
   };
 
+  const handleSignOut = async () => {
+    setIsSigningOut(true);
+    setErrorMessage(null);
+    try {
+      const response = await fetch('/api/auth/signout', { method: 'POST' });
+      const data = await response.json();
+      if (!response.ok || !data.ok) throw new Error(data.message || 'Could not sign out. Please try again.');
+      window.location.assign('/login');
+    } catch (error) {
+      setErrorMessage(error instanceof Error ? error.message : 'Could not sign out. Please try again.');
+      setIsSigningOut(false);
+    }
+  };
+
   return (
     <div className="app-page-atmosphere max-w-3xl mx-auto px-4 sm:px-6 py-8 space-y-8">
       {/* ── Title ── */}
@@ -172,6 +188,12 @@ export default function SettingsPage() {
           </div>
         </form>
       </GlassCard>
+
+      <div className="flex justify-end">
+        <Button variant="secondary" size="md" leftIcon={<LogOut size={16} />} onClick={() => void handleSignOut()} isLoading={isSigningOut} loadingText="Signing out…">
+          Sign out
+        </Button>
+      </div>
 
       {/* ── 2. My Saved Photo ── */}
       <GlassCard variant="light" className="app-lift-card p-6 sm:p-8 space-y-4">

@@ -4,7 +4,7 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 import { getPrivateAssetUrl, hasCloudPrivateStorage, resolvePrivateAssetOwner, storePrivateAsset, type PrivateAsset } from '@/lib/privateAssets';
 import { validateImageBuffer, type SupportedImageMime } from '@/lib/imageValidation';
-import { createClient } from '@/lib/supabase/server';
+import { createAdminClient } from '@/lib/supabase/admin';
 import { rejectOversizedRequest } from '@/lib/requestLimits';
 
 interface WardrobeRecord {
@@ -40,7 +40,7 @@ export async function POST(req: NextRequest) {
     const existing: WardrobeRecord[] = !cloudStorage && fs.existsSync(DB_PATH)
       ? JSON.parse(fs.readFileSync(DB_PATH, 'utf8'))
       : [];
-    const supabase = cloudStorage ? await createClient() : null;
+    const supabase = cloudStorage ? createAdminClient() : null;
     const processedItems: Array<WardrobeRecord & { transparentUrl: string; whiteUrl: string }> = [];
 
     for (const file of files) {

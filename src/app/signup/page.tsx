@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import { AuroraBackground } from '@/components/ui/AuroraBackground';
 import { AuthCard } from '@/components/auth/AuthCard';
 
@@ -9,14 +10,25 @@ export const metadata: Metadata = {
 
 export default function SignupPage() {
   return (
-    <main className="min-h-screen flex">
+    <main className="app-dashboard-theme min-h-screen flex">
       {/* ── Left panel — dark brand half (desktop only) ── */}
       <div
         className="hidden md:flex md:w-1/2 lg:w-[55%] relative flex-col justify-between p-10 overflow-hidden"
-        style={{ background: 'var(--navy-900)' }}
+        style={{ background: 'var(--blue-700)' }}
         aria-hidden="true"
       >
         <AuroraBackground className="absolute inset-0" />
+        <div className="pointer-events-none absolute inset-8 z-0 overflow-hidden rounded-[28px] bg-white">
+          <Image
+            src="/signup-rose-bouquet.jpg"
+            alt=""
+            fill
+            priority
+            sizes="(min-width: 768px) 55vw, 100vw"
+            className="object-cover object-center"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[var(--blue-700)]/55 via-transparent to-[var(--blue-700)]/20" />
+        </div>
         {/* Wordmark */}
         <div className="relative z-10">
           <span className="font-display text-2xl text-white tracking-wide select-none">

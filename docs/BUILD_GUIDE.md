@@ -46,7 +46,7 @@ Put these in the Antigravity rules file (or `AGENTS.md`) so they apply to every 
 | Motion | Framer Motion for UI; ogl (small WebGL library) for hero silk shader; CSS for fallbacks | Smooth effects without heavy dependencies |
 | Icons | lucide-react | Clean line icons that suit the theme |
 | Fonts | Cormorant Garamond (display), Manrope (interface) via next/font | Elegant headlines, readable UI |
-| Backend | Supabase: Auth, Postgres, Storage, row-level security | Accounts, wardrobe and history with little code |
+| Backend | SQLite for email/password accounts and sessions; Supabase Postgres and private Storage for cloud wardrobe/history | Local account control with private cloud media and try-on records |
 | Dress lifting | In the browser with Transformers.js running a clothes-segmentation model (e.g. Xenova/segformer_b2_clothes) | Free, private, no server cost; photos never leave device for this step |
 | Try-on | YouCam AI-Cloth through our own server routes | The required API |
 | Tests | Playwright | One automated run of the main flow |
@@ -132,7 +132,7 @@ Easing `cubic-bezier(0.22, 1, 0.36, 1)`. Durations: micro 200 ms, transitions 45
 ## Part C. Pages
 - **C1. Site map:** `/` (Landing), `/login`, `/signup`, `/try` (Guest Studio), `/privacy`, `/app` (Dashboard), `/app/studio`, `/app/wardrobe`, `/app/looks`, `/app/looks/[id]`, `/app/shortlists`, `/app/shortlists/[id]`, `/vote/[token]`, `/app/settings`.
 - **C2. Landing page (`/`)**
-- **C3. Authentication (`/login`, `/signup`)**
+- **C3. Authentication (`/login`, `/signup`):** email and password only, stored in SQLite with scrypt password hashes and opaque HTTP-only sessions. Supabase Auth is not used for account credentials.
 - **C4. Dashboard (`/app`)**
 - **C5. Studio (`/app/studio` and `/try`)**
   - Step 1: Upload a dress photo
@@ -151,12 +151,12 @@ Easing `cubic-bezier(0.22, 1, 0.36, 1)`. Durations: micro 200 ms, transitions 45
 ---
 
 ## Part D. Data and server design
-- **D1. Supabase Postgres Tables:** `profiles`, `dresses`, `looks`, `usage_counters`, `shortlists`, `shortlist_looks`, `votes`. Row-level security on all tables.
+- **D1. Account and app data:** SQLite stores accounts, sessions, and profiles. Supabase Postgres stores `dresses`, `looks`, `usage_counters`, `shortlists`, `shortlist_looks`, and `votes`. Row-level security remains enabled; server routes use the service role and explicitly filter user-owned rows by the authenticated SQLite account ID.
 - **D2. Storage:** `dresses`, `bodies`, `results`. Private buckets with signed URLs.
 - **D3. Server routes:** `/api/tryon/start`, `/api/tryon/status`, `/api/tryon/cancel`, `/api/usage`, `/api/account/delete`, `/api/vote/[token]`, `/api/shortlists/[id]/share`.
 - **D4. Dress lifting algorithm:** In-browser Web Worker using Transformers.js with clothes-segmentation model.
 - **D5. Limits, budget and sample mode:** Daily user limit (10), guest limit (3), `SAMPLE_MODE=true` toggle.
-- **D6. Environment variables:** `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `YOUCAM_API_KEY`, `YOUCAM_API_BASE`, `DAILY_LIMIT_USER`, `DAILY_LIMIT_GUEST`, `GLOBAL_DAILY_BUDGET`, `TRYON_ENABLED`, `SAMPLE_MODE`.
+- **D6. Environment variables:** `SQLITE_DB_PATH` (optional; defaults to `data/mirror-moment.sqlite`), `NEXT_PUBLIC_SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `YOUCAM_API_KEY`, `YOUCAM_API_BASE`, `DAILY_LIMIT_USER`, `DAILY_LIMIT_GUEST`, `GLOBAL_DAILY_BUDGET`, `TRYON_ENABLED`, `SAMPLE_MODE`. The SQLite file must be stored on a persistent disk in production.
 - **D7. Additions for dress details, shortlists and voting**
 
 ---
@@ -165,7 +165,7 @@ Easing `cubic-bezier(0.22, 1, 0.36, 1)`. Durations: micro 200 ms, transitions 45
 - **Stage 0:** Accounts, keys and test photos
 - **Stage 1:** Scaffold, design tokens and core components
 - **Stage 2:** Landing page
-- **Stage 3:** Supabase, authentication and guest mode
+- **Stage 3:** SQLite accounts, Supabase data/storage and guest mode
 - **Stage 4:** App shell and Dashboard
 - **Stage 5:** Dress lifter engine (in-browser Web Worker)
 - **Stage 6:** YouCam server routes

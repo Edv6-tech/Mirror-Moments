@@ -200,7 +200,7 @@ export default function EarringVTOPage() {
                       <img
                         src={preset.thumb}
                         alt={preset.name}
-                        className="relative z-10 w-full h-full object-cover"
+                        className="relative z-10 w-full h-full object-cover scale-[1.35]"
                         onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
@@ -248,9 +248,9 @@ export default function EarringVTOPage() {
               <div className="space-y-3">
               {isMockResult && <DemoPreviewNotice />}
               <FX6CurtainReveal>
-                <div className="rounded-3xl overflow-hidden aspect-[3/4]">
+                <div className="flex max-h-[78vh] min-h-64 items-center justify-center overflow-hidden rounded-3xl bg-white">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={resultUrl} alt="Earring try-on result" className="w-full h-full object-cover" />
+                  <img src={resultUrl} alt="Earring try-on result" className="block h-auto max-h-[78vh] w-full object-contain" />
                 </div>
               </FX6CurtainReveal>
               </div>

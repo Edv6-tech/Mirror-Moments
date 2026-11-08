@@ -29,6 +29,7 @@ import FX5WeavingLoader from '@/components/effects/FX5WeavingLoader';
 import FX6CurtainReveal from '@/components/effects/FX6CurtainReveal';
 import FX7TiltCard from '@/components/effects/FX7TiltCard';
 import { useDressLifter } from '@/lib/dress-lifter/useDressLifter';
+import { prepareFullLookPhoto, prepareLookCrops } from '@/lib/fullLookImages';
 
 export type StudioMode = 'dress' | 'hair' | 'shoes' | 'bag';
 
@@ -67,9 +68,9 @@ const MODE_CONFIG: Record<StudioMode, {
     label: 'Hair Studio',
     icon: Scissors,
     uploadLabel: 'Upload a photo of someone with the hairstyle',
-    uploadHint: 'Model, friend, social feed — JPG/PNG up to 10 MB',
+    uploadHint: 'Model, friend, social feed — JPG or PNG up to 10 MB',
     selfieLabel: 'Upload your front-facing photo',
-    selfieHint: 'Clear face, shoulders visible, straight-on — JPG only',
+    selfieHint: 'A clear, front-facing photo works, even if it is full-body. We automatically zoom to your face and shoulders — JPG or PNG.',
     cropLabel: 'Hair Cropped & Saved',
     apiRoute: '/api/hair-tryon',
     lifterMode: 'hair',
@@ -82,7 +83,7 @@ const MODE_CONFIG: Record<StudioMode, {
     uploadLabel: 'Upload a photo of the shoes',
     uploadHint: 'Product image or someone wearing them — JPG/PNG up to 10 MB',
     selfieLabel: 'Upload your full-body photo',
-    selfieHint: 'Full body, feet fully visible, one person only — JPG/PNG',
+    selfieHint: 'Any clear full-body photo works. We resize it while keeping your face and feet in frame — JPG/PNG.',
     cropLabel: 'Shoes Cropped & Saved',
     apiRoute: '/api/shoes-tryon',
     lifterMode: 'shoes',
@@ -95,7 +96,7 @@ const MODE_CONFIG: Record<StudioMode, {
     uploadLabel: 'Upload a photo of the bag',
     uploadHint: 'Product image or worn — JPG/PNG up to 10 MB',
     selfieLabel: 'Upload your half-body photo',
-    selfieHint: 'Head to chest, face visible >15% of frame — JPG/PNG',
+    selfieHint: 'A portrait or full-body photo works. We zoom to your head and upper body for the bag preview — JPG/PNG.',
     cropLabel: 'Bag Cropped & Saved',
     apiRoute: '/api/bag-tryon',
     lifterMode: 'bag',
@@ -103,6 +104,36 @@ const MODE_CONFIG: Record<StudioMode, {
     collection: 'Wardrobe',
   },
 };
+
+async function prepareHairApiPhoto(file: File): Promise<File> {
+  const image = await createImageBitmap(file);
+  try {
+    // Hair VTO needs a face at least 128 px wide. Cropping a centered head-and-
+    // shoulders region first makes full-body uploads usable without stretching
+    // the whole photo until the face is large enough.
+    const cropWidth = Math.max(1, Math.round(Math.min(image.width * 0.58, image.height * 0.435)));
+    const cropHeight = Math.max(1, Math.min(image.height, Math.round(cropWidth * (4 / 3))));
+    const cropX = Math.max(0, Math.round((image.width - cropWidth) / 2));
+    const cropY = 0;
+    const scale = 1024 / Math.max(cropWidth, cropHeight);
+    const canvas = document.createElement('canvas');
+    canvas.width = Math.max(1, Math.round(cropWidth * scale));
+    canvas.height = Math.max(1, Math.round(cropHeight * scale));
+    const context = canvas.getContext('2d');
+    if (!context) throw new Error('Could not prepare this photo for hair try-on.');
+    context.fillStyle = '#ffffff';
+    context.fillRect(0, 0, canvas.width, canvas.height);
+    context.imageSmoothingEnabled = true;
+    context.imageSmoothingQuality = 'high';
+    context.drawImage(image, cropX, cropY, cropWidth, cropHeight, 0, 0, canvas.width, canvas.height);
+    const jpeg = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, 'image/jpeg', 0.94));
+    if (!jpeg) throw new Error('Could not prepare this photo for hair try-on.');
+    const baseName = file.name.replace(/\.[^.]+$/, '') || 'hair-photo';
+    return new File([jpeg], `${baseName}.jpg`, { type: 'image/jpeg' });
+  } finally {
+    image.close();
+  }
+}
 
 // For bag mode: style selector options (per docs)
 const BAG_STYLES = [
@@ -255,6 +286,7 @@ export default function StudioFlow({ isGuest = false }: StudioFlowProps) {
   const [liftedTransparentBlobUrl, setLiftedTransparentBlobUrl] = useState<string | null>(null);
   const [liftedWhiteBlobUrl, setLiftedWhiteBlobUrl] = useState<string | null>(null);
   const [liftError, setLiftError] = useState<string | null>(null);
+  const [liftNotice, setLiftNotice] = useState<string | null>(null);
 
   // Source item photo (photo of someone wearing the dress or hairstyle)
   const [sourceFile, setSourceFile] = useState<File | null>(null);
@@ -300,6 +332,7 @@ export default function StudioFlow({ isGuest = false }: StudioFlowProps) {
     setLiftedTransparentBlobUrl(null);
     setLiftedWhiteBlobUrl(null);
     setLiftError(null);
+    setLiftNotice(null);
     setResultUrl(null);
     setIsSavedToCollection(false);
     setSavedGarmentId(null);
@@ -350,6 +383,7 @@ export default function StudioFlow({ isGuest = false }: StudioFlowProps) {
     setLiftedTransparentBlobUrl(null);
     setLiftedWhiteBlobUrl(null);
     setLiftError(null);
+    setLiftNotice(null);
     setIsSavedToCollection(false);
     setSavedGarmentId(null);
     const cleanName = file.name.replace(/\.[^/.]+$/, '').replace(/[-_]/g, ' ');
@@ -366,6 +400,7 @@ export default function StudioFlow({ isGuest = false }: StudioFlowProps) {
     setLiftedTransparentBlobUrl(null);
     setLiftedWhiteBlobUrl(null);
     setLiftError(null);
+    setLiftNotice(null);
     setIsSavedToCollection(false);
     setSavedGarmentId(null);
     setIsLoadingSample(true);
@@ -407,10 +442,22 @@ export default function StudioFlow({ isGuest = false }: StudioFlowProps) {
   const handleProceedToCrop = async () => {
     setCurrentStep(1);
     setLiftError(null);
+    setLiftNotice(null);
 
     if (!sourceFile) {
       setSampleLoadError('Wait for the selected sample to finish loading, or choose another sample/photo.');
       setCurrentStep(0);
+      return;
+    }
+
+    // YouCam Shoes accepts a product photo directly. The local clothes parser
+    // is trained for worn-item parsing and can fragment standalone shoe shots,
+    // so keep the original reference intact instead of pretending to isolate it.
+    if (mode === 'shoes') {
+      setLiftedTransparentBlobUrl(null);
+      setLiftedWhiteBlobUrl(sourcePreview);
+      setIsolatedPreview(sourcePreview);
+      setLiftNotice('Shoe product photo ready. We’ll send this original image for try-on without an unreliable cutout.');
       return;
     }
 
@@ -420,9 +467,9 @@ export default function StudioFlow({ isGuest = false }: StudioFlowProps) {
 
       setLiftedTransparentBlobUrl(liftResult.transparentUrl);
       setLiftedWhiteBlobUrl(liftResult.whiteUrl);
-      setIsolatedPreview(liftResult.transparentUrl);
+      setIsolatedPreview(liftResult.previewUrl);
 
-      if (!isGuest && !isSavedToCollection) {
+      if (!isGuest && !isSavedToCollection && liftResult.maskReliable) {
         setIsAutoSaving(true);
 
         const [transparentBlob, whiteBlob] = await Promise.all([
@@ -432,7 +479,7 @@ export default function StudioFlow({ isGuest = false }: StudioFlowProps) {
 
         if (isHairMode) {
           const formData = new FormData();
-          formData.append('file', sourceFile);
+          formData.append('file', await prepareHairApiPhoto(sourceFile));
           formData.append('thumb', transparentBlob, 'hair_isolated.png');
           formData.append('name', itemName);
           formData.append('consent', 'true');
@@ -441,7 +488,6 @@ export default function StudioFlow({ isGuest = false }: StudioFlowProps) {
           if (data.ok) {
             setIsSavedToCollection(true);
             if (data.item?.refUrl) setSavedHairRefUrl(data.item.refUrl);
-            if (data.item?.thumbnailUrl) setIsolatedPreview(data.item.thumbnailUrl);
           }
         } else {
           // dress / shoes / bag — all save to wardrobe
@@ -455,7 +501,6 @@ export default function StudioFlow({ isGuest = false }: StudioFlowProps) {
           if (data.ok && Array.isArray(data.items) && data.items.length > 0) {
             setIsSavedToCollection(true);
             setSavedGarmentId(data.items[0].id);
-            if (data.items[0].transparentUrl) setIsolatedPreview(data.items[0].transparentUrl);
           }
         }
       }
@@ -489,18 +534,28 @@ export default function StudioFlow({ isGuest = false }: StudioFlowProps) {
       const formData = new FormData();
 
       if (mode === 'hair') {
-        formData.append('userPhoto', userPhotoFile);
+        const [hairUserPhoto, hairReferencePhoto] = await Promise.all([
+          prepareHairApiPhoto(userPhotoFile),
+          prepareHairApiPhoto(sourceFile),
+        ]);
+        formData.append('userPhoto', hairUserPhoto);
         // Hair: pass raw source photo as ref (YouCam needs face+hair visible)
-        formData.append('refPhoto', sourceFile);
+        formData.append('refPhoto', hairReferencePhoto);
       } else {
-        formData.append('personPhoto', userPhotoFile);
-        // Dress / Shoes / Bag: pass the isolated white-bg blob as garmentPhoto
-        if (liftedWhiteBlobUrl) {
-          const whiteBlob = await fetch(liftedWhiteBlobUrl).then((r) => r.blob());
-          formData.append('garmentPhoto', whiteBlob, 'item_white.jpg');
+        if (mode === 'bag') {
+          const { bag: framedBagPhoto } = await prepareLookCrops(userPhotoFile, 1);
+          formData.append('personPhoto', framedBagPhoto);
+        } else if (mode === 'shoes') {
+          const { full: fullBodyPhoto } = await prepareFullLookPhoto(userPhotoFile);
+          formData.append('personPhoto', fullBodyPhoto);
         } else {
-          formData.append('garmentPhoto', sourceFile);
+          const { full: normalizedPhoto } = await prepareFullLookPhoto(userPhotoFile);
+          formData.append('personPhoto', normalizedPhoto);
         }
+        // Send the untouched reference to YouCam. Segmented cutouts are useful
+        // for the local preview and wardrobe thumbnail, but can remove garment
+        // details (neckline, straps, slits) needed for a faithful try-on.
+        formData.append('garmentPhoto', sourceFile);
         if (savedGarmentId) formData.append('garmentId', savedGarmentId);
         if (mode === 'dress') formData.append('garmentCategory', garmentCategory);
         if (mode === 'bag') formData.append('style', bagStyle);
@@ -663,7 +718,7 @@ export default function StudioFlow({ isGuest = false }: StudioFlowProps) {
 
               <Dropzone
                 variant="light"
-                accept={mode === 'hair' ? 'image/jpeg' : 'image/jpeg,image/png'}
+                accept="image/jpeg,image/png"
                 label={mode === 'dress'
                   ? garmentCategory === 'full_body' ? 'Upload a full-length dress reference'
                     : garmentCategory === 'upper_body' ? 'Upload a top, shirt, or jacket reference'
@@ -714,7 +769,7 @@ export default function StudioFlow({ isGuest = false }: StudioFlowProps) {
                     {mode === 'hair'
                       ? 'Pick a hair style above or upload any picture with great hair. We crop the person out, save the hair to your collection, and try it on you.'
                       : mode === 'shoes'
-                      ? 'Pick a shoe above or upload a shoes product photo. We isolate the shoes and fit them on your photo.'
+                      ? 'Pick a shoe above or upload a clear product photo. We keep the original shoe image intact for try-on.'
                       : mode === 'bag'
                       ? 'Pick a bag above or upload a bag product photo. We isolate the bag and visualise it on you.'
                       : 'Pick a dress above or upload any photo with a dress. We crop the person out, save it to your wardrobe, and fit it on you.'}
@@ -731,6 +786,7 @@ export default function StudioFlow({ isGuest = false }: StudioFlowProps) {
                 <FX4DissolveExtraction
                   originalSrc={sourcePreview}
                   liftedSrc={isolatedPreview || sourcePreview}
+                  originalFallback={Boolean(liftNotice)}
                 />
               )}
               {(isLifting || isAutoSaving) && (
@@ -745,6 +801,9 @@ export default function StudioFlow({ isGuest = false }: StudioFlowProps) {
               {liftError && (
                 <p className="text-xs text-[var(--danger)] text-center">{liftError}</p>
               )}
+              {liftNotice && (
+                <p role="status" className="text-xs text-white/80 text-center">{liftNotice}</p>
+              )}
             </div>
           )}
 
@@ -753,7 +812,7 @@ export default function StudioFlow({ isGuest = false }: StudioFlowProps) {
             <div className="w-full max-w-md flex flex-col items-center space-y-4">
               <Dropzone
                 variant="light"
-                accept={mode === 'hair' ? 'image/jpeg' : 'image/jpeg,image/png'}
+                accept="image/jpeg,image/png"
                 label={cfg.selfieLabel}
                 hint={mode === 'dress'
                   ? garmentCategory === 'full_body'
@@ -805,26 +864,44 @@ export default function StudioFlow({ isGuest = false }: StudioFlowProps) {
                 </FX6CurtainReveal>
               ) : (
                 /* Ready State Side-by-Side */
-                <div className="flex items-center justify-center gap-4 py-8">
-                  <div className="w-36 h-48 rounded-2xl overflow-hidden border border-white/20 bg-white/5 p-2 flex items-center justify-center">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={isolatedPreview || sourcePreview || ''}
-                      alt={itemName}
-                      className="max-h-full object-contain"
-                    />
-                  </div>
-                  <span className="w-8 h-8 rounded-full bg-[var(--sky-400)] text-[var(--navy-950)] font-bold flex items-center justify-center">
-                    +
+                <div className="grid w-full max-w-2xl grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-3 py-8 sm:gap-5">
+                  <figure className="mx-auto w-full max-w-[14rem]">
+                    <figcaption className="mb-2 min-h-8 text-center text-xs font-bold text-[var(--ink-900)]">
+                      {mode === 'dress' ? 'Selected look' : mode === 'hair' ? 'Selected hairstyle' : mode === 'shoes' ? 'Selected shoes' : 'Selected bag'}
+                    </figcaption>
+                    <div className="aspect-[3/4] w-full overflow-hidden rounded-2xl border border-[var(--line)] bg-[var(--ice-100)] p-2 shadow-[var(--shadow-soft)]">
+                      {isolatedPreview || sourcePreview ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={isolatedPreview || sourcePreview!}
+                          alt={itemName}
+                          className="h-full w-full object-contain"
+                        />
+                      ) : (
+                        <div className="flex h-full items-center justify-center text-center text-xs text-[var(--ink-500)]">Choose a reference photo to preview it here.</div>
+                      )}
+                    </div>
+                    <p className="mt-2 truncate text-center text-xs font-medium text-[var(--ink-500)]">{itemName}</p>
+                  </figure>
+                  <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--blue-600)] text-white shadow-[var(--shadow-soft)]" aria-hidden="true">
+                    <ArrowRight size={17} />
                   </span>
-                  <div className="w-36 h-48 rounded-2xl overflow-hidden border border-white/20 bg-white/5 p-1 flex items-center justify-center">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={userPhotoPreview ?? ''}
-                      alt="Your photo"
-                      className="w-full h-full object-cover rounded-xl"
-                    />
-                  </div>
+                  <figure className="mx-auto w-full max-w-[14rem]">
+                    <figcaption className="mb-2 min-h-8 text-center text-xs font-bold text-[var(--ink-900)]">Your photo</figcaption>
+                    <div className="aspect-[3/4] w-full overflow-hidden rounded-2xl border border-[var(--line)] bg-[var(--ice-100)] p-2 shadow-[var(--shadow-soft)]">
+                      {userPhotoPreview ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={userPhotoPreview}
+                          alt="Your photo"
+                          className="h-full w-full rounded-xl object-contain"
+                        />
+                      ) : (
+                        <div className="flex h-full items-center justify-center text-center text-xs text-[var(--ink-500)]">Upload your photo to preview it here.</div>
+                      )}
+                    </div>
+                    <p className="mt-2 truncate text-center text-xs font-medium text-[var(--ink-500)]">Ready for preview</p>
+                  </figure>
                 </div>
               )}
             </div>
@@ -932,7 +1009,9 @@ export default function StudioFlow({ isGuest = false }: StudioFlowProps) {
                     <div className="flex items-center gap-2 p-3 rounded-xl bg-[var(--success)]/10 border border-[var(--success)]/20 text-xs text-[var(--success)]">
                       <Check size={16} />
                       <span>
-                        {isSavedToCollection
+                        {liftNotice
+                          ? 'Original shoe photo ready for try-on.'
+                          : isSavedToCollection
                           ? `Saved to your ${isHairMode ? 'Hair Collection' : 'Wardrobe'}!`
                           : 'Person cropped out. Ready to continue.'}
                       </span>
@@ -1042,12 +1121,11 @@ export default function StudioFlow({ isGuest = false }: StudioFlowProps) {
                         : mode === 'bag'
                         ? 'Bag visualised on you with AI-generated scene styling.'
                         : 'Garment fitted with realistic drape and lighting.'
-                      : `YouCam AI will synthesize your photo with the cropped ${
-                          mode === 'hair' ? 'hairstyle' :
-                          mode === 'shoes' ? 'shoes' :
-                          mode === 'bag' ? 'bag' :
-                          'dress'
-                        }.`}
+                      : mode === 'shoes'
+                        ? 'YouCam AI will use your photo with the original shoe product image.'
+                        : `YouCam AI will synthesize your photo with the cropped ${
+                            mode === 'hair' ? 'hairstyle' : mode === 'bag' ? 'bag' : 'dress'
+                          }.`}
                   </p>
                 </div>
 
@@ -1094,7 +1172,7 @@ export default function StudioFlow({ isGuest = false }: StudioFlowProps) {
                   onClick={handleProceedToCrop}
                   rightIcon={<ArrowRight size={16} />}
                 >
-                  Crop Person Out
+                  {mode === 'shoes' ? 'Prepare Shoe Photo' : 'Crop Person Out'}
                 </Button>
               )}
 

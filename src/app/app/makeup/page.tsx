@@ -46,7 +46,7 @@ const LOOKS: Array<{
     ],
     swatches: ['#e8b4a0', '#c9806b', '#1a1a1a'],
     effects: [
-      { category: 'skin_smooth', skinSmoothStrength: 60, skinSmoothColorIntensity: 50 },
+      { category: 'skin_smooth', skinSmoothStrength: 20, skinSmoothColorIntensity: 50 },
       {
         category: 'blush',
         pattern: { name: '1color1' },
@@ -56,7 +56,7 @@ const LOOKS: Array<{
         category: 'lip_color',
         shape: { name: 'original' },
         style: { type: 'full' },
-        palettes: [{ color: '#c9806b', texture: 'gloss', colorIntensity: 55, gloss: 60 }],
+        palettes: [{ color: '#c9806b', texture: 'gloss', colorIntensity: 55, gloss: 60, transparencyIntensity: 30 }],
       },
       {
         category: 'eyelashes',
@@ -78,7 +78,7 @@ const LOOKS: Array<{
     ],
     swatches: ['#c0021f', '#e8c8a0', '#0d0d0d'],
     effects: [
-      { category: 'skin_smooth', skinSmoothStrength: 70, skinSmoothColorIntensity: 60 },
+      { category: 'skin_smooth', skinSmoothStrength: 20, skinSmoothColorIntensity: 60 },
       {
         category: 'foundation',
         palettes: [{ color: '#e8c8a0', colorIntensity: 40, glowIntensity: 30, coverageIntensity: 55 }],
@@ -120,13 +120,13 @@ const LOOKS: Array<{
     ],
     swatches: ['#1a1a2e', '#4a3060', '#c4a882', '#f5e6c8'],
     effects: [
-      { category: 'skin_smooth', skinSmoothStrength: 55, skinSmoothColorIntensity: 45 },
+      { category: 'skin_smooth', skinSmoothStrength: 20, skinSmoothColorIntensity: 45 },
       {
         category: 'eye_shadow',
         pattern: { name: '3colors1' },
         palettes: [
           { color: '#1a1a2e', texture: 'matte', colorIntensity: 80 },
-          { color: '#4a3060', texture: 'shimmer', colorIntensity: 70, shimmerColor: '#9b59b6', shimmerIntensity: 60, shimmerDensity: 50, shimmerSize: 40 },
+          { color: '#4a3060', texture: 'shimmer', colorIntensity: 70, shimmerColor: '#9b59b6', shimmerIntensity: 60 },
           { color: '#0d0d0d', texture: 'matte', colorIntensity: 90 },
         ],
       },
@@ -169,7 +169,7 @@ const LOOKS: Array<{
     ],
     swatches: ['#ff9eb5', '#f2a53e', '#f5715a', '#7a5230'],
     effects: [
-      { category: 'skin_smooth', skinSmoothStrength: 65, skinSmoothColorIntensity: 55 },
+      { category: 'skin_smooth', skinSmoothStrength: 20, skinSmoothColorIntensity: 55 },
       {
         category: 'blush',
         pattern: { name: '2colors6' },
@@ -182,7 +182,7 @@ const LOOKS: Array<{
         category: 'lip_color',
         shape: { name: 'heart-shaped' },
         style: { type: 'full' },
-        palettes: [{ color: '#f5715a', texture: 'gloss', colorIntensity: 70, gloss: 65 }],
+        palettes: [{ color: '#f5715a', texture: 'gloss', colorIntensity: 70, gloss: 65, transparencyIntensity: 30 }],
       },
       {
         category: 'eyebrows',
@@ -209,7 +209,7 @@ const LOOKS: Array<{
     ],
     swatches: ['#8b5a2b', '#c87941', '#f8d87a', '#c47947'],
     effects: [
-      { category: 'skin_smooth', skinSmoothStrength: 50, skinSmoothColorIntensity: 40 },
+      { category: 'skin_smooth', skinSmoothStrength: 20, skinSmoothColorIntensity: 40 },
       {
         category: 'bronzer',
         pattern: { name: 'Bronzer1' },
@@ -224,7 +224,7 @@ const LOOKS: Array<{
         category: 'eye_shadow',
         pattern: { name: '2colors1' },
         palettes: [
-          { color: '#c87941', texture: 'shimmer', colorIntensity: 65, shimmerColor: '#f5a623', shimmerIntensity: 55, shimmerDensity: 45, shimmerSize: 35 },
+          { color: '#c87941', texture: 'shimmer', colorIntensity: 65, shimmerColor: '#f5a623', shimmerIntensity: 55 },
           { color: '#6b3a2a', texture: 'matte', colorIntensity: 70 },
         ],
       },
@@ -232,7 +232,7 @@ const LOOKS: Array<{
         category: 'lip_color',
         shape: { name: 'petal' },
         style: { type: 'full' },
-        palettes: [{ color: '#c47947', texture: 'gloss', colorIntensity: 75, gloss: 70 }],
+        palettes: [{ color: '#c47947', texture: 'gloss', colorIntensity: 75, gloss: 70, transparencyIntensity: 30 }],
       },
     ],
   },
@@ -249,14 +249,14 @@ const LOOKS: Array<{
     ],
     swatches: ['#000d99', '#0099cc', '#6600cc'],
     effects: [
-      { category: 'skin_smooth', skinSmoothStrength: 75, skinSmoothColorIntensity: 65 },
+      { category: 'skin_smooth', skinSmoothStrength: 20, skinSmoothColorIntensity: 65 },
       {
         category: 'eye_liner',
         pattern: { name: '3colors2' },
         palettes: [
           { color: '#000d99', texture: 'matte', colorIntensity: 90 },
           { color: '#0099cc', texture: 'matte', colorIntensity: 75 },
-          { color: '#00cccc', texture: 'shimmer', colorIntensity: 60, shimmerColor: '#00ffff', shimmerIntensity: 70, shimmerSize: 40 },
+          { color: '#00cccc', texture: 'shimmer', colorIntensity: 60, shimmerColor: '#00ffff', shimmerIntensity: 70 },
         ],
       },
       {
@@ -276,14 +276,138 @@ const LOOKS: Array<{
       },
     ],
   },
+  {
+    id: 'soft_glam',
+    name: 'Soft Glam',
+    tag: 'Everyday glam',
+    description: 'Warm rose eyes, soft definition, satin-smooth color',
+    thumbnails: ['/samples/makeup-spring-blush.jpg', '/samples/makeup-natural-lashes.png'],
+    swatches: ['#d78376', '#9a6556', '#b86570'],
+    effects: [
+      { category: 'skin_smooth', skinSmoothStrength: 20, skinSmoothColorIntensity: 45 },
+      {
+        category: 'blush',
+        pattern: { name: '1color1' },
+        palettes: [{ color: '#d78376', texture: 'satin', glowStrength: 32, colorIntensity: 42 }],
+      },
+      {
+        category: 'eye_shadow',
+        pattern: { name: '2colors1' },
+        palettes: [
+          { color: '#9a6556', texture: 'matte', colorIntensity: 48 },
+          { color: '#c58c7c', texture: 'shimmer', shimmerColor: '#efd0bc', shimmerIntensity: 35, colorIntensity: 38 },
+        ],
+      },
+      {
+        category: 'lip_color',
+        shape: { name: 'original' },
+        style: { type: 'full' },
+        palettes: [{ color: '#b86570', texture: 'gloss', colorIntensity: 52, gloss: 48, transparencyIntensity: 28 }],
+      },
+      { category: 'eyelashes', pattern: { name: 'Natural1' }, palettes: [{ color: '#261b19', colorIntensity: 65 }] },
+    ],
+  },
+  {
+    id: 'rosewater',
+    name: 'Rosewater',
+    tag: 'Fresh & rosy',
+    description: 'Petal-pink cheeks, bright eyes, a sheer rosy lip',
+    thumbnails: ['/samples/makeup-natural-blush.jpg', '/samples/makeup-spring-brows.jpg'],
+    swatches: ['#ed9ba3', '#e8ad91', '#d46f83'],
+    effects: [
+      { category: 'skin_smooth', skinSmoothStrength: 20, skinSmoothColorIntensity: 42 },
+      {
+        category: 'blush',
+        pattern: { name: '2colors6' },
+        palettes: [
+          { color: '#ed9ba3', texture: 'satin', glowStrength: 28, colorIntensity: 48 },
+          { color: '#e8ad91', texture: 'matte', colorIntensity: 32 },
+        ],
+      },
+      {
+        category: 'lip_color',
+        shape: { name: 'heart-shaped' },
+        style: { type: 'full' },
+        palettes: [{ color: '#d46f83', texture: 'gloss', colorIntensity: 55, gloss: 45, transparencyIntensity: 35 }],
+      },
+      { category: 'eyelashes', pattern: { name: 'Upper1' }, palettes: [{ color: '#3a2523', colorIntensity: 58 }] },
+    ],
+  },
+  {
+    id: 'after_hours',
+    name: 'After Hours',
+    tag: 'Night out',
+    description: 'Smoked plum eyes, precise liner, a deep berry lip',
+    thumbnails: ['/samples/makeup-smoky-shadow.jpg', '/samples/makeup-editorial-liner.jpg'],
+    swatches: ['#46334f', '#241e2b', '#8b3155'],
+    effects: [
+      { category: 'skin_smooth', skinSmoothStrength: 20, skinSmoothColorIntensity: 45 },
+      {
+        category: 'eye_shadow',
+        pattern: { name: '3colors1' },
+        palettes: [
+          { color: '#76617d', texture: 'matte', colorIntensity: 62 },
+          { color: '#46334f', texture: 'shimmer', shimmerColor: '#c2a0d2', shimmerIntensity: 48, colorIntensity: 55 },
+          { color: '#241e2b', texture: 'matte', colorIntensity: 72 },
+        ],
+      },
+      { category: 'eye_liner', pattern: { name: 'Arabic3' }, palettes: [{ color: '#211a25', texture: 'matte', colorIntensity: 68 }] },
+      { category: 'eyelashes', pattern: { name: 'UpperDense1' }, palettes: [{ color: '#1c1720', colorIntensity: 78 }] },
+      {
+        category: 'lip_color',
+        shape: { name: 'plump' },
+        style: { type: 'full' },
+        palettes: [{ color: '#8b3155', texture: 'matte', colorIntensity: 72 }],
+      },
+    ],
+  },
 ];
 
 type AsyncState = 'idle' | 'loading' | 'success' | 'error';
+
+async function prepareMakeupPhoto(file: File, zoom: number): Promise<Blob> {
+  const bitmap = await createImageBitmap(file);
+  try {
+    // Center the frame horizontally and bias it upward for tall photos so a
+    // full-body upload can still provide a large, clear face to Makeup VTO.
+    const sourceWidth = Math.max(1, Math.round(bitmap.width / zoom));
+    const isTallPortrait = bitmap.height / bitmap.width > 1.45;
+    const sourceHeight = isTallPortrait
+      ? Math.min(bitmap.height, Math.round(sourceWidth * 1.1))
+      : Math.min(bitmap.height, Math.max(1, Math.round(bitmap.height / zoom), sourceWidth));
+    const sourceX = Math.round((bitmap.width - sourceWidth) / 2);
+    const sourceY = isTallPortrait ? 0 : Math.round((bitmap.height - sourceHeight) / 2);
+    // YouCam currently rejects source crops below 320x320. Enlarge only enough
+    // to meet that minimum, and otherwise preserve source detail; always stay
+    // below its maximum width and height.
+    const minimumSideScale = 320 / Math.min(sourceWidth, sourceHeight);
+    const scale = Math.min(
+      Math.max(1, minimumSideScale),
+      1919 / sourceWidth,
+      1079 / sourceHeight,
+    );
+    const canvas = document.createElement('canvas');
+    canvas.width = Math.round(sourceWidth * scale);
+    canvas.height = Math.round(sourceHeight * scale);
+    const context = canvas.getContext('2d');
+    if (!context) throw new Error('Could not prepare this photo. Please choose another image.');
+    context.imageSmoothingEnabled = true;
+    context.imageSmoothingQuality = 'high';
+    context.drawImage(bitmap, sourceX, sourceY, sourceWidth, sourceHeight, 0, 0, canvas.width, canvas.height);
+
+    const normalized = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, 'image/jpeg', 0.94));
+    if (!normalized) throw new Error('Could not prepare this photo. Please choose another image.');
+    return normalized;
+  } finally {
+    bitmap.close();
+  }
+}
 
 export default function MakeupStudioPage() {
   const [selectedLook, setSelectedLook] = useState<string | null>(null);
   const [selfiePreview, setSelfiePreview] = useState<string | null>(null);
   const [selfieFile, setSelfieFile] = useState<File | null>(null);
+  const [makeupZoom, setMakeupZoom] = useState(1.5);
   const [state, setState] = useState<AsyncState>('idle');
   const [resultUrl, setResultUrl] = useState<string | null>(null);
   const [isMockResult, setIsMockResult] = useState(false);
@@ -292,6 +416,7 @@ export default function MakeupStudioPage() {
 
   const handleSelfie = useCallback((file: File) => {
     setSelfieFile(file);
+    setMakeupZoom(1.5);
     const reader = new FileReader();
     reader.onload = (e) => setSelfiePreview(e.target?.result as string);
     reader.readAsDataURL(file);
@@ -309,7 +434,10 @@ export default function MakeupStudioPage() {
     try {
       const form = new FormData();
       form.append('effects', JSON.stringify(look.effects));
-      if (selfieFile) form.append('personPhoto', selfieFile);
+      if (selfieFile) {
+        const preparedPhoto = await prepareMakeupPhoto(selfieFile, makeupZoom);
+        form.append('personPhoto', preparedPhoto, 'makeup-selfie.jpg');
+      }
 
       const res = await fetch('/api/makeup-vto', { method: 'POST', body: form });
       const data = await res.json();
@@ -327,7 +455,7 @@ export default function MakeupStudioPage() {
       setErrorMsg('Network error. Please check your connection.');
       setState('error');
     }
-  }, [selectedLook, selfieFile]);
+  }, [selectedLook, selfieFile, makeupZoom]);
 
   const handleReset = useCallback(() => {
     setState('idle');
@@ -368,11 +496,11 @@ export default function MakeupStudioPage() {
             {/* Step 1 — Selfie */}
             <div className="p-5 rounded-3xl border border-white/10 space-y-3" style={{ background: 'rgba(255,255,255,0.05)', backdropFilter: 'blur(16px)' }}>
               <p className="text-xs font-bold uppercase tracking-wider text-white/50">Step 1 — Your Photo</p>
-              <p className="text-xs text-white/40">Face fully visible · long side &lt; 1920 px · JPG or PNG · max 10 MB</p>
+              <p className="text-xs leading-relaxed text-white/60">Use a clear, front-facing photo with your whole face visible. For a crisp result, choose an image at least 320 × 320 pixels and make your face about one-third of its width. JPG or PNG, under 10 MB. Full-body photos are okay—we&apos;ll zoom in for makeup.</p>
               {selfiePreview ? (
                 <div className="relative rounded-2xl overflow-hidden border border-white/10 bg-black aspect-[4/5] max-h-80">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={selfiePreview} alt="Your selfie preview" className="w-full h-full object-cover" />
+                  <img src={selfiePreview} alt="Your photo, framed toward the face for makeup" className="w-full h-full object-cover object-top transition-transform" style={{ transform: `scale(${makeupZoom})`, transformOrigin: 'center top' }} />
                   <button
                     onClick={() => { setSelfiePreview(null); setSelfieFile(null); }}
                     className="absolute top-2 right-2 w-7 h-7 bg-black/60 rounded-full text-white flex items-center justify-center hover:bg-black/80 transition"
@@ -389,6 +517,16 @@ export default function MakeupStudioPage() {
                   variant="light"
                 />
               )}
+              {selfiePreview && (
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between gap-3">
+                    <label htmlFor="makeup-face-zoom" className="text-xs font-semibold text-white/75">Zoom on face</label>
+                    <span className="text-xs tabular-nums text-white/55">{makeupZoom.toFixed(1)}×</span>
+                  </div>
+                  <input id="makeup-face-zoom" type="range" min="1" max="3" step="0.1" value={makeupZoom} onChange={(event) => setMakeupZoom(Number(event.target.value))} aria-valuetext={`${makeupZoom.toFixed(1)} times zoom`} className="w-full accent-[var(--sky-400)]" />
+                  <p className="text-[11px] leading-relaxed text-white/45">The zoomed frame is sent for makeup. Dress and bag try-ons use your full-body photo in their studios.</p>
+                </div>
+              )}
               {!selfiePreview && (
                 <p className="text-[11px] text-white/30 text-center">No photo? We&apos;ll use a sample image for preview</p>
               )}
@@ -396,7 +534,13 @@ export default function MakeupStudioPage() {
 
             {/* Step 2 — Pick a look */}
             <div className="p-5 rounded-3xl border border-white/10 space-y-4" style={{ background: 'rgba(255,255,255,0.05)', backdropFilter: 'blur(16px)' }}>
-              <p className="text-xs font-bold uppercase tracking-wider text-white/50">Step 2 — Choose a Look</p>
+              <div className="flex items-center justify-between gap-3">
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-wider text-white/50">Step 2 — Choose a Look</p>
+                  <p className="mt-1 text-sm text-white/75">From barely-there to after-dark.</p>
+                </div>
+                <span className="shrink-0 rounded-full border border-white/15 bg-white/5 px-2.5 py-1 text-[10px] font-semibold text-white/55">{LOOKS.length} looks</span>
+              </div>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                 {LOOKS.map((look) => (
                   <FX7TiltCard key={look.id} maxDeg={8} className="cursor-pointer">
@@ -410,19 +554,21 @@ export default function MakeupStudioPage() {
                           : 'border-white/10 hover:border-white/30'
                       )}
                     >
-                      {/* Thumbnail strip */}
-                      <div className="flex h-16 w-full overflow-hidden bg-black/20">
+                      {/* Larger inspiration strip makes each finish easier to compare. */}
+                      <div className="relative flex h-24 w-full overflow-hidden bg-black/20 sm:h-28">
                         {look.thumbnails.map((url, i) => (
                           // eslint-disable-next-line @next/next/no-img-element
                           <img key={i} src={url} alt="" aria-hidden="true"
-                            className="flex-1 object-cover object-center min-w-0" loading="lazy" />
+                            className="h-full min-w-0 flex-1 object-cover object-center" loading="lazy" />
                         ))}
+                        <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/10" />
+                        <span className="absolute bottom-2 left-2 rounded-full border border-white/25 bg-black/35 px-2 py-0.5 text-[9px] font-semibold text-white/90 backdrop-blur-sm">{look.tag}</span>
+                        {selectedLook === look.id && (
+                          <span aria-hidden="true" className="absolute right-2 top-2 flex h-6 w-6 items-center justify-center rounded-full bg-[var(--sky-400)] shadow-md">
+                            <Check size={12} className="text-[var(--navy-950)]" />
+                          </span>
+                        )}
                       </div>
-                      {selectedLook === look.id && (
-                        <span className="absolute top-1.5 right-1.5 w-5 h-5 bg-[var(--sky-400)] rounded-full flex items-center justify-center shadow-md">
-                          <Check size={11} className="text-[var(--navy-950)]" />
-                        </span>
-                      )}
                       <div className="p-2.5 space-y-1.5">
                         <p className="text-xs font-semibold text-white truncate">{look.name}</p>
                         <div className="flex items-center gap-1">
@@ -478,8 +624,10 @@ export default function MakeupStudioPage() {
                 {isMockResult && <DemoPreviewNotice />}
                 <div className="aspect-[4/5] max-h-[520px] rounded-3xl overflow-hidden border border-white/10 bg-black">
                   <FX6CurtainReveal>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={resultUrl} alt={`${selectedLookData?.name ?? 'Makeup'} virtual try-on result`} className="w-full h-full object-cover" />
+                    <div className="flex h-full w-full items-center justify-center">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={resultUrl} alt={`${selectedLookData?.name ?? 'Makeup'} virtual try-on result`} className="h-auto max-h-full w-auto max-w-full object-contain" />
+                    </div>
                   </FX6CurtainReveal>
                 </div>
                 <p className="text-[11px] text-center text-white/30">A vibe check, not a fit guarantee — lighting and skin tone affect results.</p>

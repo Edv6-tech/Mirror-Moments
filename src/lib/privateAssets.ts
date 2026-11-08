@@ -3,7 +3,7 @@ import crypto from 'node:crypto';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { createClient as createSupabaseClient } from '@supabase/supabase-js';
-import { createClient } from '@/lib/supabase/server';
+import { getLocalUser } from '@/lib/sqliteAuth';
 
 const MAX_SIGNED_URL_AGE_SECONDS = 10 * 60;
 const LOCAL_ROOT = path.resolve(process.cwd(), 'data/private-assets');
@@ -11,7 +11,6 @@ const LOCAL_ROOT = path.resolve(process.cwd(), 'data/private-assets');
 export function hasCloudPrivateStorage(): boolean {
   return Boolean(
     (process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL) &&
-    (process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) &&
     (process.env.SUPABASE_SECRET_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY),
   );
 }
@@ -22,15 +21,10 @@ export interface PrivateAsset {
 }
 
 export async function resolvePrivateAssetOwner(): Promise<string> {
-  if ((process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL) && (process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY)) {
-    const supabase = await createClient();
-    const { data: { user }, error } = await supabase.auth.getUser();
-    if (error || !user) throw new Error('Sign in to access your private collection.');
-    if (!(process.env.SUPABASE_SECRET_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY)) throw new Error('Private storage is not configured on the server.');
-    return user.id;
-  }
+  const user = await getLocalUser();
+  if (user) return user.id;
   if (process.env.NODE_ENV !== 'production') return 'local-demo';
-  throw new Error('Private storage is not configured on the server.');
+  throw new Error('Sign in to access your private collection.');
 }
 
 function adminStorage() {

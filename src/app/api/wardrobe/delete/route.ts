@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import fs from 'node:fs';
 import path from 'node:path';
-import { createClient } from '@/lib/supabase/server';
+import { createAdminClient } from '@/lib/supabase/admin';
 import { deletePrivateAssets, hasCloudPrivateStorage, resolvePrivateAssetOwner, type PrivateAsset } from '@/lib/privateAssets';
 
 interface WardrobeRecord { id: string; ownerId?: string; transparentAsset?: PrivateAsset; whiteAsset?: PrivateAsset }
@@ -15,11 +15,11 @@ export async function DELETE(request: NextRequest) {
     }
 
     if (hasCloudPrivateStorage()) {
-      const supabase = await createClient();
-      const { data: item, error: loadError } = await supabase.from('dresses').select('id,lifted_path,garment_path').eq('id', id).maybeSingle();
+      const supabase = createAdminClient();
+      const { data: item, error: loadError } = await supabase.from('dresses').select('id,lifted_path,garment_path').eq('user_id', ownerId).eq('id', id).maybeSingle();
       if (loadError) throw new Error(`Wardrobe item could not be loaded: ${loadError.message}`);
       if (!item) return NextResponse.json({ ok: false, message: 'That wardrobe item was not found.' }, { status: 404 });
-      const { error } = await supabase.from('dresses').delete().eq('id', id);
+      const { error } = await supabase.from('dresses').delete().eq('user_id', ownerId).eq('id', id);
       if (error) throw new Error(`Wardrobe item could not be deleted: ${error.message}`);
       await deletePrivateAssets([
         { bucket: 'dresses', key: item.lifted_path },

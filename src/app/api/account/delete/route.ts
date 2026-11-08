@@ -1,7 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient as createSupabaseClient } from '@supabase/supabase-js';
-import { createClient } from '@/lib/supabase/server';
+import fs from 'node:fs';
+import path from 'node:path';
+import { createAdminClient } from '@/lib/supabase/admin';
 import { deleteOwnerPrivateAssets, hasCloudPrivateStorage } from '@/lib/privateAssets';
+import { getLocalUser, removeLocalUser, signOutLocalUser } from '@/lib/sqliteAuth';
+
+export const runtime = 'nodejs';
+
+function removeLocalOwnerRows(filePath: string, ownerId: string) {
+  if (!fs.existsSync(filePath)) return;
+  const rows: Array<{ ownerId?: string }> = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+  fs.writeFileSync(filePath, JSON.stringify(rows.filter((row) => row.ownerId !== ownerId), null, 2));
+}
 
 export async function DELETE(request: NextRequest) {
   try {
@@ -9,21 +19,27 @@ export async function DELETE(request: NextRequest) {
     if (confirmation.confirmation !== 'DELETE') {
       return NextResponse.json({ ok: false, message: 'Type DELETE to confirm permanent account removal.' }, { status: 400 });
     }
-    if (!hasCloudPrivateStorage()) return NextResponse.json({ ok: false, message: 'Account deletion requires configured cloud storage.' }, { status: 503 });
-    const supabase = await createClient();
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
-    if (authError || !user) return NextResponse.json({ ok: false, message: 'Sign in to delete your account.' }, { status: 401 });
+    const user = await getLocalUser();
+    if (!user) return NextResponse.json({ ok: false, message: 'Sign in to delete your account.' }, { status: 401 });
 
-    const url = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL!;
-    const secret = process.env.SUPABASE_SECRET_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY!;
-    const admin = createSupabaseClient(url, secret, { auth: { persistSession: false, autoRefreshToken: false } });
+    if (hasCloudPrivateStorage()) {
+      const admin = createAdminClient();
+      for (const table of ['shortlists', 'looks', 'generated_looks', 'hair_references', 'dresses']) {
+        const { error } = await admin.from(table).delete().eq('user_id', user.id);
+        if (error) throw new Error(`Account data could not be removed: ${error.message}`);
+      }
+    }
+
     await deleteOwnerPrivateAssets(user.id);
-    const { error } = await admin.auth.admin.deleteUser(user.id);
-    if (error) throw new Error(`Account deletion failed: ${error.message}`);
-    return NextResponse.json({ ok: true });
+    const dataRoot = path.resolve(process.cwd(), 'data');
+    removeLocalOwnerRows(path.join(dataRoot, 'wardrobe/items.json'), user.id);
+    removeLocalOwnerRows(path.join(dataRoot, 'hair/items.json'), user.id);
+    await signOutLocalUser();
+    await removeLocalUser(user.id);
+    return NextResponse.json({ ok: true }, { headers: { 'Cache-Control': 'private, no-store' } });
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Account could not be deleted.';
-    const status = message.includes('Sign in') ? 401 : message.includes('requires configured') ? 503 : 500;
+    const status = message.includes('Sign in') ? 401 : 500;
     return NextResponse.json({ ok: false, message }, { status, headers: { 'Cache-Control': 'private, no-store' } });
   }
 }

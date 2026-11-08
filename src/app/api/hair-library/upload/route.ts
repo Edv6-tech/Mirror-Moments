@@ -4,7 +4,7 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 import { getPrivateAssetUrl, hasCloudPrivateStorage, resolvePrivateAssetOwner, storePrivateAsset, type PrivateAsset } from '@/lib/privateAssets';
 import { validateImageBuffer } from '@/lib/imageValidation';
-import { createClient } from '@/lib/supabase/server';
+import { createAdminClient } from '@/lib/supabase/admin';
 import { rejectOversizedRequest } from '@/lib/requestLimits';
 
 interface HairRecord {
@@ -45,7 +45,7 @@ export async function POST(req: NextRequest) {
     const thumbnailAsset = await storePrivateAsset(ownerId, 'bodies', thumbnailBuffer, thumbnailMime);
     const record: HairRecord = { id, ownerId, name: styleName || 'Custom Hairstyle', referenceAsset, thumbnailAsset, createdAt: new Date().toISOString() };
     if (hasCloudPrivateStorage()) {
-      const supabase = await createClient();
+      const supabase = createAdminClient();
       const { error } = await supabase.from('hair_references').insert({
         id,
         user_id: ownerId,

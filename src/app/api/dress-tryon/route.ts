@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import fs from 'node:fs';
 import path from 'node:path';
-import { uploadFile, createTask, pollTask, saveResult, isMockMode } from '@/lib/youcam/youcamClient';
+import { uploadFile, createTask, pollTask, saveResult, isMockMode, getResultImageDataUrl } from '@/lib/youcam/youcamClient';
 import { validateImageBuffer } from '@/lib/imageValidation';
 import { readLocalPublicImage } from '@/lib/sampleImages';
 import { downloadPrivateAsset, resolvePrivateAssetOwner, type PrivateAsset } from '@/lib/privateAssets';
@@ -69,6 +69,7 @@ export async function POST(req: NextRequest) {
     let garmentFileName = 'garment.jpg';
     let garmentId = 'emerald_slip';
     let garmentCategory = 'auto';
+    let includeResultImageData = false;
 
     const contentType = req.headers.get('content-type') || '';
 
@@ -78,6 +79,7 @@ export async function POST(req: NextRequest) {
       const garmentFile = formData.get('garmentPhoto') as File | null;
       const gId = formData.get('garmentId') as string | null;
       const requestedCategory = formData.get('garmentCategory');
+      includeResultImageData = formData.get('includeResultImageData') === 'true';
       if (gId) garmentId = gId;
       if (typeof requestedCategory === 'string') garmentCategory = requestedCategory;
 
@@ -101,6 +103,7 @@ export async function POST(req: NextRequest) {
       }
     } else {
       const body = await req.json().catch(() => ({}));
+      includeResultImageData = body.includeResultImageData === true;
       if (body.garmentId) garmentId = body.garmentId;
       if (typeof body.garmentCategory === 'string') garmentCategory = body.garmentCategory;
 
@@ -218,6 +221,7 @@ export async function POST(req: NextRequest) {
 
     // 4. Poll task
     const pollResult = await pollTask('/s2s/v2.0/task/cloth-v4', taskId);
+    const resultImageData = includeResultImageData ? await getResultImageDataUrl(pollResult.url) : undefined;
 
     // 5. Download and cache result
     const localResultUrl = await saveResult(pollResult.url, 'dress_tryon', { userId: quota.userId, category: 'dress' });
@@ -225,6 +229,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({
       ok: true,
       resultUrl: localResultUrl,
+      ...(resultImageData ? { resultImageData } : {}),
       taskId,
     });
   } catch (err: any) {

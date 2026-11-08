@@ -2,14 +2,14 @@ import { NextResponse } from 'next/server';
 import fs from 'node:fs';
 import path from 'node:path';
 import { getPrivateAssetUrl, hasCloudPrivateStorage, resolvePrivateAssetOwner, type PrivateAsset } from '@/lib/privateAssets';
-import { createClient } from '@/lib/supabase/server';
+import { createAdminClient } from '@/lib/supabase/admin';
 
 export async function GET() {
   try {
     const ownerId = await resolvePrivateAssetOwner();
     if (hasCloudPrivateStorage()) {
-      const supabase = await createClient();
-      const { data, error } = await supabase.from('hair_references').select('id,name,reference_path,thumbnail_path,created_at').order('created_at', { ascending: false });
+      const supabase = createAdminClient();
+      const { data, error } = await supabase.from('hair_references').select('id,name,reference_path,thumbnail_path,created_at').eq('user_id', ownerId).order('created_at', { ascending: false });
       if (error) throw new Error(`Your hair collection could not be loaded: ${error.message}`);
       const items = await Promise.all((data ?? []).map(async (row) => {
         const referenceAsset: PrivateAsset = { bucket: 'bodies', key: row.reference_path };

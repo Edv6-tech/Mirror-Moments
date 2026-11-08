@@ -1,7 +1,7 @@
 import crypto from 'node:crypto';
-import { getPrivateAssetUrl, storePrivateAsset } from '@/lib/privateAssets';
+import { getPrivateAssetUrl, hasCloudPrivateStorage, storePrivateAsset } from '@/lib/privateAssets';
 import { validateImageBuffer } from '@/lib/imageValidation';
-import { createClient } from '@/lib/supabase/server';
+import { createAdminClient } from '@/lib/supabase/admin';
 
 export interface YouCamResponse<T = any> {
   status: number;
@@ -227,7 +227,7 @@ export async function saveResult(
 
   // Guests can download the provider's temporary result. Signed-in accounts
   // receive durable private storage and a persisted Looks record.
-  if (!look?.userId) return remoteUrl;
+  if (!look?.userId || !hasCloudPrivateStorage()) return remoteUrl;
 
   try {
     const response = await fetch(remoteUrl);
@@ -239,7 +239,7 @@ export async function saveResult(
     if (validateImageBuffer(bytes, contentType, { maxBytes: 20 * 1024 * 1024, allowedMimes: ['image/jpeg', 'image/png', 'image/webp'] })) throw new Error('Provider result is not a valid image.');
     const owner = look.userId;
     const asset = await storePrivateAsset(owner, 'results', bytes, contentType);
-    const supabase = await createClient();
+    const supabase = createAdminClient();
     const { error } = await supabase.from('generated_looks').insert({
       user_id: owner,
       category: look.category,
@@ -253,11 +253,35 @@ export async function saveResult(
   }
 }
 
+/** Download a YouCam result on the server so the browser can safely composite it. */
+export async function getResultImageDataUrl(remoteUrl: string): Promise<string> {
+  const parsed = new URL(remoteUrl);
+  if (parsed.protocol !== 'https:' || !parsed.hostname.endsWith('.s3-accelerate.amazonaws.com')) {
+    throw new Error('The try-on result came from an unsupported image host.');
+  }
+
+  const response = await fetch(parsed, { cache: 'no-store' });
+  if (!response.ok) throw new Error('The try-on result image could not be prepared.');
+  const mime = response.headers.get('content-type')?.split(';')[0] ?? '';
+  if (!['image/jpeg', 'image/png', 'image/webp'].includes(mime)) {
+    throw new Error('The try-on result has an unsupported image format.');
+  }
+  const bytes = Buffer.from(await response.arrayBuffer());
+  if (!bytes.length || bytes.length > 12 * 1024 * 1024) {
+    throw new Error('The try-on result is too large to combine.');
+  }
+  if (validateImageBuffer(bytes, mime, { maxBytes: 12 * 1024 * 1024, allowedMimes: ['image/jpeg', 'image/png', 'image/webp'] })) {
+    throw new Error('The try-on result image could not be validated.');
+  }
+  return `data:${mime};base64,${bytes.toString('base64')}`;
+}
+
 export const youcamClient = {
   uploadFile,
   createTask,
   pollTask,
   saveResult,
+  getResultImageDataUrl,
   isMockMode,
 };
 

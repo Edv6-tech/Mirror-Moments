@@ -23,5 +23,7 @@ _trash_review/
 public/uploads/results/
 public/uploads/wardrobe/
 data/private-assets/
+data/mirror-moment.sqlite*
 data/wardrobe/items.json
+data/hair/items.json
 tsconfig.tsbuildinfo
